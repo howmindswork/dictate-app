@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice to Text for Programmers: Dictate Code Comments, Docs, and Messages | dictate.app Blog</title>
+  <meta name="description" content="RSI prevention, faster docs, and hands-free communication for developers. dictate.app works in VS Code, terminals, Slack, and any text field." />
+  <meta name="keywords" content="voice to text programmers, developer dictation software, voice coding, RSI prevention programmers" />
+  <meta name="author" content="dictate.app" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dictate-app.pages.dev/blog/voice-to-text-for-programmers.html" />
+  <meta property="og:title" content="Voice to Text for Programmers: Dictate Code Comments, Docs, and Messages" />
+  <meta property="og:description" content="RSI prevention, faster docs, and hands-free communication for developers. dictate.app works in VS Code, terminals, Slack, and any text field." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://dictate-app.pages.dev/blog/voice-to-text-for-programmers.html" />
+  <meta property="og:site_name" content="dictate.app" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Voice to Text for Programmers: Dictate Code Comments, Docs, and Messages" />
+  <meta name="twitter:description" content="RSI prevention, faster docs, and hands-free communication for developers. dictate.app works in VS Code, terminals, Slack, and any text field." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Voice to Text for Programmers: Dictate Code Comments, Docs, and Messages",
+    "description": "RSI prevention, faster docs, and hands-free communication for developers. dictate.app works in VS Code, terminals, Slack, and any text field.",
+    "author": {"@type": "Organization", "name": "dictate.app"},
+    "publisher": {"@type": "Organization", "name": "dictate.app"},
+    "datePublished": "2026-05-06",
+    "dateModified": "2026-05-06",
+    "url": "https://dictate-app.pages.dev/blog/voice-to-text-for-programmers.html",
+    "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-to-text-for-programmers.html"
+  }
+  </script>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      :root {
+        --bg: #0d0a14;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        z-index: -1; pointer-events: none;
+      }
+      .wrap { position: relative; z-index: 1; }
+
+      /* NAV */
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192,132,252,0.1);
+        position: sticky; top: 0; z-index: 100;
+        background: rgba(13,10,20,0.85);
+      }
+      nav {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex; align-items: center; gap: 6px;
+      }
+      .nav-home:hover { color: var(--accent); }
+      .logo-icon {
+        width: 26px; height: 26px; border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 14px; margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-rose) 100%);
+        color: white; text-decoration: none;
+        border-radius: 6px; font-size: 14px; font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192,132,252,0.3);
+      }
+      .cta-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192,132,252,0.5); }
+
+      /* ARTICLE */
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192,132,252,0.15);
+        border: 1px solid rgba(192,132,252,0.3);
+        color: var(--accent);
+        font-size: 12px; font-weight: 600;
+        letter-spacing: 1px; text-transform: uppercase;
+        padding: 4px 12px; border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192,132,252,0.1);
+      }
+      h2 {
+        font-size: 22px; font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px; font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p { margin-bottom: 18px; color: var(--text-secondary); font-size: 16px; }
+      p strong { color: var(--text-primary); }
+      ul, ol { padding-left: 24px; margin-bottom: 18px; }
+      li { color: var(--text-secondary); font-size: 16px; margin-bottom: 6px; }
+      li strong { color: var(--text-primary); }
+
+      /* TABLE */
+      .table-wrap { overflow-x: auto; margin: 28px 0; }
+      table {
+        width: 100%; border-collapse: collapse;
+        font-size: 14px;
+      }
+      th {
+        background: rgba(192,132,252,0.15);
+        color: var(--accent);
+        font-weight: 700; text-align: left;
+        padding: 12px 16px;
+        border: 1px solid rgba(192,132,252,0.2);
+      }
+      td {
+        padding: 10px 16px;
+        border: 1px solid rgba(192,132,252,0.1);
+        color: var(--text-secondary);
+      }
+      tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+      .check { color: var(--accent); font-weight: 700; }
+      .cross { color: var(--accent-rose); }
+      .win { color: var(--accent); font-weight: 700; }
+
+      /* CTA BLOCK */
+      .cta-block {
+        background: linear-gradient(135deg, rgba(192,132,252,0.1) 0%, rgba(244,114,182,0.08) 100%);
+        border: 1px solid rgba(192,132,252,0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 { margin: 0 0 10px; font-size: 22px; color: var(--text-primary); }
+      .cta-block p { margin: 0 0 24px; }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-rose) 100%);
+        color: white; text-decoration: none;
+        border-radius: 8px; font-size: 16px; font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192,132,252,0.35);
+      }
+      .cta-big:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(192,132,252,0.5); }
+      .cta-sub { margin-top: 12px; font-size: 13px; color: var(--text-secondary); }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(192,132,252,0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a { color: var(--accent); text-decoration: none; }
+
+      @media (max-width: 600px) {
+        article { padding: 0 16px 60px; }
+        header { padding: 16px 20px; }
+        .cta-block { padding: 24px 20px; }
+      }
+    </style>
+
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <nav>
+        <a class="nav-home" href="https://dictate-app.pages.dev">
+          <span class="logo-icon">🎙</span> ← dictate.app
+        </a>
+        <a class="cta-nav" href="https://dictate-app.pages.dev">Start Free Trial</a>
+      </nav>
+    </header>
+    <article>
+
+      <span class="post-label">Use Case</span>
+      <h1>Voice to Text for Programmers: Dictate Code Comments, Docs, and Messages</h1>
+      <p class="post-meta">dictate.app Blog &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; 6 min read</p>
+
+      <p>You probably are not going to dictate raw code. Brackets, semicolons, and nested functions do not flow naturally in speech. But most of what programmers write is not code.</p>
+
+      <h2>What Programmers Actually Dictate</h2>
+      <ul>
+        <li><strong>Code comments.</strong> Explain what a function does. Describe a tricky algorithm. Document a workaround.</li>
+        <li><strong>Docstrings and API docs.</strong> Long-form function documentation. README sections. Changelog entries.</li>
+        <li><strong>Slack and Teams messages.</strong> "Hey can you take a look at PR #4217, I think the auth logic has a race condition when…" — faster to speak than type.</li>
+        <li><strong>GitHub issue descriptions.</strong> Reproduce steps, expected behavior, actual behavior. Detailed bug reports in 30 seconds.</li>
+        <li><strong>Technical emails.</strong> Explaining a decision to a stakeholder. Responding to a tech spec review.</li>
+        <li><strong>Commit messages.</strong> Descriptive, not terse.</li>
+        <li><strong>Meeting notes.</strong> After a standup or design review, dictate your summary before you forget.</li>
+      </ul>
+
+      <h2>RSI: The Hidden Career Risk</h2>
+      <p>Repetitive Strain Injury affects an estimated 50% of programmers at some point in their careers. Carpal tunnel, tendinitis, and related conditions can sideline you for weeks or permanently alter how you work.</p>
+      <p>Every word you speak instead of type reduces the strain on your wrists and hands. For documentation and communication — which is a significant fraction of a developer's day — dictation is a genuine intervention, not a gimmick.</p>
+
+      <h2>Works Where You Work</h2>
+      <p>dictate.app works in any text field. That means:</p>
+      <ul>
+        <li>VS Code comment blocks</li>
+        <li>GitHub issue and PR descriptions in the browser</li>
+        <li>Slack, Discord, Teams messages</li>
+        <li>Jira tickets and Confluence pages</li>
+        <li>Terminal commands (careful with syntax — use for plain language queries)</li>
+        <li>Notion docs, Linear issues, any web-based tool</li>
+      </ul>
+
+      <h2>Privacy in Developer Environments</h2>
+      <p>Your code is intellectual property. Architecture decisions, proprietary algorithms, unreleased features — none of this should go to a third-party cloud for processing. dictate.app processes locally. Your spoken words about your codebase never leave your machine.</p>
+
+      <h2>Setup Takes 90 Seconds</h2>
+      <p>Install. Set your hotkey (default: Ctrl+Shift+Space). Open VS Code. Click into a comment block. Hold the hotkey. Speak. Done.</p>
+      <p>No configuration files. No API keys to manage. No special editor plugins required.</p>
+
+      <h2>The Productivity Case</h2>
+      <p>Good documentation gets skipped because it feels expensive. It takes too long to type. With dictation, the cost drops by 60%. You speak the comment, it appears, you move on. Documentation gets written because writing it stops being a grind.</p>
+    
+
+    <div class="cta-block">
+      <h2>Ready to dictate?</h2>
+      <p>7-day free trial. Works in any text field. No credit card required.</p>
+      <a class="cta-big" href="https://dictate-app.pages.dev">Start Free Trial →</a>
+      <p class="cta-sub">30-day refund guarantee. $9/mo after trial.</p>
+    </div>
+    </article>
+
+    <footer>
+      <p>© 2026 dictate.app &nbsp;·&nbsp; <a href="https://dictate-app.pages.dev">Home</a> &nbsp;·&nbsp; <a href="https://dictate-app.pages.dev/blog/">Blog</a></p>
+    </footer>
+  </div>
+
+    <canvas id="starfield"></canvas>
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+      const stars = [];
+      for (let i = 0; i < 50; i++) {
+        stars.push({
+          x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+          radius: Math.random() * 1.2, opacity: Math.random() * 0.5 + 0.4,
+          vx: (Math.random() - 0.5) * 0.08, vy: (Math.random() - 0.5) * 0.08
+        });
+      }
+      function drawStarfield() {
+        ctx.fillStyle = "rgba(13,10,20,0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+          s.x += s.vx; s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.opacity})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStarfield);
+      }
+      drawStarfield();
+    </script>
+
+</body>
+</html>

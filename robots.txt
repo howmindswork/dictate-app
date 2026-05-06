@@ -1,0 +1,28 @@
+# dictate.app robots.txt
+# SEO configuration for search engine crawlers
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /api/
+
+# Specific crawler rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://dictate.app/sitemap.xml
+
+# Standard timeouts
+Request-rate: 1/1s

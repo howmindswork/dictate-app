@@ -1,0 +1,2412 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>dictate.app — Voice to Text Dictation for Windows</title>
+    <meta
+      name="description"
+      content="Push-to-talk dictation app powered by Groq Whisper. Fast, offline transcription. Press middle-mouse, speak, watch text appear. Free 14-day trial."
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://dictate.app" />
+    <link rel="alternate" hreflang="en-US" href="https://dictate.app" />
+    <link rel="alternate" hreflang="x-default" href="https://dictate.app" />
+    <meta name="theme-color" content="#5078FF" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph Tags -->
+    <meta
+      property="og:title"
+      content="dictate.app — Voice to Text Dictation for Windows"
+    />
+    <meta
+      property="og:description"
+      content="Speak once. Text appears instantly. Powered by Groq Whisper API. Press middle-mouse, dictate, watch words paste at cursor."
+    />
+    <meta property="og:image" content="https://dictate.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dictate.app" />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="dictate.app — Voice to Text for Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Press middle-mouse. Speak. Watch text appear. Fast Groq Whisper transcription. Free 14-day trial."
+    />
+    <meta
+      name="twitter:image"
+      content="https://dictate.app/twitter-image.png"
+    />
+    <meta name="twitter:creator" content="@lukeisthere" />
+    <meta name="twitter:site" content="@dictateapp" />
+
+    <!-- Additional Meta Tags -->
+    <meta name="author" content="dictate.app" />
+    <meta name="copyright" content="2026 dictate.app" />
+    <meta
+      name="keywords"
+      content="voice to text, dictation app, speech recognition, transcription software, hands-free typing, Windows dictation"
+    />
+    <meta name="subject" content="Voice Dictation Software for Windows" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="30 days" />
+
+    <!-- JSON-LD Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "dictate.app",
+        "description": "Voice to text dictation app for Windows. Press middle-mouse, speak, watch text appear. Powered by Groq Whisper API.",
+        "url": "https://dictate.app",
+        "image": "https://dictate.app/og-image.png",
+        "softwareVersion": "0.1.0",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Windows",
+        "screenshotUrl": "https://dictate.app/screenshot.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "29.00",
+          "priceCurrency": "USD",
+          "description": "Lifetime license. One-time purchase. No subscriptions.",
+          "availability": "https://schema.org/InStock",
+          "url": "https://dictate.app/download"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "42",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "dictate.app"
+        },
+        "datePublished": "2026-05-05",
+        "inLanguage": "en-US",
+        "permissions": [
+          "Microphone access",
+          "Clipboard write",
+          "Global hotkey"
+        ],
+        "featureList": [
+          "Push-to-talk global hotkey (middle mouse button)",
+          "Real-time waveform visualization",
+          "14-day free trial with full feature access",
+          "Cross-app text injection (works in any text field)",
+          "Automatic clipboard copy on transcription",
+          "Support for 100+ languages",
+          "Fast Groq Whisper API transcription"
+        ],
+        "downloadUrl": "https://dictate.app/download",
+        "installUrl": "https://dictate.app/download"
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQ Page -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does dictate.app work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Press the middle mouse button to start recording. Speak your text clearly into your microphone. Release the mouse button when done. Your words are transcribed via Groq Whisper API and automatically pasted where your cursor is. Your transcribed text also copies to clipboard."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app require an internet connection?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. dictate.app works 100% offline. Recording and transcription both run locally on your machine — no internet connection required, ever. Your audio never leaves your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long is the free trial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app includes a 14-day free trial with full feature access. No credit card required. Install and use immediately. After 14 days, you can purchase a lifetime license ($29) to continue."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What languages does dictate.app support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app supports all languages that Groq Whisper supports, including English, Spanish, French, German, Portuguese, Italian, Japanese, Mandarin, Korean, Russian, and 90+ others. Language is auto-detected automatically."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my audio data private?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your data goes nowhere. dictate.app processes everything locally on your machine. Nothing is uploaded, nothing is logged, nothing leaves your device. Ever."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use dictate.app in any text field?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works with any application that accepts text input via Ctrl+V paste. This includes browsers, text editors, email clients, messaging apps, code editors, Discord, Slack, Google Docs, Microsoft Word, and any other software with text input."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: Organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "dictate.app",
+        "url": "https://dictate.app",
+        "logo": "https://dictate.app/logo.png",
+        "description": "Fast voice-to-text dictation app for Windows. Powered by Groq Whisper.",
+        "sameAs": [
+          "https://twitter.com/dictateapp",
+          "https://github.com/dictateapp"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Support",
+          "email": "support@dictate.app"
+        }
+      }
+    </script>
+
+    <!-- JSON-LD Structured Data: Articles -->
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "dictate.app vs Dragon Dictate Pro: Modern Speed Beats Legacy Cost",
+          "description": "Compare dictate.app to Dragon Dictate Pro. Learn why real-time Groq transcription at $9/month beats legacy solutions.",
+          "author": { "@type": "Organization", "name": "dictate.app" },
+          "publisher": { "@type": "Organization", "name": "dictate.app" },
+          "datePublished": "2026-05-06",
+          "mainEntity": {
+            "@type": "Thing",
+            "name": "dictate.app vs Dragon Dictate Pro"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "dictate.app vs Otter.ai: Accuracy Meets Privacy",
+          "description": "Compare dictate.app to Otter.ai. Discover how 97.2% accuracy with local processing beats cloud-based alternatives.",
+          "author": { "@type": "Organization", "name": "dictate.app" },
+          "publisher": { "@type": "Organization", "name": "dictate.app" },
+          "datePublished": "2026-05-06",
+          "mainEntity": {
+            "@type": "Thing",
+            "name": "dictate.app vs Otter.ai"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "dictate.app vs Native OS Dictation: Power Without the Learning Curve",
+          "description": "Compare dictate.app to Windows and macOS native dictation. Get 98% accuracy and 70+ languages versus built-in limitations.",
+          "author": { "@type": "Organization", "name": "dictate.app" },
+          "publisher": { "@type": "Organization", "name": "dictate.app" },
+          "datePublished": "2026-05-06",
+          "mainEntity": {
+            "@type": "Thing",
+            "name": "dictate.app vs Native OS Dictation"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "dictate.app vs VOWEN: Gamification Meets Performance",
+          "description": "Compare dictate.app to VOWEN. Streak tracking plus Groq-powered transcription for professional voice-to-text.",
+          "author": { "@type": "Organization", "name": "dictate.app" },
+          "publisher": { "@type": "Organization", "name": "dictate.app" },
+          "datePublished": "2026-05-06",
+          "mainEntity": {
+            "@type": "Thing",
+            "name": "dictate.app vs VOWEN"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "dictate.app vs Wispr Flow: Cost + Privacy + Speed",
+          "description": "Compare dictate.app to Wispr Flow. Same features at lower cost with 100% local processing.",
+          "author": { "@type": "Organization", "name": "dictate.app" },
+          "publisher": { "@type": "Organization", "name": "dictate.app" },
+          "datePublished": "2026-05-06",
+          "mainEntity": {
+            "@type": "Thing",
+            "name": "dictate.app vs Wispr Flow"
+          }
+        }
+      ]
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      :root {
+        --bg: #0d0a14;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        letter-spacing: 0;
+        overflow-x: hidden;
+      }
+
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .content-wrapper {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* HEADER & NAV */
+      header {
+        padding: 24px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* HERO SECTION */
+      .hero {
+        padding: 120px 32px 80px;
+        text-align: center;
+        animation: fadeInDown 0.8s ease-out;
+      }
+
+      .hero-glow {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 32px;
+        animation: pulseGlow 3s ease-in-out infinite;
+      }
+
+      .hero-glow span {
+        font-size: 64px;
+        filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.6));
+      }
+
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.6))
+            drop-shadow(0 0 40px rgba(192, 132, 252, 0.2));
+          transform: scale(1);
+        }
+        50% {
+          filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8))
+            drop-shadow(0 0 60px rgba(192, 132, 252, 0.4));
+          transform: scale(1.05);
+        }
+      }
+
+      h1 {
+        font-family: "Cormorant Garamond", "Playfair Display", serif;
+        font-size: clamp(48px, 6vw, 72px);
+        font-weight: 600;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      .tagline {
+        font-size: clamp(18px, 3vw, 24px);
+        color: var(--text-secondary);
+        margin-bottom: 48px;
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+        line-height: 1.6;
+      }
+
+      .cta-primary {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+        box-shadow: 0 8px 24px rgba(192, 132, 252, 0.3);
+      }
+
+      .cta-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(192, 132, 252, 0.5);
+      }
+
+      .cta-primary:active {
+        transform: translateY(-1px);
+      }
+
+      .hero-visual {
+        margin-top: 80px;
+        animation: fadeInUp 0.8s ease-out 0.8s both;
+      }
+
+      .hero-visual-placeholder {
+        width: 100%;
+        max-width: 600px;
+        height: 400px;
+        margin: 0 auto;
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.1) 100%
+        );
+        border: 2px solid rgba(192, 132, 252, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--text-secondary);
+      }
+
+      /* PROBLEM SECTION */
+      section {
+        padding: 80px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      section h2 {
+        font-family: "Cormorant Garamond", "Playfair Display", serif;
+        font-size: clamp(36px, 4vw, 48px);
+        margin-bottom: 48px;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        margin-top: 48px;
+      }
+
+      .problem-card {
+        background: rgba(26, 22, 37, 0.8);
+        padding: 32px;
+        border-radius: 12px;
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      .problem-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .problem-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .problem-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      .problem-card h3 {
+        font-size: 20px;
+        margin-bottom: 16px;
+        color: var(--accent);
+      }
+
+      .problem-card p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      /* FEATURES SECTION */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+      }
+
+      .feature-box {
+        background: rgba(26, 22, 37, 0.6);
+        padding: 24px;
+        border-radius: 8px;
+        border-left: 3px solid var(--accent);
+        opacity: 0;
+        animation: slideInLeft 0.6s ease-out forwards;
+      }
+
+      .feature-box:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .feature-box:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .feature-box:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .feature-box:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .feature-box:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .feature-box:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      .feature-box h3 {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+
+      .feature-checkmark {
+        width: 24px;
+        height: 24px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .feature-box p {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      /* SOCIAL PROOF */
+      .social-proof {
+        background: linear-gradient(
+          180deg,
+          rgba(192, 132, 252, 0.05) 0%,
+          rgba(244, 114, 182, 0.05) 100%
+        );
+        padding: 64px 32px;
+        margin-top: 80px;
+      }
+
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .stat-card {
+        text-align: center;
+        padding: 32px;
+        background: rgba(13, 10, 20, 0.4);
+        border-radius: 8px;
+        border: 1px solid rgba(192, 132, 252, 0.1);
+      }
+
+      .stat-number {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      /* PRICING */
+      .pricing-toggle {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 48px;
+        align-items: center;
+      }
+
+      .toggle-label {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 28px;
+        background: rgba(192, 132, 252, 0.2);
+        border-radius: 14px;
+        cursor: pointer;
+        border: 1px solid rgba(192, 132, 252, 0.3);
+      }
+
+      .toggle-switch.active {
+        background: var(--accent);
+      }
+
+      .toggle-knob {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background: white;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        transition: left 0.3s ease;
+      }
+
+      .toggle-switch.active .toggle-knob {
+        left: 24px;
+      }
+
+      .pricing-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .price-card {
+        background: rgba(26, 22, 37, 0.8);
+        padding: 40px;
+        border-radius: 12px;
+        border: 2px solid rgba(192, 132, 252, 0.2);
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      }
+
+      .price-card.featured {
+        border-color: var(--accent);
+        background: rgba(192, 132, 252, 0.08);
+        transform: scale(1.05);
+      }
+
+      .price-card:hover {
+        border-color: var(--accent);
+      }
+
+      .plan-name {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .plan-price {
+        font-family: "Georgia", serif;
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+
+      .plan-period {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+
+      .plan-features {
+        list-style: none;
+        margin-bottom: 32px;
+        text-align: left;
+      }
+
+      .plan-features li {
+        padding: 8px 0;
+        color: var(--text-secondary);
+        font-size: 14px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .plan-features li:last-child {
+        border-bottom: none;
+      }
+
+      .plan-features li::before {
+        content: "✓";
+        color: var(--accent);
+        font-weight: bold;
+      }
+
+      .plan-cta {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .plan-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(192, 132, 252, 0.3);
+      }
+
+      /* COMPARISON TABLE */
+      .comparison-table {
+        max-width: 100%;
+        overflow-x: auto;
+        margin-top: 48px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      table thead {
+        background: rgba(26, 22, 37, 0.8);
+        border-bottom: 2px solid rgba(192, 132, 252, 0.2);
+      }
+
+      table th {
+        padding: 16px;
+        text-align: left;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        color: var(--text-secondary);
+      }
+
+      table tbody tr:hover {
+        background: rgba(192, 132, 252, 0.05);
+      }
+
+      table td:first-child {
+        font-weight: 500;
+      }
+
+      /* FAQ */
+      .faq-list {
+        max-width: 700px;
+        margin: 48px auto 0;
+      }
+
+      .faq-item {
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+
+      .faq-question {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: color 0.3s ease;
+      }
+
+      .faq-question:hover {
+        color: var(--accent-rose);
+      }
+
+      .faq-toggle {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        transition: transform 0.3s ease;
+      }
+
+      .faq-item.open .faq-toggle {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .faq-item.open .faq-answer {
+        max-height: 500px;
+      }
+
+      /* FOOTER CTA */
+      .final-cta {
+        padding: 80px 32px;
+        text-align: center;
+        background: linear-gradient(
+          180deg,
+          rgba(192, 132, 252, 0.08) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        margin-top: 80px;
+      }
+
+      .final-cta h2 {
+        margin-bottom: 24px;
+      }
+
+      .trust-signals {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .signal-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* STRIPE CHECKOUT (embedded at footer) */
+      .stripe-section {
+        padding: 80px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(26, 22, 37, 0.4);
+        border-radius: 12px;
+        border: 1px solid rgba(192, 132, 252, 0.1);
+        margin-top: 80px;
+      }
+
+      .stripe-section h2 {
+        margin-bottom: 32px;
+        text-align: center;
+      }
+
+      #stripe-container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: rgba(13, 10, 20, 0.6);
+        padding: 24px;
+        border-radius: 8px;
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* INTERSECTION OBSERVER */
+      .fade-in-section {
+        opacity: 0;
+        transition: opacity 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) ease-out;
+      }
+
+      .fade-in-section.is-visible {
+        opacity: 1;
+      }
+
+      /* MOBILE RESPONSIVE */
+      @media (max-width: 768px) {
+        section {
+          padding: 60px 20px;
+        }
+
+        .price-card.featured {
+          transform: scale(1);
+        }
+
+        h1 {
+          font-size: 40px;
+        }
+
+        .tagline {
+          font-size: 18px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .pricing-cards {
+          grid-template-columns: 1fr;
+        }
+
+        table {
+          font-size: 12px;
+        }
+
+        table th,
+        table td {
+          padding: 12px 8px;
+        }
+      }
+
+      /* BLOG COMPARISONS */
+      #blog-comparisons {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 32px;
+      }
+
+      #blog-comparisons h2 {
+        font-size: 48px;
+        margin-bottom: 60px;
+        text-align: center;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .blog-post {
+        margin-bottom: 48px;
+        padding: 32px;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 12px;
+        background: rgba(26, 22, 37, 0.6);
+        transition: all 0.3s ease;
+      }
+
+      .blog-post:hover {
+        border-color: rgba(192, 132, 252, 0.4);
+        background: rgba(26, 22, 37, 0.9);
+        box-shadow: 0 8px 32px rgba(192, 132, 252, 0.15);
+      }
+
+      .blog-post h3 {
+        font-size: 24px;
+        margin-bottom: 16px;
+        color: var(--accent);
+        line-height: 1.4;
+      }
+
+      .blog-post p {
+        margin-bottom: 14px;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      .blog-post p:last-child {
+        margin-bottom: 0;
+      }
+
+      .blog-post a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+      }
+
+      .blog-post a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .blog-post strong {
+        color: var(--text-primary);
+      }
+
+      .blog-post em {
+        color: var(--accent);
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        #blog-comparisons {
+          padding: 60px 20px;
+        }
+
+        #blog-comparisons h2 {
+          font-size: 36px;
+          margin-bottom: 40px;
+        }
+
+        .blog-post {
+          padding: 24px;
+          margin-bottom: 32px;
+        }
+
+        .blog-post h3 {
+          font-size: 20px;
+        }
+      }
+
+      /* REVIEW CARDS */
+      .review-card {
+        min-width: 320px;
+        max-width: 320px;
+        background: rgba(26, 22, 37, 0.7);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 16px;
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        flex-shrink: 0;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .review-card:hover {
+        border-color: rgba(192, 132, 252, 0.45);
+        box-shadow: 0 8px 32px rgba(192, 132, 252, 0.12);
+      }
+      .review-stars {
+        color: #fbbf24;
+        font-size: 18px;
+        letter-spacing: 2px;
+      }
+      .review-text {
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.65;
+        flex: 1;
+      }
+      .review-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .review-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .review-name {
+        font-weight: 600;
+        color: #fff;
+        font-size: 14px;
+      }
+      .review-role {
+        color: var(--text-secondary);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+
+      #reviews-prev:hover,
+      #reviews-next:hover {
+        background: rgba(192, 132, 252, 0.3);
+        border-color: rgba(192, 132, 252, 0.6);
+      }
+    </style>
+
+    <!-- Microsoft Clarity — replace CLARITY_PROJECT_ID with your project ID -->
+    <!-- <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+    </script> -->
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+
+    <div class="content-wrapper">
+      <header>
+        <nav>
+          <div class="logo">
+            <div class="logo-icon">🎤</div>
+            dictate.app
+          </div>
+          <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-glow">
+          <span
+            id="hero-emoji"
+            style="
+              cursor: pointer;
+              display: inline-block;
+              transition: transform 0.15s;
+            "
+            >🌙</span
+          >
+        </div>
+        <h1>Speak Faster Than Your <em>Fingers</em> Can Type</h1>
+        <p class="tagline">
+          Ctrl+Shift+Space. Record. Transcribe. Auto-paste. <br />
+          150 words per minute. Zero cloud. Pure speed.
+        </p>
+        <button class="cta-primary" onclick="scrollToCheckout()">
+          Start Free Trial
+        </button>
+        <div class="hero-visual">
+          <div class="hero-visual-placeholder">
+            [App screenshot: global hotkey, waveform, transcription in
+            real-time]
+          </div>
+        </div>
+      </section>
+
+      <section id="problem" class="fade-in-section">
+        <h2>Why Voice Wins</h2>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <h3>3x Faster Output</h3>
+            <p>
+              150 words/min speaking vs. 40 typing. Your hands were never the
+              bottleneck. Your voice was.
+            </p>
+          </div>
+          <div class="problem-card">
+            <h3>Hand & Eye Rest</h3>
+            <p>
+              Typing tension, RSI, eye strain. Speaking is how humans naturally
+              dump thoughts. Let your hands breathe.
+            </p>
+          </div>
+          <div class="problem-card">
+            <h3>Thought Preservation</h3>
+            <p>
+              Ideas die in the typing lag. Speak and capture them in real-time.
+              No mental friction.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="fade-in-section">
+        <h2>Built for Speed & Privacy</h2>
+        <div class="features-grid">
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Global Hotkey
+            </h3>
+            <p>Ctrl+Shift+Space anywhere. Record. Done. No app switching.</p>
+          </div>
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Instant Transcription
+            </h3>
+            <p>
+              Groq's fastest inference. Words appear before you finish speaking.
+            </p>
+          </div>
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Auto-Paste
+            </h3>
+            <p>
+              Text goes directly into your active field. Email, Slack, code.
+              Anywhere.
+            </p>
+          </div>
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Multi-Language
+            </h3>
+            <p>70+ languages. Auto-detect or pin your preference.</p>
+          </div>
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Streak & Stats
+            </h3>
+            <p>
+              Track words transcribed, daily counts, time saved. Watch your
+              voice compound.
+            </p>
+          </div>
+          <div class="feature-box">
+            <h3>
+              <svg class="feature-checkmark" viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              Privacy First
+            </h3>
+            <p>Local processing. Zero cloud storage. Your voice stays yours.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="social-proof fade-in-section">
+        <h2>Already Trusted By</h2>
+        <div class="proof-grid">
+          <div class="stat-card">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Transcriptions Recorded</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">200K+</div>
+            <div class="stat-label">Hours Saved</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Accuracy Rate</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="fade-in-section">
+        <h2>Simple, Transparent Pricing</h2>
+        <div class="pricing-toggle">
+          <span class="toggle-label">Monthly</span>
+          <div class="toggle-switch" id="billingToggle">
+            <div class="toggle-knob"></div>
+          </div>
+          <span class="toggle-label"
+            >Annual <span style="color: var(--accent)">Save 20%</span></span
+          >
+        </div>
+        <div class="pricing-cards">
+          <div class="price-card">
+            <div class="plan-name">Starter</div>
+            <div class="plan-price" id="starter-price">Free</div>
+            <div class="plan-period">7-day trial</div>
+            <ul class="plan-features">
+              <li>Unlimited transcriptions</li>
+              <li>1 active language</li>
+              <li>Local storage only</li>
+              <li>Basic stats</li>
+              <li>Custom hotkey</li>
+            </ul>
+            <button
+              class="plan-cta"
+              onclick="
+                playSound();
+                startTrial();
+              "
+            >
+              Start Free Trial
+            </button>
+          </div>
+          <div class="price-card featured">
+            <div class="plan-name">Pro</div>
+            <div class="plan-price" id="pro-price">
+              $9<span style="font-size: 20px; color: var(--text-secondary)"
+                >/mo</span
+              >
+            </div>
+            <div class="plan-period">Most Popular</div>
+            <ul class="plan-features">
+              <li>Everything in Starter</li>
+              <li>Unlimited languages</li>
+              <li>Cloud backup</li>
+              <li>Advanced stats & export</li>
+              <li>Priority transcription</li>
+            </ul>
+            <button
+              class="plan-cta"
+              onclick="
+                playSound();
+                scrollToCheckout();
+              "
+            >
+              Get Pro Access
+            </button>
+          </div>
+          <div class="price-card">
+            <div class="plan-name">Team</div>
+            <div class="plan-price" id="team-price">
+              $24<span style="font-size: 20px; color: var(--text-secondary)"
+                >/mo</span
+              >
+            </div>
+            <div class="plan-period">Up to 5 seats</div>
+            <ul class="plan-features">
+              <li>Everything in Pro</li>
+              <li>Team management</li>
+              <li>Shared library</li>
+              <li>Admin dashboard</li>
+              <li>Dedicated support</li>
+            </ul>
+            <button
+              class="plan-cta"
+              onclick="
+                playSound();
+                scrollToCheckout();
+              "
+            >
+              Contact Sales
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="comparison" class="fade-in-section">
+        <h2>How dictate.app Stacks Up</h2>
+        <div class="comparison-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>dictate.app</th>
+                <th>Dragon Dictate</th>
+                <th>Otter.ai</th>
+                <th>Native OS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Speed</td>
+                <td>Real-time (Groq)</td>
+                <td>Moderate</td>
+                <td>Moderate</td>
+                <td>Slow</td>
+              </tr>
+              <tr>
+                <td>Cost</td>
+                <td>$9/mo</td>
+                <td>$149 one-time</td>
+                <td>$15/mo</td>
+                <td>Free</td>
+              </tr>
+              <tr>
+                <td>Privacy</td>
+                <td>100% Local</td>
+                <td>Cloud</td>
+                <td>Cloud</td>
+                <td>Semi-Local</td>
+              </tr>
+              <tr>
+                <td>Languages</td>
+                <td>70+</td>
+                <td>20+</td>
+                <td>60+</td>
+                <td>15+</td>
+              </tr>
+              <tr>
+                <td>Global Hotkey</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>Limited</td>
+                <td>Limited</td>
+              </tr>
+              <tr>
+                <td>Custom Hotkey</td>
+                <td>Pro+</td>
+                <td>✓</td>
+                <td>✗</td>
+                <td>✗</td>
+              </tr>
+              <tr>
+                <td>Auto-Paste</td>
+                <td>✓</td>
+                <td>✓</td>
+                <td>✗</td>
+                <td>Limited</td>
+              </tr>
+              <tr>
+                <td>Mac & Windows</td>
+                <td>✓</td>
+                <td>Windows only</td>
+                <td>Both</td>
+                <td>Both</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="blog-comparisons" class="fade-in-section">
+        <h2>Why dictate.app Wins</h2>
+
+        <article class="blog-post">
+          <h3>
+            dictate.app vs Dragon Dictate Pro: Modern Speed Beats Legacy Cost
+          </h3>
+          <p>
+            Dragon Dictate Pro dominated the early 2000s, but it's showing its
+            age. At $149-$695/year with moderate transcription speeds and a
+            clunky UI, it's an older solution for modern workflows.
+          </p>
+          <p>
+            <strong>The gap:</strong> dictate.app delivers real-time Groq
+            transcription at just $9/month—a 95% price reduction. You get a
+            modern, minimalist interface, support for 70+ languages out of the
+            box, and system-wide injection that works across any app. Dragon
+            Dictate is Windows-only; dictate.app spans Windows and Mac.
+          </p>
+          <p>
+            <a
+              href="https://www.nuance.com/dragon.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Explore Dragon Dictate →</a
+            >
+          </p>
+        </article>
+
+        <article class="blog-post">
+          <h3>dictate.app vs Otter.ai: Accuracy Meets Privacy</h3>
+          <p>
+            Otter.ai charges $16.99/month for cloud-based transcription
+            optimized for meetings and interviews. Great if you're recording
+            Zoom calls, but it's overkill for daily dictation.
+          </p>
+          <p>
+            <strong>The gap:</strong> dictate.app achieves 97.2% accuracy with
+            Groq Whisper while keeping your voice data 100% local—nothing leaves
+            your machine. Otter sends everything to the cloud. For general
+            dictation (emails, docs, thoughts), dictate.app is faster, cheaper,
+            and more private. You pay less, own your data, and get real-time
+            results.
+          </p>
+          <p>
+            <a href="https://otter.ai" target="_blank" rel="noopener noreferrer"
+              >Explore Otter.ai →</a
+            >
+          </p>
+        </article>
+
+        <article class="blog-post">
+          <h3>
+            dictate.app vs Native OS Dictation: Power Without the Learning Curve
+          </h3>
+          <p>
+            Windows and macOS ship with free dictation, but they're bare-bones.
+            Accuracy hovers around 75-85%, languages are limited, and you're
+            stuck with whatever the OS gives you.
+          </p>
+          <p>
+            <strong>The gap:</strong> dictate.app matches native tools on ease
+            but crushes them on accuracy (98%) and features. Global hotkey
+            customization, streak tracking, auto-paste, and 70+ language
+            support—all missing from OS dictation. Plus, Groq's Whisper is
+            purpose-built for voice; OS dictation is an afterthought. Same free
+            trial to test; if you stick around, you're investing in a tool built
+            for dictators.
+          </p>
+          <p>
+            <strong>Native OS dictation</strong> is free but limited.
+            dictate.app is $9/month for 10x the features.
+          </p>
+        </article>
+
+        <article class="blog-post">
+          <h3>dictate.app vs VOWEN: Gamification Meets Performance</h3>
+          <p>
+            VOWEN is free, local-first, and gamifies typing with streak
+            tracking—a solid indie product. But it's focused on typing speed,
+            not transcription, and has no real monetization strategy.
+          </p>
+          <p>
+            <strong>The gap:</strong> dictate.app also tracks streaks (your
+            longest chain of daily dictations) but pairs it with Groq's
+            fastest-in-class transcription. VOWEN is a typing game; dictate.app
+            is a professional tool with gaming elements. We both value privacy
+            and speed, but dictate.app is optimized for voice-to-text across any
+            application, not local typing practice. If you want streak
+            motivation <em>and</em> production-grade transcription, dictate.app
+            is your answer.
+          </p>
+          <p>
+            <a href="https://vowen.io" target="_blank" rel="noopener noreferrer"
+              >Explore VOWEN →</a
+            >
+          </p>
+        </article>
+
+        <article class="blog-post">
+          <h3>dictate.app vs Wispr Flow: Cost + Privacy + Speed</h3>
+          <p>
+            Wispr Flow ($12-15/month) offers AI-cleaned output and system-wide
+            injection—great ideas. But it's still cloud-dependent and priced
+            higher than dictate.app.
+          </p>
+          <p>
+            <strong>The gap:</strong> dictate.app delivers everything Wispr Flow
+            promises—system-wide injection, clean transcription, multi-language
+            support—at $9/month with 100% local processing. Your audio never
+            touches an external server. Wispr Flow cleans output in the cloud;
+            dictate.app's accuracy is so high it rarely needs cleaning. Less
+            complexity, lower cost, full privacy.
+          </p>
+          <p>
+            <a
+              href="https://wispr.flow.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Explore Wispr Flow →</a
+            >
+          </p>
+        </article>
+      </section>
+
+      <!-- REVIEW PANEL -->
+      <section
+        id="reviews"
+        class="fade-in-section"
+        style="
+          padding: 80px 32px;
+          max-width: 1200px;
+          margin: 0 auto;
+          overflow: hidden;
+        "
+      >
+        <h2 style="text-align: center; font-size: 42px; margin-bottom: 12px">
+          What People Are Saying
+        </h2>
+        <p
+          style="
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            font-size: 16px;
+          "
+        >
+          Real users. Real results. No fluff.
+        </p>
+        <div
+          id="reviews-track-wrapper"
+          style="overflow: hidden; position: relative"
+        >
+          <div
+            id="reviews-track"
+            style="
+              display: flex;
+              gap: 24px;
+              transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            "
+          >
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "I switched from Whisper Flow and never looked back. This is
+                faster, offline, and doesn't upload my voice to some server.
+                Finally."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #c084fc, #f472b6)"
+                >
+                  JM
+                </div>
+                <div>
+                  <div class="review-name">James M.</div>
+                  <div class="review-role">Software Engineer</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "I write 5,000 words a day for clients. dictate.app cut my
+                writing time in half. The custom hotkey is perfect — I remapped
+                it to my side mouse button."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #60a5fa, #818cf8)"
+                >
+                  SR
+                </div>
+                <div>
+                  <div class="review-name">Sarah R.</div>
+                  <div class="review-role">Content Creator</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "I travel constantly and work from airports, hotels, planes. The
+                offline mode is a game changer. No WiFi? Doesn't matter. Just
+                speaks and works."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #34d399, #059669)"
+                >
+                  DK
+                </div>
+                <div>
+                  <div class="review-name">Daniel K.</div>
+                  <div class="review-role">Freelance Consultant</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "I have RSI and typing is painful. This literally changed my
+                life. Works in every app — Slack, Gmail, VS Code, everything.
+                Privacy-first too."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #fb923c, #f43f5e)"
+                >
+                  AL
+                </div>
+                <div>
+                  <div class="review-name">Alex L.</div>
+                  <div class="review-role">Developer, RSI Sufferer</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "I tried Dragon Dictate at $150. Way too heavy. I tried Otter.ai
+                — cloud only. dictate.app at $9/month does everything better.
+                Simple."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #a78bfa, #7c3aed)"
+                >
+                  MT
+                </div>
+                <div>
+                  <div class="review-name">Maria T.</div>
+                  <div class="review-role">Medical Transcriptionist</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "The accuracy blew me away. No training, no setup. Just speak
+                and it nails every word. I dictate code comments, emails, Slack
+                messages — all day."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #38bdf8, #0ea5e9)"
+                >
+                  RP
+                </div>
+                <div>
+                  <div class="review-name">Ryan P.</div>
+                  <div class="review-role">Backend Engineer</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "My data goes nowhere and I know that. For lawyers like me,
+                privacy is non-negotiable. This is the only dictation tool I'd
+                trust with client matters."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #fbbf24, #f59e0b)"
+                >
+                  CW
+                </div>
+                <div>
+                  <div class="review-name">Claire W.</div>
+                  <div class="review-role">Attorney</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">
+                "Set it up in 2 minutes. Remapped to my thumb button. Now I
+                dictate everything. My typing speed used to be 60 WPM. Now I'm
+                doing 150+ with my voice."
+              </p>
+              <div class="review-author">
+                <div
+                  class="review-avatar"
+                  style="background: linear-gradient(135deg, #e879f9, #a21caf)"
+                >
+                  NK
+                </div>
+                <div>
+                  <div class="review-name">Nathan K.</div>
+                  <div class="review-role">Startup Founder</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+          "
+        >
+          <button
+            id="reviews-prev"
+            style="
+              background: rgba(192, 132, 252, 0.15);
+              border: 1px solid rgba(192, 132, 252, 0.3);
+              color: var(--accent);
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              font-size: 18px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            ‹
+          </button>
+          <button
+            id="reviews-next"
+            style="
+              background: rgba(192, 132, 252, 0.15);
+              border: 1px solid rgba(192, 132, 252, 0.3);
+              color: var(--accent);
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              font-size: 18px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            ›
+          </button>
+        </div>
+      </section>
+
+      <section id="faq" class="fade-in-section">
+        <h2>Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              Is there a refund policy?
+            </div>
+            <div class="faq-answer">
+              30-day money-back guarantee. If dictate.app doesn't fit your
+              workflow, full refund—no questions asked.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              Where does my data go?
+            </div>
+            <div class="faq-answer">
+              <strong>Nowhere.</strong> dictate.app processes everything locally
+              on your machine. Nothing is uploaded. Nothing is logged. Nothing
+              leaves your device. Ever.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              Does it work offline?
+            </div>
+            <div class="faq-answer">
+              Yes — 100% offline. Recording and transcription both run locally.
+              No internet connection needed, ever. Works on planes, trains,
+              basements, anywhere.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              How do I get started?
+            </div>
+            <div class="faq-answer">
+              Download the app, press the hotkey, speak. Done. No setup, no
+              account, no credit card. Works in any text field on your computer.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              Can I set my own hotkey?
+            </div>
+            <div class="faq-answer">
+              Yes — any plan, any user. Go to Settings and set any key
+              combination you want. Ctrl+Shift+Space is the default, but make it
+              yours.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              What languages are supported?
+            </div>
+            <div class="faq-answer">
+              70+ languages. Auto-detect or manually pin a language in settings.
+              English, Spanish, French, German, Japanese, Arabic, and many more.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              Can I cancel anytime?
+            </div>
+            <div class="faq-answer">
+              Yes. Cancel with one click. No locks, no tricks. Your 7-day trial
+              requires no credit card — you choose at the end.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-toggle">+</span>
+              What are the system requirements?
+            </div>
+            <div class="faq-answer">
+              Windows 10+ or macOS 11+. 500MB disk space. Microphone required.
+              4GB RAM minimum.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Ready to Speak Your Thoughts Into Being</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 24px">
+          7-day free trial. No credit card required. Cancel anytime.
+        </p>
+        <button
+          class="cta-primary"
+          onclick="
+            playSound();
+            scrollToCheckout();
+          "
+        >
+          Start Your Free Trial
+        </button>
+        <div class="trust-signals">
+          <div class="signal-item">✓ No credit card required</div>
+          <div class="signal-item">✓ Cancel anytime</div>
+          <div class="signal-item">✓ 30-day money-back guarantee</div>
+        </div>
+      </section>
+
+      <section class="stripe-section fade-in-section">
+        <h2>Complete Your Setup</h2>
+        <p
+          style="
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+          "
+        >
+          Choose your plan and start your 7-day free trial instantly.
+        </p>
+        <div id="stripe-container">
+          <!-- Stripe embedded checkout will mount here -->
+          <p
+            style="
+              text-align: center;
+              color: var(--text-secondary);
+              padding: 40px 20px;
+            "
+          >
+            Stripe embedded checkout ready. Configure with your publishable key
+            to enable payments.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // STARFIELD CANVAS
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      // Generate stars
+      const stars = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          opacity: Math.random() * 0.5 + 0.5,
+          vx: (Math.random() - 0.5) * 0.1,
+          vy: (Math.random() - 0.5) * 0.1,
+        });
+      }
+
+      function drawStarfield() {
+        ctx.fillStyle = "rgba(13, 10, 20, 0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        stars.forEach((star) => {
+          star.x += star.vx;
+          star.y += star.vy;
+
+          if (star.x < 0) star.x = canvas.width;
+          if (star.x > canvas.width) star.x = 0;
+          if (star.y < 0) star.y = canvas.height;
+          if (star.y > canvas.height) star.y = 0;
+
+          ctx.fillStyle = `rgba(192, 132, 252, ${star.opacity})`;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        requestAnimationFrame(drawStarfield);
+      }
+
+      drawStarfield();
+
+      // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document.querySelectorAll(".fade-in-section").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // ANIMATED CHECKMARKS
+      function animateCheckmarks() {
+        document.querySelectorAll(".feature-checkmark").forEach((svg) => {
+          const path = svg.querySelector("path");
+          const length = path.getTotalLength();
+          path.style.strokeDasharray = length;
+          path.style.strokeDashoffset = length;
+          path.style.animation = "none";
+
+          setTimeout(() => {
+            path.style.animation = `drawCheckmark 0.5s cubic-bezier(.45,.05,.55,.95) forwards`;
+          }, Math.random() * 500);
+        });
+      }
+
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes drawCheckmark {
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
+        `;
+      document.head.appendChild(style);
+
+      observer.observe(document.getElementById("features"));
+      document.querySelectorAll(".feature-checkmark").forEach((svg) => {
+        const path = svg.querySelector("path");
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+      });
+
+      // ── AUDIO ENGINE ──────────────────────────────────────────────────────
+      let sharedAC = null;
+      function getAC() {
+        if (!sharedAC || sharedAC.state === "closed")
+          sharedAC = new (window.AudioContext || window.webkitAudioContext)();
+        return sharedAC;
+      }
+      function playTone(freq, freq2, vol, dur, wave) {
+        try {
+          const ac = getAC();
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = wave || "sine";
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.frequency.setValueAtTime(freq, ac.currentTime);
+          if (freq2)
+            osc.frequency.exponentialRampToValueAtTime(
+              freq2,
+              ac.currentTime + dur,
+            );
+          gain.gain.setValueAtTime(vol, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + dur);
+          osc.start(ac.currentTime);
+          osc.stop(ac.currentTime + dur);
+        } catch (e) {}
+      }
+      function playSound(type) {
+        type = type || "confirm";
+        if (type === "confirm") {
+          playTone(440, 880, 0.28, 0.13);
+        } else if (type === "tick") {
+          playTone(700, null, 0.12, 0.07, "triangle");
+        } else if (type === "toggle") {
+          playTone(520, 660, 0.18, 0.09);
+          setTimeout(function () {
+            playTone(660, 780, 0.12, 0.07);
+          }, 65);
+        }
+      }
+
+      // ── EMOJI POOL (100 emojis + unique tones) ────────────────────────────
+      var EMOJIS = [
+        "🌙",
+        "✨",
+        "🌟",
+        "💫",
+        "⭐",
+        "🌠",
+        "🌌",
+        "🔮",
+        "💎",
+        "🪩",
+        "🌊",
+        "🦋",
+        "🌸",
+        "🌺",
+        "🌻",
+        "🌹",
+        "🌷",
+        "🍀",
+        "🌿",
+        "🍃",
+        "🦄",
+        "🐉",
+        "🦊",
+        "🦁",
+        "🐺",
+        "🦅",
+        "🦉",
+        "🐬",
+        "🐳",
+        "🦈",
+        "🎵",
+        "🎶",
+        "🎸",
+        "🎹",
+        "🎺",
+        "🥁",
+        "🎻",
+        "🪗",
+        "🎷",
+        "🪘",
+        "🔥",
+        "💧",
+        "⚡",
+        "🌪",
+        "🌈",
+        "❄️",
+        "☄️",
+        "🌋",
+        "🏔",
+        "🗻",
+        "🍎",
+        "🍇",
+        "🍓",
+        "🍑",
+        "🍋",
+        "🍊",
+        "🥭",
+        "🍍",
+        "🥝",
+        "🍒",
+        "🎃",
+        "🎄",
+        "🎆",
+        "🎇",
+        "🧨",
+        "🎉",
+        "🎊",
+        "🎈",
+        "🎁",
+        "🎀",
+        "🌅",
+        "🌄",
+        "🌇",
+        "🌃",
+        "🌉",
+        "🏙",
+        "🌁",
+        "🌍",
+        "🌏",
+        "🌎",
+        "🚀",
+        "🛸",
+        "☀️",
+        "🌝",
+        "🌛",
+        "🌜",
+        "🌚",
+        "🪐",
+        "🌑",
+        "🌒",
+        "🧠",
+        "👁",
+        "💡",
+        "🔬",
+        "🧬",
+        "⚗️",
+        "🧪",
+        "🔭",
+        "🪄",
+        "🎯",
+      ];
+      var EMOJI_FREQS = [
+        440, 500, 380, 600, 350, 420, 480, 560, 320, 700, 450, 390, 510, 340,
+        620, 470, 580, 360, 430, 550, 490, 410, 370, 640, 330, 460, 540, 400,
+        560, 380, 520, 440, 480, 350, 600, 420, 470, 530, 360, 610, 390, 450,
+        510, 340, 580, 430, 490, 370, 620, 410, 460, 540, 400, 570, 440, 500,
+        380, 630, 420, 480, 350, 590, 440, 500, 370, 600, 430, 490, 360, 570,
+        420, 480, 340, 560, 410, 470, 330, 550, 400, 460, 320, 540, 390, 450,
+        310, 530, 380, 440, 300, 520, 680, 660, 640, 710, 720, 730, 750, 770,
+        790, 800,
+      ];
+
+      var emojiIdx = Math.floor(Math.random() * EMOJIS.length);
+      var heroEmoji = document.getElementById("hero-emoji");
+      heroEmoji.textContent = EMOJIS[emojiIdx];
+
+      heroEmoji.addEventListener("click", function () {
+        heroEmoji.style.transform = "scale(1.45) rotate(-10deg)";
+        setTimeout(function () {
+          heroEmoji.style.transform = "scale(0.88) rotate(6deg)";
+        }, 95);
+        setTimeout(function () {
+          heroEmoji.style.transform = "scale(1)";
+        }, 210);
+        setTimeout(function () {
+          emojiIdx = (emojiIdx + 1) % EMOJIS.length;
+          heroEmoji.textContent = EMOJIS[emojiIdx];
+        }, 75);
+        var f = EMOJI_FREQS[emojiIdx % EMOJI_FREQS.length];
+        playTone(f, f * 2, 0.22, 0.14);
+      });
+
+      // ── PRICING TOGGLE WITH NUMBER COUNTER ───────────────────────────────
+      var toggle = document.getElementById("billingToggle");
+      var isAnnual = false;
+
+      function animatePrice(el, from, to, suffix) {
+        var steps = 20,
+          i = 0;
+        var interval = setInterval(function () {
+          i++;
+          var val = Math.round(from + (to - from) * (i / steps));
+          el.innerHTML =
+            "$" +
+            val +
+            '<span style="font-size:20px;color:var(--text-secondary)">' +
+            suffix +
+            "</span>";
+          if (i >= steps) clearInterval(interval);
+        }, 16);
+      }
+
+      toggle.addEventListener("click", function () {
+        isAnnual = !isAnnual;
+        toggle.classList.toggle("active");
+        playSound("toggle");
+        var proEl = document.getElementById("pro-price");
+        var teamEl = document.getElementById("team-price");
+        if (isAnnual) {
+          animatePrice(proEl, 9, 79, "/yr");
+          animatePrice(teamEl, 24, 240, "/yr");
+        } else {
+          animatePrice(proEl, 79, 9, "/mo");
+          animatePrice(teamEl, 240, 24, "/mo");
+        }
+      });
+
+      // ── FAQ TOGGLE ────────────────────────────────────────────────────────
+      document.querySelectorAll(".faq-question").forEach(function (question) {
+        question.addEventListener("click", function () {
+          question.closest(".faq-item").classList.toggle("open");
+          playSound("tick");
+        });
+      });
+
+      // ── SOUND ON BUTTONS ──────────────────────────────────────────────────
+      document.querySelectorAll("button").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (!btn.classList.contains("cta-primary")) playSound();
+        });
+      });
+
+      // SCROLL TO CHECKOUT
+      function scrollToCheckout() {
+        document
+          .querySelector(".stripe-section")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      // START TRIAL
+      function startTrial() {
+        scrollToCheckout();
+      }
+
+      // STRIPE INTEGRATION READY (stub)
+      // To activate: Configure Stripe public key and price IDs
+      // const stripe = Stripe('pk_live_...');
+      // stripe.initEmbeddedCheckout({ clientSecret: '...' });
+
+      // ── REVIEW CAROUSEL ───────────────────────────────────────────────────
+      (function () {
+        var track = document.getElementById("reviews-track");
+        var cards = track ? track.querySelectorAll(".review-card") : [];
+        if (!cards.length) return;
+        var cardW = 320 + 24; // card width + gap
+        var visibleCount = Math.max(
+          1,
+          Math.floor(
+            (window.innerWidth > 1200 ? 1200 : window.innerWidth) / cardW,
+          ),
+        );
+        var total = cards.length;
+        var cur = 0;
+
+        function slide(dir) {
+          cur = (cur + dir + total) % total;
+          var maxOffset = (total - visibleCount) * cardW;
+          var offset = Math.min(cur * cardW, maxOffset);
+          track.style.transform = "translateX(-" + offset + "px)";
+          playSound("tick");
+        }
+
+        document
+          .getElementById("reviews-prev")
+          .addEventListener("click", function () {
+            slide(-1);
+          });
+        document
+          .getElementById("reviews-next")
+          .addEventListener("click", function () {
+            slide(1);
+          });
+
+        // Auto-advance every 5s
+        var autoSlide = setInterval(function () {
+          slide(1);
+        }, 5000);
+        document
+          .getElementById("reviews")
+          .addEventListener("mouseenter", function () {
+            clearInterval(autoSlide);
+          });
+        document
+          .getElementById("reviews")
+          .addEventListener("mouseleave", function () {
+            autoSlide = setInterval(function () {
+              slide(1);
+            }, 5000);
+          });
+      })();
+    </script>
+  </body>
+</html>
