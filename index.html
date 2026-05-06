@@ -17,6 +17,7 @@
     <link rel="alternate" hreflang="en-US" href="https://dictate.app" />
     <link rel="alternate" hreflang="x-default" href="https://dictate.app" />
     <meta name="theme-color" content="#5078FF" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
@@ -392,6 +393,9 @@
       .hero-glow span {
         font-size: 64px;
         filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.6));
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
       }
 
       @keyframes pulseGlow {
@@ -1203,10 +1207,13 @@
         <div class="hero-glow">
           <span
             id="hero-emoji"
+            ondragstart="return false;"
             style="
               cursor: pointer;
               display: inline-block;
               transition: transform 0.15s;
+              user-select: none;
+              -webkit-user-select: none;
             "
             >🌙</span
           >
@@ -1670,12 +1677,18 @@
                 Finally."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=JamesMcAllister&backgroundColor=c084fc&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #c084fc, #f472b6)"
-                >
-                  JM
-                </div>
+                  alt="James M."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">James M.</div>
                   <div class="review-role">Software Engineer</div>
@@ -1687,16 +1700,22 @@
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
                 "I write 5,000 words a day for clients. dictate.app cut my
-                writing time in half. The custom hotkey is perfect — I remapped
+                writing time in half. The custom hotkey is perfect. I remapped
                 it to my side mouse button."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=SarahReed&backgroundColor=818cf8&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #60a5fa, #818cf8)"
-                >
-                  SR
-                </div>
+                  alt="Sarah R."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Sarah R.</div>
                   <div class="review-role">Content Creator</div>
@@ -1707,17 +1726,23 @@
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
-                "I travel constantly and work from airports, hotels, planes. The
-                offline mode is a game changer. No WiFi? Doesn't matter. Just
-                speaks and works."
+                "I travel constantly. Airports, hotels, planes. The offline mode
+                is a game changer. No WiFi? Doesn't matter. Just speaks and
+                works."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=DanielKramer&backgroundColor=34d399&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #34d399, #059669)"
-                >
-                  DK
-                </div>
+                  alt="Daniel K."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Daniel K.</div>
                   <div class="review-role">Freelance Consultant</div>
@@ -1729,16 +1754,22 @@
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
                 "I have RSI and typing is painful. This literally changed my
-                life. Works in every app — Slack, Gmail, VS Code, everything.
+                life. Works in every app. Slack, Gmail, VS Code, everything.
                 Privacy-first too."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=AlexLopez&backgroundColor=fb923c&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #fb923c, #f43f5e)"
-                >
-                  AL
-                </div>
+                  alt="Alex L."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Alex L.</div>
                   <div class="review-role">Developer, RSI Sufferer</div>
@@ -1749,17 +1780,23 @@
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
-                "I tried Dragon Dictate at $150. Way too heavy. I tried Otter.ai
-                — cloud only. dictate.app at $9/month does everything better.
-                Simple."
+                "I tried Dragon Dictate at $150. Way too heavy. I tried
+                Otter.ai, cloud only. dictate.app at $9/month does everything
+                better. Simple."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=MariaTorres&backgroundColor=a78bfa&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #a78bfa, #7c3aed)"
-                >
-                  MT
-                </div>
+                  alt="Maria T."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Maria T.</div>
                   <div class="review-role">Medical Transcriptionist</div>
@@ -1772,15 +1809,21 @@
               <p class="review-text">
                 "The accuracy blew me away. No training, no setup. Just speak
                 and it nails every word. I dictate code comments, emails, Slack
-                messages — all day."
+                messages all day."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=RyanPatel&backgroundColor=38bdf8&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #38bdf8, #0ea5e9)"
-                >
-                  RP
-                </div>
+                  alt="Ryan P."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Ryan P.</div>
                   <div class="review-role">Backend Engineer</div>
@@ -1796,12 +1839,18 @@
                 trust with client matters."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=ClaireWatson&backgroundColor=fbbf24&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #fbbf24, #f59e0b)"
-                >
-                  CW
-                </div>
+                  alt="Claire W."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Claire W.</div>
                   <div class="review-role">Attorney</div>
@@ -1817,12 +1866,18 @@
                 doing 150+ with my voice."
               </p>
               <div class="review-author">
-                <div
+                <img
+                  src="https://api.dicebear.com/9.x/notionists/svg?seed=NathanKim&backgroundColor=e879f9&scale=110"
                   class="review-avatar"
-                  style="background: linear-gradient(135deg, #e879f9, #a21caf)"
-                >
-                  NK
-                </div>
+                  alt="Nathan K."
+                  style="
+                    background: #1a1625;
+                    border-radius: 50%;
+                    width: 42px;
+                    height: 42px;
+                    object-fit: cover;
+                  "
+                />
                 <div>
                   <div class="review-name">Nathan K.</div>
                   <div class="review-role">Startup Founder</div>
@@ -2273,7 +2328,8 @@
       var heroEmoji = document.getElementById("hero-emoji");
       heroEmoji.textContent = EMOJIS[emojiIdx];
 
-      heroEmoji.addEventListener("click", function () {
+      heroEmoji.addEventListener("click", function (e) {
+        e.preventDefault();
         heroEmoji.style.transform = "scale(1.45) rotate(-10deg)";
         setTimeout(function () {
           heroEmoji.style.transform = "scale(0.88) rotate(6deg)";
@@ -2371,23 +2427,23 @@
         var total = cards.length;
         var cur = 0;
 
-        function slide(dir) {
+        function slide(dir, withSound) {
           cur = (cur + dir + total) % total;
           var maxOffset = (total - visibleCount) * cardW;
           var offset = Math.min(cur * cardW, maxOffset);
           track.style.transform = "translateX(-" + offset + "px)";
-          playSound("tick");
+          if (withSound) playSound("tick");
         }
 
         document
           .getElementById("reviews-prev")
           .addEventListener("click", function () {
-            slide(-1);
+            slide(-1, true);
           });
         document
           .getElementById("reviews-next")
           .addEventListener("click", function () {
-            slide(1);
+            slide(1, true);
           });
 
         // Auto-advance every 5s
