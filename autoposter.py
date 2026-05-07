@@ -7,15 +7,17 @@ import os, json, urllib.request, urllib.parse, datetime, re
 
 SITE_URL = "https://dictate-app.pages.dev"
 
-# ── Content bank (20 posts, ~10 days before any repeat at 2x/day) ─────────────
+# ── Content bank (15 threads, ~7.5 days before any repeat at 2x/day) ──────────
+# Each post has a "thread" array: post 1 = hook (<200 chars), posts 2-3 = value, post 4 = CTA
 POSTS = [
     # 1
     {
         "text": f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms.\n\nNo Dragon. No $500 license. No Mac required.\n\n30-day free trial → {SITE_URL}\n\n#productivity #Windows #buildinpublic",
         "thread": [
-            f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms.\n\nFree trial → {SITE_URL}",
-            "The gap:\n\n• Win+H — stops mid-sentence, no auto-paste\n• Dragon — $500+\n• Wispr Flow — Mac only\n• Local Whisper — 1-2s lag\n\nFast + Windows + auto-paste at cursor didn't exist. So I built it.",
-            "Tech: Electron + Groq Whisper. Audio goes to Groq only — they don't store it.\n\nHotkey is fully remappable. Works in any app.\n\n#indiedev #buildinpublic",
+            f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms. #productivity #windows",
+            "The gap nobody filled:\n\n• Win+H — stops mid-sentence, no auto-paste\n• Dragon — $500+\n• Wispr Flow — Mac only\n• Local Whisper — 1-2s lag\n\nFast + Windows + auto-paste at cursor didn't exist. So I built it.",
+            "Tech: Electron + Groq Whisper API. Audio goes to Groq only — they don't store it.\n\nHotkey is fully remappable. Works in any app. #groq #whisper #devtools",
+            f"30-day free trial, no credit card → {SITE_URL}\n\n#productivity #windows #buildinpublic",
         ],
         "title": "I built a push-to-talk dictation app for Windows — 200ms, auto-paste at cursor",
         "body": f"""## The problem
@@ -53,9 +55,10 @@ Would love feedback from anyone who types a lot for work.
     {
         "text": f"Speaking is 2.5x faster than typing.\n\nAverage typing speed: 60 wpm.\nAverage speaking speed: 150 wpm.\n\nI switched to voice dictation and never looked back.\n\nWindows tool → {SITE_URL}\n\n#productivity #indiedev",
         "thread": [
-            "Speaking is 2.5x faster than typing. This is not a hot take. It's math.",
-            f"Average typing speed: 60 wpm.\nAverage speaking speed: 150 wpm.\n\nIf you write more than 500 words a day, that gap is costing you hours every week.\n\nI built a Windows app to close it → {SITE_URL}",
-            "What actually made the habit stick:\n\n→ Remap to a mouse side button (one thumb, no chord)\n→ Don't correct mid-sentence (finish the thought first)\n→ Start with emails, not code\n\n#productivity #buildinpublic",
+            "Speaking is 2.5x faster than typing. This is not a hot take. It's math. #productivity",
+            f"Average typing speed: 60 wpm.\nAverage speaking speed: 150 wpm.\n\nIf you write more than 500 words a day, that gap is costing you hours every week.\n\nI built a Windows voice typing app to close it → {SITE_URL}",
+            "What actually made the habit stick:\n\n→ Remap to a mouse side button (one thumb, no chord)\n→ Don't correct mid-sentence (finish the thought first)\n→ Start with emails, not code",
+            f"dictate.app — Windows dictation via Groq Whisper. ~200ms latency, auto-paste at cursor.\n\n{SITE_URL}\n\n#productivity #buildinpublic #windows",
         ],
         "title": "How I went from 60 wpm to 150 wpm — dictating instead of typing",
         "body": f"""The math is simple: average typing speed is 60 wpm, average speaking speed is 150 wpm. That's 2.5x more output for free.
@@ -80,9 +83,10 @@ Free trial: {SITE_URL}
     {
         "text": f"Windows dictation in 2026 is still broken.\n\nWin+H stops mid-sentence. Dragon costs $500. Local Whisper takes 2 seconds. Wispr Flow is Mac only.\n\nSo I built the thing that fills the gap → {SITE_URL}\n\n#buildinpublic #indiedev",
         "thread": [
-            f"Windows dictation in 2026 is still a mess. So I fixed it.\n\n{SITE_URL}",
+            f"Windows dictation in 2026 is still a mess. So I fixed it. #windows #productivity",
             "The gap nobody filled:\n\n| Tool | Speed | Auto-paste | Windows |\n|------|-------|-----------|--------|\n| Win+H | slow | ✗ | ✓ |\n| Dragon | ok | ✓ | ✓ |\n| Local Whisper | slow | ✗ | ✓ |\n| Wispr Flow | fast | ✓ | ✗ |\n\nFast + auto-paste + Windows = doesn't exist.",
-            "dictate.app fills it:\n→ Groq Whisper = ~200ms\n→ Auto-paste at cursor (not clipboard)\n→ Custom hotkey\n→ Bring your own Groq key (free tier works)\n\nBrutal feedback welcome.\n\n#indiedev #buildinpublic",
+            "dictate.app fills it:\n→ Groq Whisper = ~200ms\n→ Auto-paste at cursor (not clipboard)\n→ Custom hotkey\n→ Bring your own Groq key (free tier works)\n\n#groq #whisper #devtools",
+            f"Brutal feedback welcome → {SITE_URL}\n\n#indiedev #buildinpublic #windows",
         ],
         "title": "Windows dictation in 2026 is still broken — so I fixed it",
         "body": f"""Voice dictation on Windows in 2026 is still a mess:
@@ -109,9 +113,10 @@ So I built dictate.app:
     {
         "text": f"Hot take: the best productivity upgrade isn't a new app.\n\nIt's stopping typing altogether.\n\nI dictate everything now. 150 wpm vs 60 wpm.\n\nWindows tool I built → {SITE_URL}\n\n#productivity #indiedev",
         "thread": [
-            "Hot take: the best productivity upgrade isn't a new app. It's stopping typing altogether.",
-            f"I dictate everything now. Emails. Slack. Docs. Even these posts.\n\n150 wpm vs 60 wpm. Same mental effort.\n\nWindows tool → {SITE_URL}",
-            "The trick that made it stick: remap the hotkey to a mouse side button.\n\nOne thumb click, speak, done. It becomes invisible.\n\n#productivity #buildinpublic",
+            "Hot take: the best productivity upgrade isn't a new app. It's stopping typing altogether. #productivity",
+            f"I dictate everything now. Emails. Slack. Docs. Even these posts.\n\n150 wpm vs 60 wpm. Same mental effort.\n\nWindows voice typing tool → {SITE_URL}",
+            "The trick that made it stick: remap the hotkey to a mouse side button.\n\nOne thumb click, speak, done. It becomes invisible.",
+            f"dictate.app — Windows dictation via Groq Whisper, ~200ms latency.\n\n{SITE_URL}\n\n#productivity #buildinpublic #windows",
         ],
         "title": "Hot take: stop typing. Your output will double.",
         "body": f"""Everyone's optimizing their note apps, task managers, and keyboard shortcuts.
@@ -134,80 +139,37 @@ Free trial: {SITE_URL}
     },
     # 5
     {
-        "text": f"I was skeptical about voice dictation.\n\nSeemed gimmicky. Seemed slow. Seemed like I'd spend more time correcting than typing.\n\nThen I tried it for a week.\n\n→ {SITE_URL}\n\n#productivity #Windows",
+        "text": f"Dragon NaturallySpeaking costs $500.\n\nGroq Whisper API costs $0.02 per hour of audio.\n\nIf you dictate 30 min/day, that's $3/month.\n\nI built the Windows app that uses it → {SITE_URL}\n\n#buildinpublic #productivity",
         "thread": [
-            "I was skeptical about voice dictation. Seemed gimmicky. Seemed slow.",
-            "Then I tried it for a week.\n\nWeek 1: slower than typing (expected)\nWeek 2: about the same speed\nWeek 3: noticeably faster\nMonth 2: I genuinely don't want to type long things anymore",
-            f"The tool that got me there: dictate.app — Ctrl+Space, speak, text appears at cursor in ~200ms on Windows.\n\nFree trial → {SITE_URL}\n\n#productivity #buildinpublic",
+            "Dragon NaturallySpeaking costs $500. Here's the math on doing it for under $2/month instead. #productivity",
+            "Groq Whisper API pricing: $0.02 per hour of audio.\n\nIf you dictate 30 minutes per day × 30 days = 15 hours/month = $0.30/month.\n\nEven at 2 hours/day of heavy use: $1.20/month. #groq #whisper",
+            "I built a Windows app that uses Groq Whisper. You bring your own API key (free tier works for light use).\n\nYou own your data. You see the cost. No markup. No lock-in. #devtools",
+            f"dictate.app → {SITE_URL}\n\n30-day free trial, no credit card\n\n#buildinpublic #indiedev #windows",
         ],
-        "title": "I was skeptical about voice dictation. Then I tried it.",
-        "body": f"""I thought dictation was for people who couldn't type. I was wrong.
+        "title": "Dragon costs $500. Here's the math on doing it for $3/month.",
+        "body": f"""Dragon NaturallySpeaking: $500 upfront.
 
-**Week 1:** Slower than typing. Expected.
-**Week 2:** About the same speed. Accuracy improving.
-**Week 3:** Noticeably faster. The corrections are getting rarer.
-**Month 2:** I genuinely don't want to type long things anymore.
+Groq Whisper API: $0.02 per hour of audio.
 
-The thing that changed it: a tool that actually works. Low latency (~200ms), auto-paste at cursor, no friction.
+If you dictate 30 minutes per day × 30 days = 15 hours/month = **$0.30/month**.
 
-If the tool is slow, you blame yourself. If the tool is fast, you blame nothing.
+At 2 hours/day heavy use: **$1.20/month**.
 
-Windows: {SITE_URL} — 30-day free trial.
+Worst case, 4 hours/day: **$2.40/month**.
+
+You bring your own Groq API key (free tier works for light use — up to a certain quota). I built the Windows app that wraps it with hotkey + auto-paste.
+
+{SITE_URL} — 30-day free trial.
 """,
     },
     # 6
     {
-        "text": f"If you write more than 1,000 words a day, you should try dictation.\n\nNot because typing is slow. Because speaking is faster.\n\nThe math: 60 wpm typing vs 150 wpm speaking. You're leaving hours on the table.\n\n→ {SITE_URL}\n\n#productivity",
-        "thread": [
-            "If you write more than 1,000 words a day, you should try dictation.",
-            "Not because typing is slow.\n\nBecause speaking is faster.\n\n60 wpm vs 150 wpm. If you write 2,000 words/day that's 33 minutes typing vs 13 minutes speaking.\n\n20 minutes/day = 120 hours/year.",
-            f"The Windows tool that makes this actually work: dictate.app\n\nCtrl+Space → speak → text at cursor in ~200ms\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
-        ],
-        "title": "If you write 1,000+ words a day, you're leaving time on the table",
-        "body": f"""60 wpm typing. 150 wpm speaking. That's not an opinion, it's an average.
-
-If you write 2,000 words per day:
-- Typing: ~33 minutes
-- Speaking: ~13 minutes
-- Difference: 20 minutes
-
-Over a year, that's 120 hours.
-
-The bottleneck isn't tool quality anymore. It's habits and latency. If dictation feels slow, the tool is the problem — not you.
-
-Windows: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 7
-    {
-        "text": f"Sent 40 emails today.\n\nTyped maybe 150 words total.\n\nThe rest was dictated. Each email: hold button, speak, done.\n\nWindows app → {SITE_URL}\n\n#productivity #buildinpublic",
-        "thread": [
-            "Sent 40 emails today. Typed maybe 150 words total.",
-            "The rest was dictated.\n\nEach email: hold button, speak, release. Text appears where my cursor is.\n\nThe whole thing takes as long as thinking of what to say — not longer.",
-            f"Tool: dictate.app for Windows\nHotkey: Ctrl+Space (remappable)\nLatency: ~200ms via Groq Whisper\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
-        ],
-        "title": "I sent 40 emails today and typed almost nothing",
-        "body": f"""Dictated all of them. Each one: hold hotkey, speak, release. Text appears at cursor.
-
-The whole thing takes as long as thinking — not longer.
-
-Email is the perfect starting point for dictation:
-- Low stakes (you'll proofread anyway)
-- Short bursts (not 10-minute monologues)
-- High volume (you write dozens a day)
-
-After a week of email dictation, everything else follows.
-
-Windows: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 8
-    {
         "text": f"The thing nobody tells you about dictation:\n\nThe learning curve isn't accuracy.\n\nIt's learning to think out loud without editing yourself mid-sentence.\n\nThat part takes 2 weeks.\n\n→ {SITE_URL}\n\n#productivity",
         "thread": [
-            "The thing nobody tells you about dictation: the learning curve isn't accuracy.",
-            "Accuracy is fine from day one. Groq Whisper is good.\n\nThe actual curve: learning to think out loud without interrupting yourself.\n\nEvery instinct says 'no wait' and then you stop and start over. That's the habit to break.",
-            f"2 weeks in, it clicks. You stop editing mid-sentence. You finish thoughts. The words flow.\n\ndictate.app — Ctrl+Space, speak, text at cursor in ~200ms\n\n{SITE_URL}\n\n#productivity #buildinpublic",
+            "The thing nobody tells you about dictation: the learning curve isn't accuracy. #productivity",
+            "Accuracy is fine from day one. Groq Whisper is good.\n\nThe actual curve: learning to think out loud without interrupting yourself.\n\nEvery instinct says 'no wait' and then you stop and start over. That's the habit to break. #whisper #groq",
+            "2 weeks in, it clicks. You stop editing mid-sentence. You finish thoughts. The words flow.\n\nVoice typing on Windows becomes invisible — just thought-to-text.",
+            f"dictate.app — Ctrl+Space, speak, text at cursor in ~200ms\n\n{SITE_URL}\n\n#productivity #buildinpublic #windows",
         ],
         "title": "The real dictation learning curve nobody talks about",
         "body": f"""The accuracy is fine from day one. Modern Whisper models are good.
@@ -223,33 +185,63 @@ In two weeks, the instinct changes. You stop editing in real-time. Words flow.
 Windows tool: {SITE_URL} — 30-day free trial.
 """,
     },
-    # 9
+    # 7
     {
-        "text": f"Remap your dictation hotkey to a mouse side button.\n\nIt sounds trivial. It's not.\n\nOne thumb click, speak, text appears. Zero friction. Becomes muscle memory in 3 days.\n\n→ {SITE_URL}\n\n#productivity #Windows",
+        "text": f"Auto-paste at cursor is the feature that changes everything.\n\nNot clipboard. Not a text box you then copy from. Directly at cursor.\n\nSounds obvious. Somehow most dictation tools don't do it.\n\n→ {SITE_URL}\n\n#productivity #Windows",
         "thread": [
-            "One change that made dictation actually stick: remap the hotkey to a mouse side button.",
-            "Keyboard chords have a problem: you have to stop what you're doing to reach them.\n\nA mouse side button is always there. Your thumb never leaves it. One click, speak, done.\n\nZero interruption to hand position.",
-            f"Dictation tool I use: dictate.app — fully remappable hotkey, ~200ms latency, auto-paste at cursor.\n\nWindows only → {SITE_URL}\n\n#productivity #indiedev",
+            "Auto-paste at cursor is the feature that changes everything about voice typing. #productivity #windows",
+            "Most dictation tools give you:\n1. A separate text box\n2. Or clipboard paste (Ctrl+V yourself)\n\nNeither is frictionless. You break your workflow to use the tool.",
+            "dictate.app injects text directly at your cursor. Any app. Any text field.\n\nCtrl+Space → speak → text appears. Done.\n\nNo window switch. No paste step. #devtools #windows",
+            f"30-day free trial → {SITE_URL}\n\n#productivity #indiedev #buildinpublic",
         ],
-        "title": "The one remapping that makes dictation actually stick",
-        "body": f"""Keyboard hotkeys for dictation have a problem: you have to stop what you're doing to reach them.
+        "title": "Why auto-paste at cursor changes everything about dictation",
+        "body": f"""Most dictation tools give you one of two workflows:
 
-A mouse side button solves this. Your thumb is already there. One click, speak, done. Hand position doesn't change.
+1. A separate text box you type into, then copy from
+2. Clipboard paste — it transcribes, you hit Ctrl+V
 
-It sounds trivial. It's not. This one change is why dictation went from "interesting experiment" to "I can't work without it."
+Neither is frictionless. You break your workflow every time.
 
-dictate.app has fully remappable hotkeys. Set it once, forget it exists.
+dictate.app injects text directly at your cursor. Any app. Any text field. No window switch. No paste step.
+
+The difference sounds small. In practice it's the whole product.
 
 Windows: {SITE_URL} — 30-day free trial.
 """,
     },
-    # 10
+    # 8
+    {
+        "text": f"What I use to build dictate.app:\n\n• Electron (Windows native)\n• Groq Whisper API (transcription)\n• uiohook-napi (global hotkeys)\n• robotjs (cursor injection)\n\nThe stack is boring. The product works.\n\n→ {SITE_URL}\n\n#buildinpublic #indiedev",
+        "thread": [
+            f"Tech stack behind dictate.app — Windows voice typing at ~200ms: #devtools #buildinpublic",
+            "• Electron — Windows native, handles the app shell\n• Groq Whisper API — transcription in ~200ms, $0.02/hr\n• uiohook-napi — global hotkey listener (works even when app is in background)\n• robotjs — types text at cursor position (simulates keystrokes)\n\n#groq #whisper #windows",
+            "The hard part wasn't transcription. It was injecting text into elevated Windows processes.\n\nwmic, uiautomation, 3 approaches before it worked. Some apps block everything.\n\nTesting across every major Windows app was most of the build time. #devtools",
+            f"dictate.app → {SITE_URL}\n\n30-day free trial\n\n#indiedev #buildinpublic",
+        ],
+        "title": "Tech stack: how I built a 200ms Windows dictation app",
+        "body": f"""**Stack:**
+- Electron — Windows native app shell
+- Groq Whisper API — transcription in ~200ms at $0.02/hr
+- uiohook-napi — global hotkey listener (works while app is backgrounded)
+- robotjs — types text at cursor position (simulates keystrokes)
+
+**The hard part:** reliable cursor injection across different apps.
+
+Some apps block clipboard paste. Some block simulated keystrokes. Some do both. Testing across every major Windows app took most of the build time.
+
+**The easy part:** transcription. Groq Whisper just works.
+
+{SITE_URL} — 30-day free trial.
+""",
+    },
+    # 9
     {
         "text": f"Built a Windows dictation app because I couldn't find one that did all three:\n\n✓ Fast (200ms)\n✓ Auto-paste at cursor\n✓ Works on Windows\n\nAll three together didn't exist. So I built it.\n\n{SITE_URL}\n\n#buildinpublic #indiedev",
         "thread": [
-            "Built a Windows dictation app because I couldn't find one that did all three things I needed.",
+            "Built a Windows dictation app because I couldn't find one that did all three things I needed. #buildinpublic #windows",
             "The three requirements:\n\n1/ Fast — under 300ms or it breaks flow\n2/ Auto-paste at cursor — not clipboard, not a separate window\n3/ Windows — not Mac, not browser extension\n\nEvery tool I found missed at least one.",
-            f"So I built dictate.app.\n\nGroq Whisper = ~200ms\nAuto-paste at cursor = ✓\nWindows native = ✓\n\n{SITE_URL} — 30-day free trial\n\n#buildinpublic #indiedev",
+            "Wispr Flow: fast, auto-paste, Mac only. ✗\nWin+H: Windows, free, slow, no auto-paste. ✗\nDragon: Windows, auto-paste, $500. ✗\n\nGroq Whisper made the speed possible. Everything else is UX. #groq #whisper #devtools",
+            f"dictate.app — now it exists.\n\n{SITE_URL} — 30-day free trial\n\n#buildinpublic #indiedev #productivity",
         ],
         "title": "I built it because the tool I wanted didn't exist",
         "body": f"""Three requirements. Every existing tool missed at least one.
@@ -269,218 +261,14 @@ So I built dictate.app.
 {SITE_URL} — 30-day free trial.
 """,
     },
-    # 11
-    {
-        "text": f"My writing output in one month of dictating everything:\n\n• Emails: 3x faster\n• Slack: barely notice I'm writing\n• Docs: still adjusting\n• Code comments: actually writing them now\n\nWindows tool → {SITE_URL}\n\n#productivity",
-        "thread": [
-            "One month of dictating everything. Here's what actually changed.",
-            "Emails: 3x faster. I don't dread the inbox anymore.\n\nSlack: I barely notice I'm writing. Messages come out in full sentences instead of fragments.\n\nDocs: still adjusting. Longer-form thinking out loud is a different skill.\n\nCode comments: I'm actually writing them now because there's no friction.",
-            f"Tool: dictate.app — Ctrl+Space, speak, 200ms, auto-paste.\n\nWindows only → {SITE_URL}\n\n#productivity #buildinpublic",
-        ],
-        "title": "One month of dictating everything — what actually changed",
-        "body": f"""**Emails:** 3x faster. I don't dread the inbox anymore.
-
-**Slack:** I barely notice I'm writing. Messages come out in full sentences instead of fragments.
-
-**Docs:** Still adjusting. Longer-form thinking out loud is a different skill than typing.
-
-**Code comments:** I'm actually writing them now. Zero friction means zero excuse not to.
-
-**The surprise:** My writing got worse before it got better. You think slower than you speak. But then it evens out.
-
-Tool: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 12
-    {
-        "text": f"Dragon NaturallySpeaking costs $500.\n\nGroq Whisper API costs $0.02 per hour of audio.\n\nIf you dictate 30 min/day, that's $3/month.\n\nI built the Windows app that uses it → {SITE_URL}\n\n#buildinpublic #productivity",
-        "thread": [
-            "Dragon NaturallySpeaking costs $500. Here's the math on doing it for $3/month instead.",
-            "Groq Whisper API pricing: $0.02 per hour of audio.\n\nIf you dictate 30 minutes per day × 30 days = 15 hours/month = $0.30/month.\n\nEven at 2 hours/day of heavy use: $1.20/month.",
-            f"I built a Windows app that uses Groq Whisper. You bring your own API key (free tier works for light use).\n\ndictate.app → {SITE_URL}\n\n30-day free trial, no credit card\n\n#buildinpublic #indiedev",
-        ],
-        "title": "Dragon costs $500. Here's the math on doing it for $3/month.",
-        "body": f"""Dragon NaturallySpeaking: $500 upfront.
-
-Groq Whisper API: $0.02 per hour of audio.
-
-If you dictate 30 minutes per day × 30 days = 15 hours/month = **$0.30/month**.
-
-At 2 hours/day heavy use: **$1.20/month**.
-
-Worst case, 4 hours/day: **$2.40/month**.
-
-You bring your own Groq API key (free tier works for light use — up to a certain quota). I built the Windows app that wraps it with hotkey + auto-paste.
-
-{SITE_URL} — 30-day free trial.
-""",
-    },
-    # 13
-    {
-        "text": f"The best writing tool is your voice.\n\nYou already have it. You've had it your whole life.\n\nYou're just not using it to write.\n\n→ {SITE_URL}\n\n#productivity #writing",
-        "thread": [
-            "The best writing tool is your voice. You already have it.",
-            "Speaking is how humans have communicated for 200,000 years.\n\nTyping is how we've communicated for 170.\n\nYour brain is optimized for speech. Lean into that.",
-            f"dictate.app — Ctrl+Space, speak, text appears at cursor in ~200ms.\n\nWindows native → {SITE_URL}\n\n#productivity #buildinpublic",
-        ],
-        "title": "The best writing tool is already built into you",
-        "body": f"""Speaking is how humans have communicated for 200,000 years.
-
-Typing is how we've communicated for 170.
-
-Your brain is optimized for speech. Sentences flow naturally. Thoughts connect. You don't get "writer's block" when you're talking — you get conversational block, which is different and rarer.
-
-The friction is the tool, not the skill. Low-latency auto-paste dictation removes that friction.
-
-Windows: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 14
-    {
-        "text": f"Building in public update:\n\nShipped dictate.app — Windows dictation, 200ms, auto-paste.\n\nBiggest fear: it would just be Win+H with extra steps.\nResult: it's not. The latency and auto-paste make it a different category.\n\n→ {SITE_URL}\n\n#buildinpublic",
-        "thread": [
-            f"Building in public update: shipped dictate.app for Windows.\n\n{SITE_URL}",
-            "Biggest fear going in: I was just rebuilding Win+H with extra steps.\n\nResult: the 200ms latency and true auto-paste (at cursor, not clipboard) make it feel like a different category of tool.",
-            "What I learned: latency is the product.\n\nAt 2 seconds, you notice the gap. At 200ms, you don't. That threshold is the entire difference between a tool you use and a tool you forget.\n\n#buildinpublic #indiedev",
-        ],
-        "title": "Building in public: what I learned shipping a Windows dictation app",
-        "body": f"""Biggest fear: I was just rebuilding Win+H with extra steps.
-
-Result: the 200ms latency and true auto-paste at cursor (not clipboard) make it feel like a different category.
-
-**What I learned: latency is the product.**
-
-At 2 seconds, you're aware of the tool. At 200ms, you're not. That threshold is the entire difference between a tool you use daily and a tool you uninstall after a week.
-
-Groq Whisper makes the 200ms number possible. Everything else is UX.
-
-30-day free trial: {SITE_URL}
-""",
-    },
-    # 15
-    {
-        "text": f"Ctrl+Space is my most-used keyboard shortcut.\n\nMore than Ctrl+C. More than Ctrl+Z. More than Alt+Tab.\n\nEvery time I need to write something, I press it.\n\n→ {SITE_URL}\n\n#productivity #Windows",
-        "thread": [
-            "Ctrl+Space is now my most-used keyboard shortcut. More than Ctrl+C.",
-            "Every time I need to write something: Ctrl+Space, speak, done.\n\nEmails, Slack, search bars, doc titles, commit messages, everything.\n\nThe hotkey is fully remappable but I haven't changed it. It's muscle memory now.",
-            f"dictate.app — Windows dictation that actually works.\n\nCtrl+Space → speak → 200ms → text at cursor.\n\n{SITE_URL} — 30-day free trial\n\n#productivity #buildinpublic",
-        ],
-        "title": "Ctrl+Space became my most-used shortcut",
-        "body": f"""More than Ctrl+C. More than Ctrl+Z. More than Alt+Tab.
-
-Every time I need to write anything — email, Slack, search bar, doc title, commit message — I press it.
-
-The process: Ctrl+Space, speak, text appears at cursor.
-
-That's the whole thing. No window switches. No clipboard paste. No mode changes. Just text where I need it.
-
-Windows: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 16
-    {
-        "text": f"Auto-paste at cursor is the feature that changes everything.\n\nNot clipboard. Not a text box you then copy from. Directly at cursor.\n\nSounds obvious. Somehow most dictation tools don't do it.\n\n→ {SITE_URL}\n\n#productivity #Windows",
-        "thread": [
-            "Auto-paste at cursor is the feature that changes everything about dictation.",
-            "Most dictation tools give you:\n1. A separate text box\n2. Or clipboard paste (Ctrl+V yourself)\n\nNeither is frictionless. You break your workflow to use the tool.",
-            f"dictate.app injects text directly at your cursor. Any app. Any text field.\n\nCtrl+Space → speak → text appears. Done.\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
-        ],
-        "title": "Why auto-paste at cursor changes everything about dictation",
-        "body": f"""Most dictation tools give you one of two workflows:
-
-1. A separate text box you type into, then copy from
-2. Clipboard paste — it transcribes, you hit Ctrl+V
-
-Neither is frictionless. You break your workflow every time.
-
-dictate.app injects text directly at your cursor. Any app. Any text field. No window switch. No paste step.
-
-The difference sounds small. In practice it's the whole product.
-
-Windows: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 17
-    {
-        "text": f"Bring your own API key — it's the right model.\n\nYou control your data. You see the cost. No markup. No lock-in.\n\nMy Windows dictation app uses Groq Whisper. You bring the key.\n\n→ {SITE_URL}\n\n#buildinpublic #indiedev",
-        "thread": [
-            "\"Bring your own API key\" is the right model for AI tools. Here's why.",
-            "When the tool controls the API:\n• You don't know where your data goes\n• You pay a markup on compute\n• You're locked in\n\nWhen you bring your own key:\n• Groq's privacy policy is what matters (they don't store audio)\n• You pay actual cost (~$0.02/hr)\n• You can switch tools tomorrow",
-            f"dictate.app uses this model. Bring your own Groq API key (free tier works for light use).\n\nWindows → {SITE_URL}\n\n#buildinpublic #indiedev",
-        ],
-        "title": "Why bring-your-own-API-key is the right model for AI tools",
-        "body": f"""When the tool controls the API:
-- You don't know where your data goes
-- You pay a markup on compute
-- You're locked in to their pricing and existence
-
-When you bring your own key:
-- The AI provider's privacy policy is what matters — not a middle layer
-- You pay actual cost (Groq Whisper: ~$0.02/hr of audio)
-- You can switch tools tomorrow without losing anything
-
-dictate.app uses this model. Bring your own Groq API key. Free tier covers light use.
-
-{SITE_URL} — 30-day free trial.
-""",
-    },
-    # 18
-    {
-        "text": f"Things I no longer type:\n\n• Emails (dictated)\n• Slack messages (dictated)\n• Search queries (dictated)\n• Meeting notes (dictated)\n\nThings I still type:\n\n• Code\n• Passwords\n\n→ {SITE_URL}\n\n#productivity",
-        "thread": [
-            "Things I no longer type:\n\n• Emails\n• Slack messages\n• Search queries\n• Meeting notes\n• Jira tickets\n• Doc titles",
-            "Things I still type:\n\n• Code (accuracy isn't there yet for syntax)\n• Passwords (you don't want to say those out loud)\n\nEverything else: dictated.",
-            f"Tool: dictate.app — Ctrl+Space, speak, text at cursor in ~200ms.\n\nWindows only → {SITE_URL}\n\n#productivity #buildinpublic",
-        ],
-        "title": "Everything I stopped typing (and what I still type)",
-        "body": f"""**No longer typed:**
-- Emails
-- Slack messages
-- Search queries
-- Meeting notes
-- Jira tickets
-- Doc titles and headings
-
-**Still typed:**
-- Code (accuracy isn't reliable enough for syntax)
-- Passwords (don't say those out loud)
-
-Everything else: dictated. The division happened naturally over about 3 weeks.
-
-Tool: {SITE_URL} — 30-day free trial.
-""",
-    },
-    # 19
-    {
-        "text": f"What I use to build dictate.app:\n\n• Electron (Windows native)\n• Groq Whisper API (transcription)\n• uiohook-napi (global hotkeys)\n• robotjs (cursor injection)\n\nThe stack is boring. The product works.\n\n→ {SITE_URL}\n\n#buildinpublic #indiedev",
-        "thread": [
-            f"Tech stack behind dictate.app (Windows dictation, ~200ms):\n\n{SITE_URL}",
-            "• Electron — Windows native, handles the app shell\n• Groq Whisper API — transcription in ~200ms, $0.02/hr\n• uiohook-napi — global hotkey listener (works even when app is in background)\n• robotjs — types text at cursor position (simulates keystrokes)",
-            "The hard part wasn't transcription. It was reliable cursor injection across different apps.\n\nSome apps block clipboard paste. Some block simulated keystrokes. Testing across every major Windows app was most of the work.\n\n#buildinpublic #indiedev",
-        ],
-        "title": "Tech stack: how I built a 200ms Windows dictation app",
-        "body": f"""**Stack:**
-- Electron — Windows native app shell
-- Groq Whisper API — transcription in ~200ms at $0.02/hr
-- uiohook-napi — global hotkey listener (works while app is backgrounded)
-- robotjs — types text at cursor position (simulates keystrokes)
-
-**The hard part:** reliable cursor injection across different apps.
-
-Some apps block clipboard paste. Some block simulated keystrokes. Some do both. Testing across every major Windows app took most of the build time.
-
-**The easy part:** transcription. Groq Whisper just works.
-
-{SITE_URL} — 30-day free trial.
-""",
-    },
-    # 20
+    # 10
     {
         "text": f"Week 1 feedback on dictate.app:\n\n'This is the first Windows dictation tool that doesn't make me want to throw my computer'\n\nThat's the bar. We cleared it.\n\n→ {SITE_URL}\n\n#buildinpublic #indiedev",
         "thread": [
-            "Week 1 feedback on dictate.app:",
+            "Week 1 feedback on dictate.app — Windows voice typing via Groq Whisper: #buildinpublic #productivity",
             "'This is the first Windows dictation tool that doesn't make me want to throw my computer.'\n\n'I remapped it to my mouse button and haven't touched the keyboard for emails since.'\n\n'200ms feels like zero. I didn't know dictation could feel like this.'",
-            f"That's the bar. Clear it and people keep using it.\n\nFree trial → {SITE_URL}\n\n#buildinpublic #indiedev",
+            "Latency is the whole product.\n\nAt 2 seconds, you're aware of the tool. At 200ms, you're not.\n\nThat threshold is the difference between a tool you use daily and one you uninstall after a week. #devtools #windows",
+            f"Free trial → {SITE_URL}\n\n#buildinpublic #indiedev #whisper",
         ],
         "title": "Week 1 user feedback on dictate.app",
         "body": f"""The feedback I needed to hear:
@@ -494,6 +282,145 @@ Some apps block clipboard paste. Some block simulated keystrokes. Some do both. 
 That's the bar. Latency and friction are the whole product. Clear those and people keep using it.
 
 {SITE_URL} — 30-day free trial.
+""",
+    },
+    # 11 — build-in-public: launch numbers
+    {
+        "text": f"shipped dictate.app last week. 47 trial installs, 0 paid. still figuring out the funnel. #buildinpublic\n\n{SITE_URL}",
+        "thread": [
+            "shipped dictate.app last week. 47 trial installs, 0 paid. still figuring out the funnel. #buildinpublic #indiedev",
+            "what I know so far:\n\n→ people download it when they see the latency demo\n→ nobody reads the pricing page\n→ the trial-to-paid conversion path is unclear\n\nnext: add an in-app prompt on day 6 of the trial",
+            "the product itself seems to work. groq whisper at ~200ms genuinely surprises people.\n\nthe problem is distribution and conversion, not the dictation. #groq #whisper #windows",
+            f"if you've tried it and have feedback → {SITE_URL}\n\n#buildinpublic #productivity #devtools",
+        ],
+        "title": "dictate.app week 1: 47 installs, 0 paid — what I learned",
+        "body": f"""Shipped dictate.app and here's the honest update:
+
+**Numbers:**
+- Trial installs: 47
+- Paid conversions: 0
+- Refunds: 0 (nothing to refund yet)
+
+**What I know:**
+- People download when they see the latency demo
+- Nobody reads the pricing page
+- The trial-to-paid path is unclear
+
+**Next action:** in-app prompt on day 6 of trial. Make the ask explicit.
+
+The product itself works — Groq Whisper at ~200ms genuinely surprises people. The problem is conversion, not dictation.
+
+{SITE_URL}
+""",
+    },
+    # 12 — build-in-public: cost/tech breakdown
+    {
+        "text": f"dictate.app uses groq whisper. 200ms latency. that's 3x faster than openai whisper. cost: ~$0.02/hr of speech. #devtools\n\n{SITE_URL}",
+        "thread": [
+            "dictate.app uses groq whisper. 200ms latency. that's 3x faster than openai whisper. cost: ~$0.02/hr of speech. #devtools #groq",
+            "why groq over openai for whisper:\n\n→ groq: ~200ms per request\n→ openai: ~600-800ms per request\n→ both use the same whisper model\n\nlatency wins. for voice typing, 600ms feels broken. 200ms feels instant. #whisper #productivity",
+            "you bring your own groq key. free tier covers light use. heavy users pay pennies.\n\nno middleman markup. no audio stored on my servers. just you + groq. #windows #devtools",
+            f"dictate.app → {SITE_URL}\n\n#buildinpublic #indiedev #productivity",
+        ],
+        "title": "Why I use Groq instead of OpenAI for Whisper — the latency difference",
+        "body": f"""Both Groq and OpenAI offer Whisper transcription. Here's why I went with Groq for dictate.app:
+
+**Groq:** ~200ms per request
+**OpenAI:** ~600-800ms per request
+
+Same underlying Whisper model. 3x speed difference.
+
+For voice typing, that gap is the whole product. At 600ms you're waiting. At 200ms you're not.
+
+Cost: ~$0.02/hr of audio. You bring your own key. Free tier works for most users.
+
+{SITE_URL} — 30-day free trial.
+""",
+    },
+    # 13 — build-in-public: hardest technical problem
+    {
+        "text": f"the hardest part of building dictate.app wasn't the ai. it was injecting text into elevated windows processes. wmic, uiautomation, 3 approaches before it worked. #devtools #buildinpublic",
+        "thread": [
+            "the hardest part of building dictate.app wasn't the ai. it was injecting text into elevated windows processes. #devtools #buildinpublic",
+            "approach 1: clipboard + simulated ctrl+v\n→ fails in apps running as admin (UAC elevation blocks it)\n\napproach 2: SendInput via win32\n→ works most places, fails in some terminals and IDEs\n\napproach 3: UI Automation + accessibility APIs\n→ slower but covers the edge cases #windows",
+            "ended up with a hybrid: try SendInput first, fall back to UI Automation, final fallback to clipboard.\n\n3 code paths for what looks like one feature. windows is something else.\n\n#indiedev #devtools #whisper",
+            f"dictate.app — the result of that work → {SITE_URL}\n\n#buildinpublic #windows #productivity",
+        ],
+        "title": "The hardest Windows programming problem I solved — text injection across elevated processes",
+        "body": f"""Building dictate.app, the AI part (Groq Whisper) was easy. The Windows part was not.
+
+**The problem:** injecting typed text into any app, including ones running with admin elevation.
+
+**Approach 1:** Clipboard + simulated Ctrl+V
+→ Fails in elevated apps (UAC blocks cross-privilege input)
+
+**Approach 2:** SendInput via Win32 API
+→ Works in most apps, fails in some terminals and IDEs
+
+**Approach 3:** UI Automation / Accessibility APIs
+→ More universal but ~50ms slower
+
+**Solution:** Hybrid. Try SendInput first, fall back to UI Automation, final fallback to clipboard paste. Three code paths for what looks like one feature.
+
+Windows is something else. But it works now across every major app I've tested.
+
+{SITE_URL} — 30-day free trial.
+""",
+    },
+    # 14 — build-in-public: honest limitations
+    {
+        "text": f"honest review of my own app — dictate.app limitations:\n\n• doesn't work well for code\n• elevated apps needed a workaround\n• no offline mode\n\nbut for everything else: it's the best voice typing on windows. #buildinpublic",
+        "thread": [
+            "honest review of my own app — dictate.app limitations nobody talks about: #buildinpublic #indiedev",
+            "• doesn't work well for code (groq whisper isn't trained on syntax)\n• elevated apps required a 3-approach workaround\n• no offline mode — requires groq api connection\n• hotkey conflicts with some apps (remappable but annoying)\n\n#windows #whisper",
+            "what it does well:\n\n• 200ms latency — genuinely feels instant\n• any text field in any normal app\n• auto-paste at cursor, not clipboard\n• groq key stays yours, audio never hits my servers\n\n#groq #productivity #devtools",
+            f"if you write lots of prose — emails, docs, slack — it's the best windows dictation option i know of.\n\n{SITE_URL}\n\n#buildinpublic #productivity #windows",
+        ],
+        "title": "Honest review of my own dictation app — what it's bad at",
+        "body": f"""I built dictate.app so I should be honest about what it doesn't do well.
+
+**Weaknesses:**
+- Code dictation: Groq Whisper isn't trained on syntax. Variable names, brackets, operators — accuracy is poor.
+- Elevated processes: took 3 different approaches to handle admin apps. It works, but it's a hack.
+- No offline mode: requires a Groq API connection. No internet = no dictation.
+- Hotkey conflicts: some apps grab global hotkeys before we can. Remappable, but annoying to discover.
+
+**Where it's strong:**
+- ~200ms latency — the fastest Windows dictation option I know of
+- Any text field in any non-elevated app
+- True auto-paste at cursor, not clipboard
+- Your Groq key stays yours — audio never hits my servers
+
+For prose — emails, docs, Slack, notes — I believe it's the best option on Windows right now.
+
+{SITE_URL} — 30-day free trial.
+""",
+    },
+    # 15 — build-in-public: what's next
+    {
+        "text": f"next features for dictate.app:\n\n→ custom vocabulary (for jargon + names)\n→ silence detection (auto-stop recording)\n→ windows 11 tray redesign\n\nbuilding in public. what would you add? #buildinpublic\n\n{SITE_URL}",
+        "thread": [
+            "next features for dictate.app — windows voice typing via groq whisper: #buildinpublic #indiedev",
+            "→ custom vocabulary: teach it your jargon, names, brand terms\n→ silence detection: auto-stop after 1.5s of silence instead of releasing hotkey\n→ windows 11 tray redesign: current one is ugly and I know it\n\n#windows #devtools #whisper",
+            "not building:\n\n✗ mac version (different beast)\n✗ browser extension (too limited)\n✗ self-hosted whisper (latency tradeoff isn't worth it for most users)\n\nfocused on making windows dictation the best it can be. #groq #productivity",
+            f"what would you add? → {SITE_URL}\n\n#buildinpublic #windows #productivity #devtools",
+        ],
+        "title": "What's next for dictate.app — the roadmap, honest version",
+        "body": f"""Building in public means sharing what's actually on the list.
+
+**Building next:**
+- Custom vocabulary: teach it your jargon, names, brand terms. Groq Whisper has a prompt parameter for this.
+- Silence detection: auto-stop after 1.5s of silence instead of requiring hotkey release.
+- Windows 11 tray redesign: current one is functional but ugly.
+
+**Not building:**
+- Mac version: different OS, different text injection APIs, different app entirely.
+- Browser extension: too limited, can't access native app text fields.
+- Self-hosted Whisper: local models have 1-2s latency. The cloud tradeoff is worth it.
+
+**Why these and not others:** staying focused on Windows voice typing being the best it can be. Adding platforms dilutes that.
+
+Feedback welcome: {SITE_URL}
 """,
     },
 ]
