@@ -1162,6 +1162,206 @@
         background: rgba(192, 132, 252, 0.3);
         border-color: rgba(192, 132, 252, 0.6);
       }
+
+      /* PAIN BLOCK */
+      .pain-block {
+        padding: 80px 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .pain-block h2 {
+        font-family: "Cormorant Garamond", "Playfair Display", serif;
+        font-size: clamp(32px, 4vw, 44px);
+        text-align: center;
+        margin-bottom: 12px;
+        line-height: 1.2;
+      }
+
+      .pain-block .section-sub {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 48px;
+      }
+
+      .pain-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+
+      .pain-tile {
+        background: rgba(26, 22, 37, 0.85);
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        border-radius: 12px;
+        padding: 32px 28px;
+        position: relative;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .pain-tile:hover {
+        border-color: rgba(192, 132, 252, 0.35);
+        box-shadow: 0 8px 28px rgba(192, 132, 252, 0.1);
+      }
+
+      .pain-icon {
+        font-size: 32px;
+        margin-bottom: 16px;
+        display: block;
+        line-height: 1;
+      }
+
+      .pain-tile h3 {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+        line-height: 1.35;
+      }
+
+      .pain-tile p {
+        color: var(--text-secondary);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      /* STATS BAR */
+      .stats-bar {
+        max-width: 1200px;
+        margin: 0 auto 0;
+        padding: 0 32px 40px;
+      }
+
+      .stats-bar-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        background: rgba(26, 22, 37, 0.7);
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        border-radius: 10px;
+        padding: 20px 32px;
+      }
+
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 24px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+      }
+
+      .stat-item strong {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .stat-sep {
+        width: 1px;
+        height: 20px;
+        background: rgba(192, 132, 252, 0.2);
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 768px) {
+        .stat-sep {
+          display: none;
+        }
+        .stat-item {
+          padding: 6px 16px;
+        }
+        .stats-bar-inner {
+          gap: 4px;
+        }
+      }
+
+      /* FOUNDER NOTE */
+      .founder-note {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 32px 80px;
+      }
+
+      .founder-card {
+        background: rgba(26, 22, 37, 0.6);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-left: 3px solid var(--accent);
+        border-radius: 12px;
+        padding: 36px 40px;
+      }
+
+      .founder-card p {
+        color: var(--text-secondary);
+        font-size: 15px;
+        line-height: 1.85;
+        margin-bottom: 16px;
+      }
+
+      .founder-card p:last-of-type {
+        margin-bottom: 20px;
+      }
+
+      .founder-sig {
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      /* PRICING TESTIMONIAL */
+      .pricing-testimonial {
+        max-width: 700px;
+        margin: 0 auto 48px;
+        padding: 0 32px;
+      }
+
+      .pt-card {
+        background: rgba(26, 22, 37, 0.5);
+        border: 1px solid rgba(192, 132, 252, 0.18);
+        border-radius: 10px;
+        padding: 24px 28px;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+
+      .pt-quote-mark {
+        font-size: 48px;
+        line-height: 1;
+        color: var(--accent);
+        opacity: 0.4;
+        font-family: Georgia, serif;
+        flex-shrink: 0;
+        margin-top: -8px;
+      }
+
+      .pt-body {
+        flex: 1;
+      }
+
+      .pt-text {
+        color: var(--text-primary);
+        font-size: 15px;
+        line-height: 1.7;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+
+      .pt-author {
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+
+      .pt-author strong {
+        color: var(--accent);
+        font-weight: 600;
+      }
     </style>
 
     <!-- Microsoft Clarity — replace CLARITY_PROJECT_ID with your project ID -->
@@ -1304,6 +1504,42 @@
         }
       </script>
 
+      <!-- PAIN BLOCK -->
+      <section class="pain-block fade-in-section">
+        <h2>Every Other Option Fails You</h2>
+        <p class="section-sub">
+          You've tried the alternatives. Here's why they didn't stick.
+        </p>
+        <div class="pain-grid">
+          <div class="pain-tile">
+            <span class="pain-icon">💸</span>
+            <h3>Dragon is $699 — and still breaks on Windows 11</h3>
+            <p>
+              Nuance's flagship costs more than a month of rent, requires a
+              training ritual, and ships bugs on every major OS update. You pay
+              for legacy debt, not speed.
+            </p>
+          </div>
+          <div class="pain-tile">
+            <span class="pain-icon">🔒</span>
+            <h3>Chrome extensions only work inside the browser</h3>
+            <p>
+              Browser-based dictation is useless the moment you switch to Slack,
+              Notion, VS Code, or your email client. You still have to type
+              everywhere else.
+            </p>
+          </div>
+          <div class="pain-tile">
+            <span class="pain-icon">❌</span>
+            <h3>Windows built-in dictation misses words and skips apps</h3>
+            <p>
+              Win+H only works in some fields, drops syllables mid-sentence, and
+              has no cross-app paste. It's a half-feature, not a workflow tool.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section id="features" class="fade-in-section">
         <h2>Built for Speed & Privacy</h2>
         <div class="features-grid">
@@ -1375,6 +1611,26 @@
         </div>
       </section>
 
+      <!-- FOUNDER NOTE -->
+      <div class="founder-note fade-in-section">
+        <div class="founder-card">
+          <p>
+            I built dictate.app because I kept losing thoughts. I type at 80
+            WPM, but my ideas move faster. Every tool I tried either cost a
+            fortune, broke on updates, or only worked inside one app. I wanted
+            something dumb-simple: press a key, speak, text appears. No account.
+            No training run. No surveillance.
+          </p>
+          <p>
+            This is a new app. No enterprise sales team, no VC pitch deck. Just
+            software I use every day and wanted other people to have. The 7-day
+            trial is full-featured because I want you to actually try it before
+            you decide.
+          </p>
+          <span class="founder-sig">— Luke, builder of dictate.app</span>
+        </div>
+      </div>
+
       <section id="problem" class="fade-in-section">
         <h2>Why Voice Wins</h2>
         <div class="problem-grid">
@@ -1401,6 +1657,35 @@
           </div>
         </div>
       </section>
+
+      <!-- STATS BAR -->
+      <div class="stats-bar fade-in-section">
+        <div class="stats-bar-inner">
+          <div class="stat-item"><strong>~200ms</strong> avg transcription</div>
+          <div class="stat-sep"></div>
+          <div class="stat-item"><strong>$0.02/hr</strong> API cost</div>
+          <div class="stat-sep"></div>
+          <div class="stat-item"><strong>100+ apps</strong> supported</div>
+          <div class="stat-sep"></div>
+          <div class="stat-item"><strong>No account</strong> required</div>
+        </div>
+      </div>
+
+      <!-- PRICING TESTIMONIAL -->
+      <div class="pricing-testimonial fade-in-section">
+        <div class="pt-card">
+          <div class="pt-quote-mark">"</div>
+          <div class="pt-body">
+            <p class="pt-text">
+              I write all my emails by voice now. 10 minutes of dictating saves
+              me an hour of typing.
+            </p>
+            <p class="pt-author">
+              <strong>Beta user</strong> — software engineer
+            </p>
+          </div>
+        </div>
+      </div>
 
       <section id="pricing" class="fade-in-section">
         <h2>Simple, Transparent Pricing</h2>
