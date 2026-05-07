@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Windows Built-In Speech Recognition vs Whisper (2026) | dictate.app
-    </title>
+    <title>Windows Speech Recognition vs Whisper 2026 | dictate.app</title>
     <meta
       name="description"
       content="Windows built-in speech recognition vs Whisper: accuracy benchmarks, latency numbers, app compatibility, and which one you should actually use in 2026."
@@ -16,13 +14,10 @@
     />
     <meta name="author" content="dictate.app" />
     <meta name="robots" content="index, follow" />
-    <link
-      rel="canonical"
-      href="https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper.html"
-    />
+    <link rel="canonical" href="https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper" />
     <meta
       property="og:title"
-      content="Windows Built-In Speech Recognition vs Whisper (2026)"
+      content="Windows Speech Recognition vs Whisper 2026"
     />
     <meta
       property="og:description"
@@ -31,7 +26,7 @@
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper.html"
+      content="https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper"
     />
     <meta property="og:site_name" content="dictate.app" />
     <meta name="twitter:card" content="summary" />
@@ -53,8 +48,8 @@
         "publisher": { "@type": "Organization", "name": "dictate.app" },
         "datePublished": "2026-05-07",
         "dateModified": "2026-05-07",
-        "url": "https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper.html",
-        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper.html"
+        "url": "https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/windows-speech-recognition-vs-whisper"
       }
     </script>
 
@@ -371,7 +366,7 @@
         <p>
           Windows ships with two speech recognition systems. Windows Speech
           Recognition (WSR) has existed since Vista. Voice Access arrived with
-          Windows 11. Both are free. Neither is Whisper — and the gap between
+          Windows 11. Both are free. Neither is Whisper  -  and the gap between
           them is larger than most people expect.
         </p>
 
@@ -389,7 +384,7 @@
           WSR has been in Windows since Vista and survived through Windows 11.
           It requires a setup wizard and a brief microphone training session.
           It's deeply integrated with Windows and can control the interface
-          through voice commands — click buttons, navigate menus, dictate into
+          through voice commands  -  click buttons, navigate menus, dictate into
           text fields. The model is offline and runs on your CPU.
         </p>
 
@@ -410,11 +405,11 @@
           widely considered the most accurate general-purpose transcription
           model available. The large-v3 variant achieves around
           <strong>2.7% Word Error Rate (WER)</strong> on standard English
-          benchmarks — that's near-human transcription accuracy.
+          benchmarks  -  that's near-human transcription accuracy.
         </p>
 
         <p>
-          Running Whisper locally is slow — 1–3 seconds per utterance even on a
+          Running Whisper locally is slow  -  1–3 seconds per utterance even on a
           decent GPU. The breakthrough came when Groq built hardware
           specifically optimized for inference.
           <strong>Groq-accelerated Whisper</strong> hits the same accuracy with
@@ -463,7 +458,7 @@
 
         <p>
           The accuracy difference is not subtle. At 15% WER, you get roughly one
-          mistake per seven words — enough to require constant correction. At 3%
+          mistake per seven words  -  enough to require constant correction. At 3%
           WER, mistakes are occasional enough to mostly ignore during a first
           draft.
         </p>
@@ -515,7 +510,7 @@
         <p>
           The Windows built-in systems run on your local CPU with a compressed
           model. The tradeoff for privacy and offline capability is latency.
-          Groq runs in the cloud on custom silicon designed for fast inference —
+          Groq runs in the cloud on custom silicon designed for fast inference  - 
           the same principle as a GPU but optimized for transformer models
           specifically.
         </p>
@@ -524,7 +519,7 @@
 
         <p>
           This is where the differences become practical. Windows Voice Access
-          works well with Microsoft's own apps — Word, Outlook, Edge, Teams. Its
+          works well with Microsoft's own apps  -  Word, Outlook, Edge, Teams. Its
           integration with third-party apps is inconsistent.
         </p>
 
@@ -532,7 +527,7 @@
           Whisper-based tools like dictate.app work differently: they listen,
           transcribe, and simulate keyboard input. Because they use the
           clipboard and keyboard injection, they work in
-          <strong>any app that accepts typed text</strong> — VS Code, Slack,
+          <strong>any app that accepts typed text</strong>  -  VS Code, Slack,
           Chrome, Notion, Obsidian, Notepad, Scrivener, anything. There's no
           application-specific integration required.
         </p>
@@ -592,7 +587,7 @@
 
         <ul>
           <li>
-            <strong>It's free.</strong> If $9/month isn't in the budget, Voice
+            <strong>It's free.</strong> If $8.99/month isn't in the budget, Voice
             Access is a real option.
           </li>
           <li>
@@ -602,7 +597,7 @@
           <li>
             <strong>It has accessibility commands.</strong> Voice Access can
             navigate the Windows UI, click buttons, and control system functions
-            — things Whisper dictation tools don't do.
+             -  things Whisper dictation tools don't do.
           </li>
         </ul>
 
@@ -629,7 +624,7 @@
 
         <p>
           The bottom line: if you're using Windows Voice Access and finding it
-          accurate enough, stick with it — it's free. If you're frustrated by
+          accurate enough, stick with it  -  it's free. If you're frustrated by
           correction rate or the 1-second delay, trying a Groq Whisper tool for
           a week will make the difference immediately obvious.
         </p>

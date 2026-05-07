@@ -39,7 +39,9 @@ id = "1dfe5e3b6c054804b5ae1ad499f258ea"
 STRIPE_PAYMENT_LINK = "https://buy.stripe.com/8x2aEX7ree937fw6A3dwc0l"
 COMMISSION_RATE = "0.40"
 COOKIE_DAYS = "30"
-RESEND_API_KEY = "re_abTZyTiw_EujCxZVBEpBgy7ZeTSmPQ29a"
+# RESEND_API_KEY is stored as a wrangler secret — NOT here.
+# Set it once with: wrangler secret put RESEND_API_KEY
+# The key was previously leaked here; rotate it if this file was committed.
 
 # ─── OBSERVABILITY ────────────────────────────────────────────────────────────
 [observability]

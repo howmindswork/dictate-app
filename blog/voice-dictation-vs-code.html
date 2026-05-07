@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation in VS Code on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="You can't dictate raw code. But 80% of dev work isn't code. Dictate comments, docs, commit messages, and Slack in VS Code with dictate.app."
+    />
+    <meta
+      name="keywords"
+      content="voice dictation VS Code Windows, voice coding Windows, dictation developer tools"
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-vs-code"
+    />
+    <meta property="og:title" content="Voice Dictation in VS Code on Windows" />
+    <meta
+      property="og:description"
+      content="You can't dictate raw code. But 80% of dev work isn't code. Here's how developers use push-to-talk dictation in VS Code."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-vs-code"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Voice Dictation in VS Code on Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="You can't dictate raw code. But 80% of dev work isn't code. Here's how developers use push-to-talk dictation in VS Code."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation in VS Code on Windows",
+        "description": "How developers use push-to-talk voice dictation in VS Code for everything except raw code syntax.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-dictation-vs-code",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-dictation-vs-code"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can you dictate code in VS Code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You cannot reliably dictate raw code syntax — variable names, brackets, and operators don't translate from speech to text accurately. But you can dictate everything else: comments, documentation, commit messages, README files, and any text-based communication."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work in VS Code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app uses clipboard injection, which works in any Windows application that accepts Ctrl+V paste — including VS Code. Hold your hotkey, speak, release. Text pastes at your cursor."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What can developers use voice dictation for?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Comments, docstrings, JSDoc, README files, commit messages, PR descriptions, Slack messages, GitHub issue descriptions, email replies, and any documentation task. These account for roughly 80% of a developer's writing time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month with a 7-day free trial. No credit card required to start."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a VS Code extension for voice dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VS Code has an experimental voice extension but it is unreliable and only works within VS Code. dictate.app works at the OS level, so it works in VS Code, your browser, Slack, email, and every other app simultaneously."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg-accent: #0f0b18;
+        --text-primary: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --accent: #c084fc;
+        --accent2: #818cf8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      main {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      h1 span {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .meta {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+      h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 40px 0 16px;
+        color: var(--accent);
+      }
+      p {
+        margin-bottom: 18px;
+        color: rgba(241, 240, 245, 0.85);
+      }
+      .stat-box {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 12px;
+        padding: 24px;
+        margin: 32px 0;
+      }
+      .stat-box .stat-num {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .stat-box .stat-label {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-top: 4px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 32px 0;
+        font-size: 15px;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.12);
+        color: var(--accent);
+        padding: 12px 16px;
+        text-align: left;
+        font-weight: 600;
+      }
+      td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .yes {
+        color: #34d399;
+      }
+      .no {
+        color: rgba(241, 240, 245, 0.4);
+      }
+      .tip {
+        background: rgba(129, 140, 248, 0.08);
+        border-left: 3px solid var(--accent2);
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+      .cta-block {
+        text-align: center;
+        margin: 60px 0 0;
+        padding: 48px 32px;
+        background: rgba(192, 132, 252, 0.06);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 16px;
+      }
+      .cta-block h2 {
+        margin-top: 0;
+        font-size: 1.6rem;
+        color: var(--text-primary);
+      }
+      .cta-main {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 20px;
+        transition: all 0.2s;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+      }
+      .cta-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
+      }
+      .trial-note {
+        color: var(--text-secondary);
+        font-size: 13px;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="https://dictate-app.pages.dev" class="nav-home"
+            ><span class="logo-icon">🎙</span> dictate.app</a
+          >
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav">Try Free</a>
+        </nav>
+      </header>
+      <main>
+        <h1>Voice Dictation in <span>VS Code</span> on Windows</h1>
+        <p class="meta">May 2026 · 8 min read</p>
+
+        <p>
+          The honest answer: you cannot dictate raw code. Brackets, semicolons,
+          camelCase, and operator symbols do not come out of speech-to-text
+          cleanly. Anyone who tells you otherwise is selling something.
+        </p>
+
+        <p>
+          But here is what most developers miss: raw code is not most of what
+          you write.
+        </p>
+
+        <div class="stat-box">
+          <div class="stat-num">80%</div>
+          <div class="stat-label">
+            of a developer's writing is not code syntax — it is comments, docs,
+            messages, and emails
+          </div>
+        </div>
+
+        <p>
+          That 80% is where voice dictation pays off immediately. No learning
+          curve. No training. Just speak and the text appears.
+        </p>
+
+        <h2>What You Can Dictate in VS Code</h2>
+
+        <p>
+          dictate.app uses clipboard injection. It works at the OS level.
+          Wherever your cursor sits and wherever Ctrl+V works, dictation works.
+          In VS Code that means:
+        </p>
+
+        <p>
+          <strong>Code comments.</strong> Single-line comments, block comments,
+          inline explanations. Speaking a comment is faster than typing it and
+          you get more natural language out of it. "This function handles the
+          edge case where the user disconnects before the response completes"
+          comes out better spoken than typed.
+        </p>
+
+        <p>
+          <strong>JSDoc and docstrings.</strong> Documentation is the #1 thing
+          developers skip because it is tedious to type. Speaking it takes a
+          quarter of the time. Describe the parameters, the return value, the
+          side effects. Done in 20 seconds.
+        </p>
+
+        <p>
+          <strong>Commit messages.</strong> The VS Code source control panel has
+          a text field. Hold your hotkey, describe what you did, release. A real
+          commit message in 5 seconds instead of "fix stuff."
+        </p>
+
+        <p>
+          <strong>README files.</strong> Markdown documents are ideal for
+          dictation. No syntax to worry about. Just speak the content. You can
+          dictate a full README in under 3 minutes.
+        </p>
+
+        <p>
+          <strong>GitHub issue descriptions.</strong> VS Code's GitHub extension
+          shows issue text fields. Dictate bug reports, feature requests, and
+          pull request descriptions directly.
+        </p>
+
+        <p>
+          <strong>Terminal commands you already know.</strong> If you type the
+          same git commands, npm scripts, or shell commands repeatedly, you can
+          dictate them. "git push origin main" comes out fine. Complex flags do
+          not.
+        </p>
+
+        <h2>What You Cannot Dictate</h2>
+
+        <p>Raw code syntax is hard. These specific things fail:</p>
+
+        <p>
+          Variable names with underscores or camelCase. "user underscore id"
+          usually comes out as "user underscore id" literally, not "user_id."
+          Same problem with camelCase.
+        </p>
+
+        <p>
+          Operator-heavy lines. "const result equals arr dot filter open paren
+          item arrow item dot active close paren" is not faster than typing it.
+        </p>
+
+        <p>
+          File paths. Slashes, dots, and directory structures are painful to
+          dictate reliably.
+        </p>
+
+        <div class="tip">
+          <strong>The rule:</strong> if it reads like English, dictate it. If it
+          reads like code, type it.
+        </div>
+
+        <h2>The 80/20 Breakdown</h2>
+
+        <table>
+          <tr>
+            <th>Task</th>
+            <th>Dictate?</th>
+            <th>Why</th>
+          </tr>
+          <tr>
+            <td>Code comments</td>
+            <td class="yes">Yes</td>
+            <td>Natural English, no special syntax</td>
+          </tr>
+          <tr>
+            <td>JSDoc / docstrings</td>
+            <td class="yes">Yes</td>
+            <td>Plain language descriptions</td>
+          </tr>
+          <tr>
+            <td>Commit messages</td>
+            <td class="yes">Yes</td>
+            <td>Short, descriptive English</td>
+          </tr>
+          <tr>
+            <td>README / docs</td>
+            <td class="yes">Yes</td>
+            <td>Markdown prose dictates perfectly</td>
+          </tr>
+          <tr>
+            <td>GitHub issues / PRs</td>
+            <td class="yes">Yes</td>
+            <td>Long-form text fields</td>
+          </tr>
+          <tr>
+            <td>Slack / Teams messages</td>
+            <td class="yes">Yes</td>
+            <td>Highest ROI use case</td>
+          </tr>
+          <tr>
+            <td>Email replies</td>
+            <td class="yes">Yes</td>
+            <td>Speaking is 3x faster than typing</td>
+          </tr>
+          <tr>
+            <td>Raw code syntax</td>
+            <td class="no">No</td>
+            <td>Operators and symbols fail</td>
+          </tr>
+          <tr>
+            <td>Complex file paths</td>
+            <td class="no">No</td>
+            <td>Slashes and dots are unreliable</td>
+          </tr>
+        </table>
+
+        <h2>How dictate.app Works in VS Code</h2>
+
+        <p>
+          No VS Code extension needed. dictate.app runs as a background Windows
+          app.
+        </p>
+
+        <p>
+          The setup: install dictate.app, set your hotkey (default is middle
+          mouse button, but any key combination works), and start using it. Hold
+          the key while speaking, release when done, text pastes at your cursor
+          in VS Code or any other app.
+        </p>
+
+        <p>
+          The transcription uses Groq's Whisper API. It comes back in about 200
+          milliseconds. That is fast enough that it feels instantaneous in
+          normal use.
+        </p>
+
+        <p>
+          Push-to-talk matters especially for developers. You are not
+          broadcasting to the office. You dictate one comment, release the key,
+          keep coding. Nobody around you knows you are using it.
+        </p>
+
+        <h2>VS Code Voice Extension vs dictate.app</h2>
+
+        <p>
+          VS Code has an experimental voice extension. It requires a GitHub
+          Copilot subscription and only works inside VS Code. It cannot be used
+          in your browser, Slack, email, or any other app.
+        </p>
+
+        <p>
+          dictate.app works everywhere. One tool. One hotkey. Every application
+          on Windows.
+        </p>
+
+        <h2>Real Workflow: A Developer's Day</h2>
+
+        <p>
+          Morning standup notes dictated into Slack: 20 seconds instead of 90.
+        </p>
+
+        <p>
+          JSDoc for a new function: speak the description while looking at the
+          code, done in 15 seconds.
+        </p>
+
+        <p>
+          Commit message: "refactor user authentication to use the new token
+          validation middleware" dictated in 4 seconds.
+        </p>
+
+        <p>
+          GitHub PR description: 200 words spoken in 90 seconds instead of 8
+          minutes of typing.
+        </p>
+
+        <p>
+          Bug report to your team: dictated into Slack while reproducing the
+          bug, instead of stopping to type.
+        </p>
+
+        <p>
+          The typing you save is not the exciting typing. It is the tedious
+          surrounding work that slows you down.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try it in VS Code today</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px">
+            7-day free trial. No credit card required.
+          </p>
+          <a href="https://dictate-app.pages.dev/download" class="cta-main"
+            >Download Free</a
+          >
+          <p class="trial-note">$8.99/month after trial. Cancel anytime.</p>
+        </div>
+      </main>
+    </div>
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function initStars() {
+        stars = Array.from({ length: 150 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.5 + 0.2,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.7 || s.o < 0.2) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      initStars();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        initStars();
+      });
+    </script>
+  </body>
+</html>

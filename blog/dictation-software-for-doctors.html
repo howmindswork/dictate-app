@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dictation Software for Doctors on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="Dragon Medical costs $3,000/year. dictate.app works in every EHR system at $8.99/month. Fast, private medical dictation for Windows. Audio is never stored."
+    />
+    <meta
+      name="keywords"
+      content="dictation software for doctors, medical dictation software, EHR dictation Windows, doctor voice typing"
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/dictation-software-for-doctors"
+    />
+    <meta
+      property="og:title"
+      content="Dictation Software for Doctors on Windows"
+    />
+    <meta
+      property="og:description"
+      content="Dragon Medical costs $3,000/year. dictate.app works in every EHR system at $8.99/month. Fast, private medical dictation for Windows."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/dictation-software-for-doctors"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Dictation Software for Doctors on Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Dragon Medical costs $3,000/year. dictate.app works in every EHR system at $8.99/month."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Dictation Software for Doctors on Windows",
+        "description": "Dragon Medical costs $3,000/year. dictate.app works in every EHR system at $8.99/month. Fast, private medical dictation for Windows.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/dictation-software-for-doctors",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/dictation-software-for-doctors"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the best dictation software for doctors on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app is the most cost-effective option for doctors on Windows at $8.99/month. It works in any EHR system with a text field, processes speech using Groq Whisper, and discards audio after transcription. Dragon Medical Professional is the traditional choice at $2,000-3,000/year."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work with Epic, Cerner, or other EHR systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works in any application on Windows that accepts text input, including Epic, Cerner, Athenahealth, and any browser-based EHR. It pastes transcribed text via clipboard into whatever field your cursor is in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is dictate.app private for medical use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app sends audio to Groq's API for transcription and discards it immediately after. Audio is not logged or stored by dictate.app. For clinical environments with specific compliance requirements, consult your compliance officer before use."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does push-to-talk work for clinical dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You hold a hotkey (configurable, e.g. Ctrl+Shift+Space) while speaking and release when done. Only what you say while holding the key is transcribed. This prevents accidental transcription of conversations with patients or colleagues."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost compared to Dragon Medical?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month ($107.88/year). Dragon Medical Professional costs approximately $2,000-3,000/year. dictate.app is roughly 20-28x cheaper with a 7-day free trial."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg-accent: #0f0b18;
+        --text-primary: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --accent: #c084fc;
+        --accent2: #818cf8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.12);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 28px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.12);
+        color: var(--accent);
+        font-weight: 700;
+        text-align: left;
+        padding: 12px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+      }
+      td {
+        padding: 10px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.1);
+        color: var(--text-secondary);
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .check {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .cross {
+        color: #f87171;
+      }
+      .stat-box {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin: 24px 0;
+      }
+      .stat-box .big {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .stat-box .label {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-top: 4px;
+      }
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(129, 140, 248, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a class="nav-home" href="https://dictate-app.pages.dev">
+            <span class="logo-icon">🎙</span> dictate.app
+          </a>
+          <a class="cta-nav" href="https://dictate-app.pages.dev/download"
+            >Try Free 7 Days</a
+          >
+        </nav>
+      </header>
+      <article>
+        <span class="post-label">Medical</span>
+        <h1>Dictation Software for Doctors on Windows</h1>
+        <p class="post-meta">
+          dictate.app &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; 7 min read
+        </p>
+
+        <p>
+          Physicians spend 2 hours on documentation for every hour of patient
+          care. That number has been climbing for years.
+          <strong>The fastest way to cut it in half is voice dictation.</strong>
+          The problem has always been the cost of medical-grade dictation
+          software.
+        </p>
+
+        <div class="stat-box">
+          <div class="big">2+ hours</div>
+          <div class="label">
+            Documentation per hour of patient care. Source: multiple physician
+            burnout studies.
+          </div>
+        </div>
+
+        <h2>The Dragon Medical Problem</h2>
+        <p>
+          Dragon Medical Professional is the gold standard for medical
+          dictation. It handles clinical terminology well. It has been around
+          for decades. And it costs $2,000 to $3,000 per year per physician.
+        </p>
+        <p>
+          For a solo practitioner or small practice, that is a serious line
+          item. For residents and early-career physicians, it is often simply
+          not affordable.
+        </p>
+        <p>
+          Dragon also requires dedicated training time, a local installation
+          that can conflict with hospital IT policies, and periodic retraining
+          to maintain accuracy.
+        </p>
+
+        <h2>How dictate.app Works for Medical Documentation</h2>
+        <p>
+          dictate.app is a Windows app that transcribes speech using Groq's
+          Whisper API. You hold a hotkey, speak, release. Your words appear
+          wherever your cursor is.
+        </p>
+        <p>That means it works in:</p>
+        <ul>
+          <li><strong>Epic</strong> (browser or desktop client)</li>
+          <li><strong>Cerner</strong> (any text field)</li>
+          <li><strong>Athenahealth</strong></li>
+          <li><strong>Any browser-based EHR</strong></li>
+          <li><strong>Microsoft Word</strong> (for offline documentation)</li>
+          <li>
+            <strong>Outlook</strong> (for patient communications and referral
+            letters)
+          </li>
+        </ul>
+        <p>
+          If the EHR has a text field, dictate.app can put text in it. That
+          covers every EHR system on the market.
+        </p>
+
+        <h2>Privacy and Audio Handling</h2>
+        <p>
+          dictate.app sends audio to Groq's API for transcription. The audio is
+          discarded after processing. dictate.app does not store, log, or retain
+          audio recordings.
+        </p>
+        <p>
+          For clinical environments with specific compliance requirements,
+          consult your institution's compliance officer before adopting any
+          voice transcription tool. This applies to Dragon Medical and every
+          other cloud-assisted dictation product as well.
+        </p>
+        <p>
+          The push-to-talk model also helps:
+          <strong>only what you actively dictate gets sent.</strong> You are not
+          broadcasting a room conversation. You hold the key, speak the
+          documentation, release. Only that audio is processed.
+        </p>
+
+        <h2>Clinical Use Cases</h2>
+        <h3>Progress Notes</h3>
+        <p>
+          The highest-volume documentation task. Dictate the SOAP note
+          structure, history, assessment, and plan. At 150 WPM speaking vs 50
+          WPM typing, a 300-word note takes 2 minutes instead of 6.
+        </p>
+
+        <h3>Referral Letters</h3>
+        <p>
+          Specialist referral letters are time-consuming to type. Dictate the
+          clinical summary, relevant history, and specific questions for the
+          consultant. What takes 20 minutes of typing takes 7 minutes of
+          speaking.
+        </p>
+
+        <h3>Patient Instructions</h3>
+        <p>
+          After-visit summaries, medication instructions, follow-up plans.
+          Dictate directly into the patient instruction field in the EHR. Done
+          before the patient leaves the exam room.
+        </p>
+
+        <h3>Discharge Summaries</h3>
+        <p>
+          Hospital discharge documentation is notoriously time-consuming.
+          Dictating the summary while reviewing the chart is faster than
+          alternating between reading and typing.
+        </p>
+
+        <h2>Cost Comparison</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Software</th>
+                <th>Annual Cost</th>
+                <th>Works in Any EHR</th>
+                <th>Training Required</th>
+                <th>Free Trial</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dragon Medical Professional</td>
+                <td>$2,000-3,000</td>
+                <td><span class="check">Yes</span></td>
+                <td><span class="cross">Yes (significant)</span></td>
+                <td><span class="cross">No</span></td>
+              </tr>
+              <tr>
+                <td>Nuance DAX</td>
+                <td>$2,000+</td>
+                <td><span class="check">Yes</span></td>
+                <td>Minimal</td>
+                <td><span class="cross">No</span></td>
+              </tr>
+              <tr>
+                <td>dictate.app</td>
+                <td>$107.88</td>
+                <td><span class="check">Yes</span></td>
+                <td><span class="check">None</span></td>
+                <td><span class="check">7 days free</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          dictate.app is not trying to replace Dragon Medical Professional for
+          large enterprise deployments. It is for individual physicians,
+          residents, small practices, and anyone who cannot or will not pay
+          $2,000+ per year for documentation software.
+        </p>
+
+        <h2>Getting Started</h2>
+        <p>
+          Download dictate.app for Windows. Install it. Set your hotkey. Open
+          your EHR. Click into a text field. Hold the hotkey and dictate.
+        </p>
+        <p>
+          No IT involvement required. No training. No custom vocabulary setup
+          (though Whisper handles medical terminology accurately out of the
+          box). Ready in 5 minutes.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try It Free for 7 Days</h2>
+          <p>Works in every EHR on Windows. $8.99/month after trial.</p>
+          <a class="cta-big" href="https://dictate-app.pages.dev/download"
+            >Download dictate.app Free</a
+          >
+          <p class="cta-sub">No credit card required. Windows 10 and 11.</p>
+        </div>
+
+        <p>
+          Also see:
+          <a
+            href="/blog/medical-legal-dictation-windows.html"
+            style="color: var(--accent)"
+            >medical and legal dictation on Windows</a
+          >
+          for a broader overview covering both professions.
+        </p>
+      </article>
+      <footer>
+        <p>
+          <a href="https://dictate-app.pages.dev">dictate.app</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/download">Download</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/blog/">Blog</a>
+        </p>
+        <p style="margin-top: 8px">2026 dictate.app. All rights reserved.</p>
+      </footer>
+    </div>
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function init() {
+        resize();
+        stars = Array.from({ length: 120 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.5 + 0.1,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.o += (Math.random() - 0.5) * 0.02;
+          s.o = Math.max(0.05, Math.min(0.7, s.o));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener("resize", init);
+      init();
+      draw();
+    </script>
+  </body>
+</html>

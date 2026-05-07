@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      How to Use OpenAI Whisper for Voice Dictation on Windows (Without Coding)
+      | dictate.app
+    </title>
+    <meta
+      name="description"
+      content="OpenAI Whisper is the most accurate speech recognition model available. Here's how to use it for voice dictation on Windows without running it locally — via Groq and dictate.app."
+    />
+    <meta
+      name="keywords"
+      content="whisper dictation windows, openai whisper windows app, groq whisper dictation, whisper speech to text windows"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/whisper-dictation-app-windows"
+    />
+    <meta
+      property="og:title"
+      content="How to Use OpenAI Whisper for Voice Dictation on Windows (Without Coding)"
+    />
+    <meta
+      property="og:description"
+      content="Whisper is the best speech recognition model, but running it locally is hard. Here's the easier path — Groq-powered Whisper dictation on Windows via dictate.app."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/whisper-dictation-app-windows"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="How to Use OpenAI Whisper for Voice Dictation on Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Whisper is the best dictation model. Here's how to use it on Windows without any setup — via Groq and dictate.app."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Use OpenAI Whisper for Voice Dictation on Windows (Without Coding)",
+        "description": "OpenAI Whisper is the most accurate speech recognition model available. Here's how to use it for voice dictation on Windows without running it locally — via Groq and dictate.app.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/whisper-dictation-app-windows",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/whisper-dictation-app-windows"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is OpenAI Whisper?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Whisper is an open-source speech recognition model released by OpenAI. It was trained on 680,000 hours of multilingual audio. It is significantly more accurate than older models like Google's speech-to-text or Windows Speech Recognition, especially for accents, technical vocabulary, and noisy environments."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I run Whisper locally on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, but it requires Python, ffmpeg, and a capable GPU for acceptable speed. The large model needs 10+ GB of VRAM to run in real time. For most users, running Whisper via a cloud API like Groq is faster and simpler."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Groq Whisper?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Groq runs Whisper on its custom LPU hardware, which is optimized for fast inference. This brings Whisper transcription latency down to around 200 milliseconds — much faster than running Whisper locally on most consumer hardware or using other cloud providers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I use Whisper for dictation on Windows without coding?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app is a Windows desktop app that uses Groq's Whisper API under the hood. You install it, set a hotkey, and hold to speak. No Python, no command line, no GPU required. It's a plug-and-play Whisper dictation tool for Windows."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .stat-row {
+        display: flex;
+        gap: 16px;
+        margin: 28px 0;
+        flex-wrap: wrap;
+      }
+      .stat-box {
+        flex: 1;
+        min-width: 140px;
+        background: rgba(192, 132, 252, 0.07);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 10px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .stat-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 20px 24px;
+        margin: 28px 0;
+      }
+      .tip-box p {
+        margin: 0;
+      }
+      .tip-box .tip-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .steps-list {
+        counter-reset: steps;
+        padding-left: 0;
+        list-style: none;
+      }
+      .steps-list li {
+        counter-increment: steps;
+        padding-left: 48px;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .steps-list li::before {
+        content: counter(steps);
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #c084fc, #f472b6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: white;
+        line-height: 28px;
+        text-align: center;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .faq-section {
+        margin: 48px 0 0;
+      }
+      .faq-item {
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 20px 0;
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-q {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+      }
+      .faq-a {
+        color: var(--text-secondary);
+        font-size: 15px;
+        margin: 0;
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .stat-row {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Whisper · May 2026</div>
+        <h1>
+          How to Use OpenAI Whisper for Voice Dictation on Windows (Without
+          Coding)
+        </h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 7 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          OpenAI Whisper is the most accurate speech recognition model available
+          to the public. It handles accents, background noise, and technical
+          vocabulary in ways that older models cannot match. Developers love it.
+          Researchers use it. But for most people on Windows, actually using
+          Whisper for daily voice dictation requires setting up Python, ffmpeg,
+          and a GPU — which is a lot of friction just to type faster.
+        </p>
+
+        <p>
+          This post explains the Whisper model, why running it locally is
+          impractical for most users, and how dictate.app makes Groq-powered
+          Whisper dictation work on Windows without any technical setup.
+        </p>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num">680K</div>
+            <div class="stat-desc">Hours of audio Whisper was trained on</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">99+</div>
+            <div class="stat-desc">Languages Whisper supports</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">~200ms</div>
+            <div class="stat-desc">Groq Whisper latency in dictate.app</div>
+          </div>
+        </div>
+
+        <h2>What Is OpenAI Whisper?</h2>
+
+        <p>
+          Whisper is an open-source automatic speech recognition model released
+          by OpenAI in 2022. It was trained on 680,000 hours of multilingual
+          audio collected from the internet. That training scale is what makes
+          it qualitatively different from older models.
+        </p>
+
+        <p>
+          Older speech recognition systems like Windows Speech Recognition or
+          Dragon were trained on smaller, more controlled datasets. They work
+          well in ideal conditions but struggle with accents, mumbling,
+          technical jargon, and background noise. Whisper handles all of these
+          significantly better because it has seen far more variation in its
+          training data.
+        </p>
+
+        <p>
+          Whisper comes in several sizes. The tiny and base models run fast but
+          sacrifice accuracy. The large model is the most accurate but requires
+          serious compute to run in real time. For dictation, you want accuracy,
+          which means you want something close to the large model.
+        </p>
+
+        <h2>Why Running Whisper Locally on Windows Is Hard</h2>
+
+        <p>
+          Whisper is open source. You can run it yourself. But for real-time
+          dictation, the requirements add up quickly.
+        </p>
+
+        <ul>
+          <li><strong>Python 3.8+</strong> — required to run the model</li>
+          <li><strong>ffmpeg</strong> — required for audio processing</li>
+          <li>
+            <strong>CUDA-capable GPU</strong> — required for the large model to
+            run in real time without multi-second delays
+          </li>
+          <li>
+            <strong>10+ GB VRAM</strong> — the large-v3 model needs roughly 10
+            GB of GPU memory
+          </li>
+          <li>
+            <strong>PyTorch</strong> — the ML framework Whisper depends on
+          </li>
+        </ul>
+
+        <p>
+          On a machine without a dedicated Nvidia GPU, the large Whisper model
+          takes 5 to 15 seconds to transcribe a short sentence. That's slower
+          than typing. Even with a high-end GPU, the setup is a multi-hour
+          project involving package management, driver configuration, and
+          debugging dependency conflicts.
+        </p>
+
+        <div class="tip-box">
+          <span class="tip-label">The real barrier</span>
+          <p>
+            Most people who search for "Whisper dictation Windows" don't want to
+            set up Python. They want to hold a key, speak a sentence, and have
+            it appear in their document in under a second. That's what a
+            properly packaged Whisper app delivers.
+          </p>
+        </div>
+
+        <h2>What Is Groq and Why Does It Matter for Whisper?</h2>
+
+        <p>
+          Groq is an AI infrastructure company that built custom hardware called
+          the LPU (Language Processing Unit). Unlike GPUs, which are
+          general-purpose parallel processors, LPUs are designed specifically
+          for the sequential computation patterns in large transformer models.
+        </p>
+
+        <p>
+          The result: Groq runs Whisper inference dramatically faster than a
+          consumer GPU can. What takes a high-end GPU 1 to 3 seconds takes Groq
+          around 200 milliseconds. That latency difference is the gap between
+          dictation that feels slow and dictation that feels instant.
+        </p>
+
+        <p>
+          Groq offers a Whisper API. dictate.app uses that API as its
+          transcription backend. You get the accuracy of Whisper's large model
+          at Groq's speed, via a clean desktop app with no setup beyond
+          installing a .exe file.
+        </p>
+
+        <h2>How dictate.app Makes Whisper Plug-and-Play on Windows</h2>
+
+        <p>
+          dictate.app wraps the entire stack — microphone capture, audio
+          encoding, Groq API call, clipboard injection — into a system tray app
+          for Windows. The experience from the user's side is simple:
+        </p>
+
+        <ol class="steps-list">
+          <li>
+            <strong>Install dictate.app</strong> — run the .exe installer, no
+            admin rights required
+          </li>
+          <li>
+            <strong>Set your hotkey</strong> — pick any key combination that
+            feels natural
+          </li>
+          <li>
+            <strong>Hold to speak</strong> — hold the hotkey and say what you
+            want to type
+          </li>
+          <li>
+            <strong>Release to paste</strong> — text appears at your cursor in
+            roughly 200 milliseconds
+          </li>
+        </ol>
+
+        <p>
+          No Python. No command line. No GPU. No API key management. dictate.app
+          handles the Groq integration internally. You pay $8.99/month per month and
+          everything is included.
+        </p>
+
+        <h2>Whisper Accuracy in Practice</h2>
+
+        <p>
+          Whisper's accuracy advantage over older models is most visible in
+          specific situations:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Non-native English accents:</strong> Whisper handles Indian,
+            British, Australian, and other accents with far fewer errors than
+            Windows Voice Typing or Dragon.
+          </li>
+          <li>
+            <strong>Technical vocabulary:</strong> Software terms, medical
+            terms, legal terms, and brand names are transcribed more accurately
+            because Whisper's training data contained these in context.
+          </li>
+          <li>
+            <strong>Background noise:</strong> Whisper was trained on web audio,
+            which includes variable recording conditions. It's more tolerant of
+            ambient noise than systems trained on clean studio recordings.
+          </li>
+          <li>
+            <strong>Fast speech:</strong> Speaking at a natural conversational
+            pace, including when you speak quickly, produces fewer errors than
+            older acoustic models.
+          </li>
+        </ul>
+
+        <p>
+          For most knowledge workers dictating in English, error rates with
+          Whisper via Groq are low enough that light editing — if any — is all
+          that's needed after dictating.
+        </p>
+
+        <h2>Groq Whisper vs OpenAI Whisper API vs Local Whisper</h2>
+
+        <p>There are three ways to run Whisper for dictation:</p>
+
+        <p>
+          <strong>OpenAI's Whisper API</strong> — accurate, but latency is
+          typically 1 to 3 seconds. Priced per minute of audio. Requires API key
+          management.
+        </p>
+
+        <p>
+          <strong>Local Whisper</strong> — free per transcription but requires
+          significant hardware. Latency ranges from 500ms (with a good GPU) to
+          15+ seconds (CPU only). Setup is technical.
+        </p>
+
+        <p>
+          <strong>Groq Whisper (via dictate.app)</strong> — ~200ms latency, no
+          hardware requirements, no API key setup. $8.99/month flat rate with a
+          30-day free trial.
+        </p>
+
+        <p>
+          For daily dictation where you're doing dozens of short transcriptions
+          throughout the day, Groq's speed advantage is significant. At 200ms,
+          the delay disappears into the background. At 2 seconds, every
+          dictation is a conscious wait.
+        </p>
+
+        <div class="cta-block">
+          <h2>Use Whisper for Dictation on Windows Today</h2>
+          <p>
+            No Python. No GPU. No setup. Install dictate.app and get
+            Groq-powered Whisper dictation in under 5 minutes.
+          </p>
+          <a
+            href="https://github.com/howmindswork/dictate-electron/releases/download/v0.1.0/dictate.app-Setup-0.1.0.exe"
+            class="cta-big"
+            >Download dictate.app for Windows →</a
+          >
+          <p class="cta-sub">
+            30-day free trial &nbsp;·&nbsp; $8.99/month after &nbsp;·&nbsp;
+            <a href="https://dictate-app.pages.dev/download">More options</a>
+          </p>
+        </div>
+
+        <div class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+
+          <div class="faq-item">
+            <div class="faq-q">What is OpenAI Whisper?</div>
+            <p class="faq-a">
+              Whisper is an open-source speech recognition model released by
+              OpenAI. It was trained on 680,000 hours of multilingual audio. It
+              is significantly more accurate than older models like Google's
+              speech-to-text or Windows Speech Recognition, especially for
+              accents, technical vocabulary, and noisy environments.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">Can I run Whisper locally on Windows?</div>
+            <p class="faq-a">
+              Yes, but it requires Python, ffmpeg, and a capable GPU for
+              acceptable speed. The large model needs 10+ GB of VRAM to run in
+              real time. For most users, running Whisper via a cloud API like
+              Groq is faster and simpler.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">What is Groq Whisper?</div>
+            <p class="faq-a">
+              Groq runs Whisper on its custom LPU hardware, which is optimized
+              for fast inference. This brings Whisper transcription latency down
+              to around 200 milliseconds — much faster than running Whisper
+              locally on most consumer hardware or using other cloud providers.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              How do I use Whisper for dictation on Windows without coding?
+            </div>
+            <p class="faq-a">
+              dictate.app is a Windows desktop app that uses Groq's Whisper API
+              under the hood. You install it, set a hotkey, and hold to speak.
+              No Python, no command line, no GPU required. It's a plug-and-play
+              Whisper dictation tool for Windows.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>

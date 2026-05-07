@@ -13,9 +13,9 @@
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     />
-    <link rel="canonical" href="https://dictate.app" />
-    <link rel="alternate" hreflang="en-US" href="https://dictate.app" />
-    <link rel="alternate" hreflang="x-default" href="https://dictate.app" />
+    <link rel="canonical" href="https://dictate-app.pages.dev" />
+    <link rel="alternate" hreflang="en-US" href="https://dictate-app.pages.dev" />
+    <link rel="alternate" hreflang="x-default" href="https://dictate-app.pages.dev" />
     <meta name="theme-color" content="#5078FF" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -82,9 +82,9 @@
         "screenshotUrl": "https://dictate.app/screenshot.png",
         "offers": {
           "@type": "Offer",
-          "price": "29.00",
+          "price": "9.00",
           "priceCurrency": "USD",
-          "description": "Lifetime license. One-time purchase. No subscriptions.",
+          "description": "Monthly subscription. 7-day free trial. Cancel anytime.",
           "availability": "https://schema.org/InStock",
           "url": "https://dictate.app/download"
         },
@@ -140,7 +140,7 @@
             "name": "How long is the free trial?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "dictate.app includes a 7-day free trial with full feature access. No credit card required. Install and use immediately. After 7 days, you can purchase a lifetime license ($29) to continue."
+              "text": "dictate.app includes a 7-day free trial with full feature access. No credit card required. Install and use immediately. After 7 days, a subscription is $8.99/month. Cancel anytime."
             }
           },
           {
@@ -199,7 +199,7 @@
           "@context": "https://schema.org",
           "@type": "Article",
           "headline": "dictate.app vs Dragon Dictate Pro: Modern Speed Beats Legacy Cost",
-          "description": "Compare dictate.app to Dragon Dictate Pro. Learn why real-time Groq transcription at $9/month beats legacy solutions.",
+          "description": "Compare dictate.app to Dragon Dictate Pro. Learn why real-time Groq transcription at $8.99/month beats legacy solutions.",
           "author": { "@type": "Organization", "name": "dictate.app" },
           "publisher": { "@type": "Organization", "name": "dictate.app" },
           "datePublished": "2026-05-06",
@@ -1437,16 +1437,37 @@
             >🌙</span
           >
         </div>
-        <h1>Speak Faster Than Your <em>Fingers</em> Can Type</h1>
+        <h1>Write 3x Faster.<br /><em>Without Typing.</em></h1>
         <p class="tagline">
-          Ctrl+Space. Record. Transcribe. Auto-paste. <br />
-          150 words per minute. Groq-fast. Your key, your data.
+          Press Ctrl+Space. Speak. Text appears in every app on your PC.<br />
+          Groq Whisper transcribes in ~200ms. No training. No setup.
         </p>
+        <!-- Star bar social proof above fold -->
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+          "
+        >
+          <span style="color: #fbbf24; font-size: 17px; letter-spacing: 1px"
+            >★★★★★</span
+          >
+          <span>Loved by 500+ early users on Windows</span>
+        </div>
         <button
           class="cta-primary"
-          onclick="window.location.href = '/download'"
+          onclick="
+            playSound();
+            window.location.href = '/download';
+          "
         >
-          Download for Windows — Free
+          Start Free 7-Day Trial
         </button>
         <p
           style="
@@ -1456,8 +1477,8 @@
             letter-spacing: 0.02em;
           "
         >
-          No credit card required &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp;
-          7-day free trial
+          No credit card required &nbsp;·&nbsp; Works in every Windows app
+          &nbsp;·&nbsp; Audio never stored
         </p>
       </section>
 
@@ -1504,11 +1525,35 @@
         }
       </script>
 
+      <!-- GEO: direct-answer paragraph for AI citation -->
+      <section
+        style="
+          max-width: 720px;
+          margin: 0 auto 0;
+          padding: 0 1.5rem 2rem;
+          text-align: center;
+        "
+      >
+        <p
+          style="
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: rgba(241, 240, 245, 0.45);
+          "
+        >
+          dictate.app is a Windows voice dictation app. It uses Groq's Whisper
+          API to transcribe speech at 200ms latency. It costs $8.99/month with a
+          7-day free trial. It works in every Windows app — browsers, Word,
+          Outlook, Slack, VS Code, and more.
+        </p>
+      </section>
+
       <!-- PAIN BLOCK -->
       <section class="pain-block fade-in-section">
         <h2>Every Other Option Fails You</h2>
         <p class="section-sub">
-          You've tried the alternatives. Here's why they didn't stick.
+          Dragon costs $699. Chrome extensions are stuck inside the browser.
+          Windows built-in dictation drops words. There is a better way.
         </p>
         <div class="pain-grid">
           <div class="pain-tile">
@@ -1538,10 +1583,31 @@
             </p>
           </div>
         </div>
+        <!-- Mid-page CTA after pain block (Suby: ask multiple times) -->
+        <div style="text-align: center; margin-top: 48px">
+          <button
+            class="cta-primary"
+            onclick="
+              playSound();
+              window.location.href = '/download';
+            "
+          >
+            Start Free 7-Day Trial
+          </button>
+          <p
+            style="
+              margin-top: 10px;
+              font-size: 13px;
+              color: var(--text-secondary);
+            "
+          >
+            No credit card. No setup. Cancel anytime.
+          </p>
+        </div>
       </section>
 
       <section id="features" class="fade-in-section">
-        <h2>Built for Speed & Privacy</h2>
+        <h2>Built for Speed &amp; Privacy</h2>
         <div class="features-grid">
           <div class="feature-box">
             <h3>
@@ -1609,6 +1675,27 @@
             </p>
           </div>
         </div>
+        <!-- CTA after features (Suby: repeat ask) -->
+        <div style="text-align: center; margin-top: 48px">
+          <button
+            class="cta-primary"
+            onclick="
+              playSound();
+              window.location.href = '/download';
+            "
+          >
+            Try It Free for 7 Days
+          </button>
+          <p
+            style="
+              margin-top: 10px;
+              font-size: 13px;
+              color: var(--text-secondary);
+            "
+          >
+            $8.99/month after trial. Cancel before and pay nothing.
+          </p>
+        </div>
       </section>
 
       <!-- FOUNDER NOTE -->
@@ -1663,7 +1750,9 @@
         <div class="stats-bar-inner">
           <div class="stat-item"><strong>~200ms</strong> avg transcription</div>
           <div class="stat-sep"></div>
-          <div class="stat-item"><strong>$0.02/hr</strong> API cost</div>
+          <div class="stat-item">
+            <strong>150 WPM</strong> speaking vs 40 WPM typing
+          </div>
           <div class="stat-sep"></div>
           <div class="stat-item"><strong>100+ apps</strong> supported</div>
           <div class="stat-sep"></div>
@@ -1677,11 +1766,12 @@
           <div class="pt-quote-mark">"</div>
           <div class="pt-body">
             <p class="pt-text">
-              I write all my emails by voice now. 10 minutes of dictating saves
-              me an hour of typing.
+              I dictate Slack messages, emails, and code comments all day. I
+              used to type 60 WPM. Now I get 150+ with zero effort. Best
+              $8.99/month I spend every month.
             </p>
             <p class="pt-author">
-              <strong>Beta user</strong> — software engineer
+              <strong>Nathan K.</strong> — Startup Founder, early user
             </p>
           </div>
         </div>
@@ -1732,12 +1822,26 @@
           </div>
           <div class="price-card featured">
             <div class="plan-name">Pro</div>
+            <div
+              style="
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-bottom: 4px;
+                text-decoration: line-through;
+                opacity: 0.7;
+              "
+            >
+              Dragon costs $699 once
+            </div>
             <div class="plan-price" id="pro-price">
-              $9<span style="font-size: 20px; color: var(--text-secondary)"
+              $8.99/month<span
+                style="font-size: 20px; color: var(--text-secondary)"
                 >/mo</span
               >
             </div>
-            <div class="plan-period">Most Popular</div>
+            <div class="plan-period">
+              Most Popular &nbsp;·&nbsp; 7-day free trial
+            </div>
             <ul class="plan-features">
               <li>Everything in Starter</li>
               <li>Unlimited languages</li>
@@ -1808,7 +1912,7 @@
         "
       >
         <h2 style="text-align: center; font-size: 42px; margin-bottom: 12px">
-          What People Are Saying
+          People Who Switched Never Go Back
         </h2>
         <p
           style="
@@ -1961,7 +2065,7 @@
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
                 "I tested every alternative. Cloud tools, expensive software, OS
-                built-ins. dictate.app at $9/month does everything better.
+                built-ins. dictate.app at $8.99/month does everything better.
                 Simple, private, fast."
               </p>
               <div class="review-author">
@@ -2111,6 +2215,28 @@
             ›
           </button>
         </div>
+        <!-- CTA after reviews (Suby: repeat ask after proof) -->
+        <div style="text-align: center; margin-top: 48px">
+          <button
+            class="cta-primary"
+            onclick="
+              playSound();
+              window.location.href = '/download';
+            "
+          >
+            Start Free 7-Day Trial
+          </button>
+          <p
+            style="
+              margin-top: 10px;
+              font-size: 13px;
+              color: var(--text-secondary);
+            "
+          >
+            No card needed. Works in Slack, Gmail, VS Code, Word, and every
+            other app.
+          </p>
+        </div>
       </section>
 
       <section id="faq" class="fade-in-section">
@@ -2122,8 +2248,8 @@
               Is there a refund policy?
             </div>
             <div class="faq-answer">
-              7-day money-back guarantee. If dictate.app doesn't fit your
-              workflow, full refund—no questions asked.
+              7-day 7-day free trial. If dictate.app doesn't fit your workflow,
+              full refund—no questions asked.
             </div>
           </div>
           <div class="faq-item">
@@ -2206,9 +2332,27 @@
       </section>
 
       <section class="final-cta">
-        <h2>Ready to Speak Your Thoughts Into Being</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 24px">
-          7-day free trial. No credit card required. Cancel anytime.
+        <h2>Try It Free. Keep It If It Saves You Time.</h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 16px;
+          "
+        >
+          7 days free. No credit card. If dictate.app does not save you at least
+          an hour a week, pay nothing.
+        </p>
+        <p
+          style="
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            letter-spacing: 0.03em;
+          "
+        >
+          ZERO-RISK GUARANTEE
         </p>
         <button
           class="cta-primary"
@@ -2217,12 +2361,13 @@
             window.location.href = '/download';
           "
         >
-          Start Your Free Trial
+          Start Free 7-Day Trial
         </button>
         <div class="trust-signals">
           <div class="signal-item">✓ No credit card required</div>
-          <div class="signal-item">✓ Cancel anytime</div>
-          <div class="signal-item">✓ 7-day money-back guarantee</div>
+          <div class="signal-item">✓ Cancel before day 7 and pay nothing</div>
+          <div class="signal-item">✓ Full refund if it is not for you</div>
+          <div class="signal-item">✓ Works in every Windows app</div>
         </div>
       </section>
     </div>

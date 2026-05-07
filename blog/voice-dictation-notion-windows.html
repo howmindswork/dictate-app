@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation in Notion on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="Notion has no native voice input on Windows desktop. Here's how to dictate into any Notion page, database, or block using push-to-talk dictation in 2026."
+    />
+    <meta
+      name="keywords"
+      content="voice dictation notion windows, notion voice typing, dictate into notion, notion speech to text windows"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-notion-windows"
+    />
+    <meta property="og:title" content="Voice Dictation in Notion on Windows" />
+    <meta
+      property="og:description"
+      content="Notion has no native voice input on Windows desktop. Here's how to dictate into any Notion page using push-to-talk in 2026."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-notion-windows"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Voice Dictation in Notion on Windows" />
+    <meta
+      name="twitter:description"
+      content="Notion has no native voice input on Windows. Here's the fix."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation in Notion on Windows",
+        "description": "Notion has no native voice input on Windows desktop. Here's how to dictate into any Notion page, database, or block using push-to-talk dictation in 2026.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-dictation-notion-windows",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-dictation-notion-windows"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does Notion have voice dictation on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Notion's Windows desktop app has no built-in voice input. On mobile (iOS/Android), Notion inherits the device keyboard's mic button. On Windows desktop, you need a third-party tool like dictate.app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I dictate into Notion on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Install dictate.app, click inside any Notion text block, then hold your hotkey and speak. When you release, transcribed text is pasted at your cursor. It works in every Notion block type including pages, databases, and comments."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Win+H work in Notion on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sometimes. Win+H (Windows built-in voice typing) works inconsistently in Notion's Electron app. It frequently fails to inject text into the active block. dictate.app uses clipboard paste which is universal and never fails."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month after a 7-day free trial. No credit card is required to start the trial."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app store my audio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Audio is sent to Groq's Whisper API for transcription and discarded immediately. Nothing is stored on dictate.app servers."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg2: #0f0b18;
+        --accent: #c084fc;
+        --accent2: #818cf8;
+        --text: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --border: rgba(192, 132, 252, 0.2);
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Georgia, serif;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+      canvas#stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-brand {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-family: system-ui, sans-serif;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-cta {
+        background: var(--accent);
+        color: #0b0812 !important;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+      }
+      .post-tag {
+        font-family: system-ui, sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        line-height: 1.25;
+        margin-bottom: 1rem;
+        color: var(--text);
+      }
+      .post-meta {
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin: 2.5rem 0 1rem;
+        color: var(--text);
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin: 2rem 0 0.75rem;
+        color: var(--accent);
+      }
+      p {
+        margin-bottom: 1.25rem;
+        color: var(--text-secondary);
+      }
+      p strong {
+        color: var(--text);
+      }
+      ul,
+      ol {
+        margin: 1rem 0 1.5rem 1.5rem;
+        color: var(--text-secondary);
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+      .stat-box {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem 1.5rem;
+        margin: 1.5rem 0;
+        font-family: system-ui, sans-serif;
+      }
+      .stat-box .stat-num {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .stat-box .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-family: system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.15);
+        color: var(--accent);
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 600;
+      }
+      td {
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-secondary);
+      }
+      tr:hover td {
+        background: rgba(192, 132, 252, 0.05);
+      }
+      .cta-block {
+        margin: 3rem 0;
+        padding: 2rem;
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-align: center;
+      }
+      .cta-block p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+      }
+      .cta-btn {
+        display: inline-block;
+        background: var(--accent);
+        color: #0b0812;
+        font-family: system-ui, sans-serif;
+        font-weight: 700;
+        padding: 0.85rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: opacity 0.2s;
+      }
+      .cta-btn:hover {
+        opacity: 0.85;
+      }
+      .cta-sub {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 0.75rem;
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars"></canvas>
+    <nav>
+      <a href="https://dictate-app.pages.dev" class="nav-brand">dictate.app</a>
+      <div class="nav-links">
+        <a href="https://dictate-app.pages.dev">Home</a>
+        <a href="https://dictate-app.pages.dev/blog/">Blog</a>
+        <a href="https://dictate-app.pages.dev/download" class="nav-cta">Try Free</a>
+      </div>
+    </nav>
+    <main>
+      <div class="post-tag">Notion + Windows</div>
+      <h1>Voice Dictation in Notion on Windows</h1>
+      <div class="post-meta">May 2026 &nbsp;&middot;&nbsp; 6 min read</div>
+
+      <p>
+        Notion does not have built-in voice input on Windows desktop. If you
+        click the mic button on an iPhone, Notion inherits it from iOS. On a
+        Windows PC, you get nothing.
+      </p>
+      <p>
+        That is a problem. Notion users write thousands of words every week.
+        Daily notes, meeting summaries, project updates, database entries.
+        Typing all of it is slow.
+      </p>
+      <p>Here is how to fix it.</p>
+
+      <h2>Why Notion Has No Windows Voice Input</h2>
+      <p>
+        Notion is an Electron app. Electron wraps web code in a desktop shell.
+        Voice APIs that work in Chrome browsers do not always translate cleanly
+        to Electron desktop apps.
+      </p>
+      <p>
+        Windows has built-in voice typing via Win+H. But Win+H is inconsistent
+        in Electron apps. It frequently fails to inject text into the active
+        text block. Many Notion users have reported this. The text either lands
+        in the wrong place or does not appear at all.
+      </p>
+      <p>
+        The root cause: Win+H uses a text input hook that Electron sometimes
+        intercepts incorrectly.
+      </p>
+
+      <h2>The Fix: Clipboard-Based Dictation</h2>
+      <p>
+        dictate.app sidesteps the Electron text injection problem entirely.
+        Instead of trying to inject text through the input hook, it transcribes
+        your speech, puts the result on your clipboard, and simulates a paste
+        (Ctrl+V).
+      </p>
+      <p>
+        Clipboard paste works in every Electron app. Always. Notion, VS Code,
+        Slack, Discord. If Ctrl+V works, dictate.app works.
+      </p>
+
+      <div class="stat-box">
+        <div class="stat-num">200ms</div>
+        <div class="stat-label">
+          Time from releasing hotkey to text appearing in Notion
+        </div>
+      </div>
+
+      <h2>How to Set It Up</h2>
+      <ol>
+        <li>
+          Download dictate.app from
+          <a href="https://dictate-app.pages.dev/download" style="color: var(--accent)"
+            >dictate.app/download</a
+          >
+        </li>
+        <li>Install and launch. It runs in the system tray.</li>
+        <li>Click inside any Notion text block.</li>
+        <li>
+          Hold your hotkey (default: middle mouse button). Speak. Release.
+        </li>
+        <li>Text appears at your cursor.</li>
+      </ol>
+      <p>
+        No setup per-app. No Notion-specific configuration. It works the same in
+        every app you use.
+      </p>
+
+      <h2>Best Notion Use Cases</h2>
+
+      <h3>Daily Notes</h3>
+      <p>
+        The daily notes page is where dictation pays off most. You open it, hold
+        the hotkey, and brain-dump your morning thoughts. Speaking is three
+        times faster than typing. A 500-word morning note takes four minutes to
+        type. It takes 90 seconds to speak.
+      </p>
+
+      <h3>Meeting Notes</h3>
+      <p>
+        During a meeting, keep your Notion page open. Use push-to-talk to
+        capture key points as they happen. Short phrases. Names. Action items.
+        Push-to-talk is ideal here because you can speak in bursts without
+        triggering accidental transcription when others are talking.
+      </p>
+
+      <h3>Project Descriptions and README Blocks</h3>
+      <p>
+        Writing a project description is one of those tasks that takes 20
+        minutes because you keep second-guessing yourself. Speak it in two
+        minutes, then edit. The editing step is faster when you have something
+        to react to.
+      </p>
+
+      <h3>Database Properties</h3>
+      <p>
+        Notion database text fields work the same as any other text block.
+        Dictate into a description field, a notes property, or an inline
+        comment. The clipboard method handles all of them.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Works in Notion?</th>
+            <th>Latency</th>
+            <th>Push-to-Talk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Win+H (built-in)</td>
+            <td>Inconsistent</td>
+            <td>1-2 seconds</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Browser mic button</td>
+            <td>Web only</td>
+            <td>Variable</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>dictate.app</td>
+            <td>Yes, always</td>
+            <td>~200ms</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>The Speed Math</h2>
+      <p>
+        Average typing speed is 45 words per minute. Average speaking speed is
+        140 words per minute. If you write 2,000 words of Notion content per
+        week (daily notes, meeting summaries, project docs), that is 44 minutes
+        of typing versus 14 minutes of speaking.
+      </p>
+      <p>30 minutes saved per week. 26 hours per year. From one tool change.</p>
+
+      <div class="cta-block">
+        <p>
+          Try dictate.app free for 7 days. Works in Notion and every other
+          Windows app.
+        </p>
+        <a href="https://dictate-app.pages.dev/download" class="cta-btn">Download Free</a>
+        <div class="cta-sub">
+          $8.99/month after trial. No credit card required to start.
+        </div>
+      </div>
+
+      <h2>What It Does Not Do</h2>
+      <p>
+        dictate.app is a push-to-talk dictation tool. It does not control Notion
+        with voice commands. You cannot say "create a new page" or "add a
+        database row." It transcribes speech to text. Navigation and commands
+        still require keyboard and mouse.
+      </p>
+      <p>
+        If you want voice commands for Notion, that is a different category of
+        software (voice assistants, macro tools). dictate.app is for writing
+        faster, not replacing the keyboard entirely.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>
+        Audio is sent to Groq's Whisper API for transcription. Groq does not
+        store audio or train models on it. Nothing reaches dictate.app servers.
+        Your Notion content stays private.
+      </p>
+    </main>
+    <script>
+      const c = document.getElementById("stars"),
+        ctx = c.getContext("2d");
+      let stars = [];
+      function resize() {
+        c.width = innerWidth;
+        c.height = innerHeight;
+      }
+      function init() {
+        stars = Array.from({ length: 160 }, () => ({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.6 + 0.2,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.8 || s.o < 0.2) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      init();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        init();
+      });
+    </script>
+  </body>
+</html>

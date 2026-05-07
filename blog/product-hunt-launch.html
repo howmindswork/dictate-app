@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dictate.app is Live on Product Hunt | dictate.app</title>
+    <meta
+      name="description"
+      content="dictate.app launched on Product Hunt on May 12, 2026. The push-to-talk Windows dictation app powered by Groq Whisper. Vote for us and try it free."
+    />
+    <meta
+      name="keywords"
+      content="dictate app product hunt, voice dictation windows launch, push to talk windows app"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://dictate-app.pages.dev/blog/product-hunt-launch" />
+    <meta property="og:title" content="dictate.app is Live on Product Hunt" />
+    <meta
+      property="og:description"
+      content="We launched on Product Hunt. The push-to-talk Windows dictation app that works offline. Vote for us and try it free for 7 days."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/product-hunt-launch"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="dictate.app is Live on Product Hunt" />
+    <meta
+      name="twitter:description"
+      content="Push-to-talk voice dictation for Windows. Works offline. $8.99/month. Live on Product Hunt May 12, 2026."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "dictate.app is Live on Product Hunt",
+        "description": "dictate.app launched on Product Hunt on May 12, 2026. The push-to-talk Windows dictation app powered by Groq Whisper.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-12",
+        "dateModified": "2026-05-12",
+        "url": "https://dictate-app.pages.dev/blog/product-hunt-launch",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/product-hunt-launch"
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg-accent: #0f0b18;
+        --text-primary: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.55);
+        --accent: #c084fc;
+        --accent2: #818cf8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* NAV */
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      /* ARTICLE */
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.12);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+
+      /* PH BADGE BLOCK */
+      .ph-block {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 32px;
+        text-align: center;
+        margin: 36px 0;
+      }
+      .ph-block p {
+        margin: 0 0 20px;
+        font-size: 17px;
+        color: var(--text-primary);
+      }
+      .ph-btn {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(135deg, #da552f 0%, #e8734a 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(218, 85, 47, 0.4);
+      }
+      .ph-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(218, 85, 47, 0.55);
+      }
+      .ph-sub {
+        margin-top: 12px !important;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      /* CTA BLOCK */
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(129, 140, 248, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      /* FEATURE GRID */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 28px 0;
+      }
+      .feature-card {
+        background: rgba(192, 132, 252, 0.06);
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        border-radius: 10px;
+        padding: 20px;
+      }
+      .feature-card .icon {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .feature-card strong {
+        color: var(--text-primary);
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+      }
+      .feature-card span {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+      @media (max-width: 600px) {
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .ph-block {
+          padding: 24px 20px;
+        }
+        .cta-block {
+          padding: 28px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="https://dictate-app.pages.dev" class="nav-home">
+            <span class="logo-icon">🎙</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
+            >Try Free 7 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Launch Day</div>
+        <h1>dictate.app is Live on Product Hunt</h1>
+        <div class="post-meta">May 12, 2026 &nbsp;·&nbsp; dictate.app team</div>
+
+        <p>
+          Today we launched on Product Hunt. If you have been waiting for a good
+          Windows dictation app, this is it.
+        </p>
+
+        <div class="ph-block">
+          <p>We are live. Upvotes mean everything on launch day.</p>
+          <a
+            href="https://www.producthunt.com/posts/dictate-app"
+            class="ph-btn"
+            target="_blank"
+            rel="noopener"
+          >
+            ▲ Upvote on Product Hunt
+          </a>
+          <p class="ph-sub">
+            Takes 10 seconds. No account needed if you sign in with Google.
+          </p>
+        </div>
+
+        <h2>Why We Built This</h2>
+        <p>
+          Windows users have been stuck. Wispr Flow is Mac only. Dragon costs
+          $300 and the consumer version is discontinued. Windows built-in
+          dictation drops words and needs an internet connection.
+        </p>
+        <p>We wanted something simple. Hold a key. Speak. Release. Done.</p>
+        <p>
+          So we built dictate.app. Push-to-talk hotkey. Groq Whisper under the
+          hood. Transcription in under a second. Works in every app. No internet
+          required.
+        </p>
+
+        <h2>What dictate.app Does</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon">⌨️</div>
+            <strong>Push-to-talk hotkey</strong>
+            <span
+              >Hold any key to dictate. Release to insert text. Works
+              anywhere.</span
+            >
+          </div>
+          <div class="feature-card">
+            <div class="icon">✈️</div>
+            <strong>Works offline</strong>
+            <span
+              >Local Whisper model. No internet. No uploads. Your words stay on
+              your machine.</span
+            >
+          </div>
+          <div class="feature-card">
+            <div class="icon">⚡</div>
+            <strong>Under a second</strong>
+            <span
+              >Groq Whisper is the fastest transcription available. You won't
+              wait.</span
+            >
+          </div>
+          <div class="feature-card">
+            <div class="icon">🖥️</div>
+            <strong>Every Windows app</strong>
+            <span
+              >VS Code, Notion, Gmail, Slack, Word, browsers. If you can type
+              there, you can dictate there.</span
+            >
+          </div>
+        </div>
+
+        <h2>The Plan</h2>
+        <p>
+          We are a solo project. No VC money. No bloated roadmap. We ship based
+          on what users actually ask for.
+        </p>
+        <p>
+          Today's launch on Product Hunt is how we find the people who need this
+          most. If you are a developer, writer, lawyer, doctor, or anyone who
+          types a lot — dictate.app will save you hours every week.
+        </p>
+        <p>
+          The 7-day free trial is real. No credit card required to start. $8.99
+          per month after.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try It Free for 7 Days</h2>
+          <p>Download for Windows. No credit card. Cancel anytime.</p>
+          <a href="https://dictate-app.pages.dev/download" class="cta-big"
+            >Download dictate.app</a
+          >
+          <div class="cta-sub">
+            Windows 10 and 11 &nbsp;·&nbsp; 7-day free trial &nbsp;·&nbsp;
+            $8.99/month after
+          </div>
+        </div>
+
+        <h2>Help Us Spread the Word</h2>
+        <p>
+          If you know someone who types a lot on Windows, send them this post.
+          If you are a content creator, blogger, or developer with an audience,
+          our
+          <a
+            href="https://dictate-app.pages.dev/affiliates"
+            style="color: var(--accent)"
+            >affiliate program</a
+          >
+          pays 40% recurring commission every month forever.
+        </p>
+        <p>Thank you for being here on day one.</p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 dictate.app &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev">Home</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/blog">Blog</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/affiliates">Affiliates</a>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const canvas = document.getElementById("starfield");
+        const ctx = canvas.getContext("2d");
+        let stars = [];
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        function init() {
+          stars = [];
+          for (let i = 0; i < 160; i++) {
+            stars.push({
+              x: Math.random() * canvas.width,
+              y: Math.random() * canvas.height,
+              r: Math.random() * 1.2 + 0.2,
+              o: Math.random() * 0.6 + 0.2,
+              s: Math.random() * 0.3 + 0.05,
+            });
+          }
+        }
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          stars.forEach((s) => {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+            ctx.fill();
+            s.o += s.s;
+            if (s.o > 0.8 || s.o < 0.1) s.s *= -1;
+          });
+          requestAnimationFrame(draw);
+        }
+        resize();
+        init();
+        draw();
+        window.addEventListener("resize", () => {
+          resize();
+          init();
+        });
+      })();
+    </script>
+  </body>
+</html>

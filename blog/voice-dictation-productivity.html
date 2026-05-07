@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      How Voice Dictation Saves 2+ Hours Per Day for Knowledge Workers |
+      dictate.app
+    </title>
+    <meta
+      name="description"
+      content="Knowledge workers type millions of words a year. Speaking is 3x faster than typing. Here's how voice dictation saves 2+ hours per day — and how to build the habit in 2026."
+    />
+    <meta
+      name="keywords"
+      content="voice dictation productivity, dictate instead of type, speak to text productivity, voice typing productivity 2026"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-productivity"
+    />
+    <meta
+      property="og:title"
+      content="How Voice Dictation Saves 2+ Hours Per Day for Knowledge Workers"
+    />
+    <meta
+      property="og:description"
+      content="Speaking is 3x faster than typing. Here's how to use voice dictation to reclaim 2+ hours every workday — with practical setup using dictate.app."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-productivity"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="How Voice Dictation Saves 2+ Hours Per Day for Knowledge Workers"
+    />
+    <meta
+      name="twitter:description"
+      content="The average knowledge worker spends 4+ hours typing per day. Speaking is 3x faster. Here's how to close that gap."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How Voice Dictation Saves 2+ Hours Per Day for Knowledge Workers",
+        "description": "Knowledge workers type millions of words a year. Speaking is 3x faster than typing. Here's how voice dictation saves 2+ hours per day — and how to build the habit in 2026.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-dictation-productivity",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-dictation-productivity"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much faster is dictation than typing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The average person types at 40-60 words per minute and speaks at 130-150 words per minute. That's a 2.5 to 3x speed advantage for voice dictation on prose-based work like emails, messages, notes, and documents."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What tasks are best suited for voice dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Email replies, Slack and Teams messages, meeting notes, first drafts of documents, code comments and docstrings, and task capture. These are all natural-language tasks where speaking is faster than typing. Code syntax itself is faster to type."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to build a voice dictation habit?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most people feel comfortable with push-to-talk dictation within 1-2 weeks of daily use. The habit forms fastest when you attach it to high-frequency tasks you already do — like replying to emails or writing Slack messages."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best voice dictation setup for productivity?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A low-latency push-to-talk dictation tool paired with a hotkey you can press without looking. dictate.app uses Groq-powered Whisper for ~200ms latency and works in every Windows app. The low latency is critical — high-latency tools break concentration and don't stick as habits."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .stat-row {
+        display: flex;
+        gap: 16px;
+        margin: 28px 0;
+        flex-wrap: wrap;
+      }
+      .stat-box {
+        flex: 1;
+        min-width: 140px;
+        background: rgba(192, 132, 252, 0.07);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 10px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .stat-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 20px 24px;
+        margin: 28px 0;
+      }
+      .tip-box p {
+        margin: 0;
+      }
+      .tip-box .tip-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .steps-list {
+        counter-reset: steps;
+        padding-left: 0;
+        list-style: none;
+      }
+      .steps-list li {
+        counter-increment: steps;
+        padding-left: 48px;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .steps-list li::before {
+        content: counter(steps);
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #c084fc, #f472b6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: white;
+        line-height: 28px;
+        text-align: center;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .faq-section {
+        margin: 48px 0 0;
+      }
+      .faq-item {
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 20px 0;
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-q {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+      }
+      .faq-a {
+        color: var(--text-secondary);
+        font-size: 15px;
+        margin: 0;
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .stat-row {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Productivity · May 2026</div>
+        <h1>
+          How Voice Dictation Saves 2+ Hours Per Day for Knowledge Workers
+        </h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          The average knowledge worker spends 4 to 5 hours per day producing
+          written output. Emails. Slack messages. Documents. Meeting notes.
+          Reports. Task descriptions. All typed, character by character.
+        </p>
+
+        <p>
+          The average person types at 40 to 60 words per minute. The same person
+          speaks at 130 to 150 words per minute. That's a 3x gap. Applied across
+          4 hours of daily writing, closing that gap means reclaiming 2 to 2.5
+          hours every workday.
+        </p>
+
+        <p>
+          Voice dictation closes the gap. But only when it's set up correctly
+          and used for the right tasks. This post covers the math, the use
+          cases, and how to build the habit.
+        </p>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num">40–60</div>
+            <div class="stat-desc">Words per minute typing (average)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">130–150</div>
+            <div class="stat-desc">Words per minute speaking (average)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2+ hrs</div>
+            <div class="stat-desc">Daily time savings at 3x speed</div>
+          </div>
+        </div>
+
+        <h2>The Math Behind 2 Hours</h2>
+
+        <p>
+          Let's be concrete. A typical knowledge worker writes roughly 6,000 to
+          8,000 words per day across all written channels. At 50 WPM typing,
+          that's 2 to 2.7 hours of active typing time. At 140 WPM speaking, the
+          same output takes 43 to 57 minutes.
+        </p>
+
+        <p>
+          The savings aren't 2 hours of free time — some of that time is
+          thinking, not typing. But the compressible portion — the time spent
+          physically converting thoughts into keystrokes — is where dictation
+          creates leverage.
+        </p>
+
+        <p>
+          Conservative estimate: if dictation is 2x faster than typing
+          (accounting for some correction overhead), and you spend 4 hours
+          typing per day, you save 2 hours. That's 10 hours per week. 40 hours
+          per month. 480 hours per year.
+        </p>
+
+        <h2>The Best Use Cases for Voice Dictation</h2>
+
+        <p>
+          Not every task benefits equally. Dictation works best for
+          natural-language output. It's slower for code syntax, spreadsheet
+          data, and anything with complex formatting.
+        </p>
+
+        <h3>Email Replies</h3>
+
+        <p>
+          The highest-ROI scenario. Most emails are conversational prose. They
+          take 3 to 8 minutes to type. Dictating the same email takes 1 to 3
+          minutes. Most knowledge workers send 30 to 50 emails per day. Even if
+          only half are long enough to benefit from dictation, that's 15 minutes
+          of savings per day on email alone.
+        </p>
+
+        <h3>Slack and Teams Messages</h3>
+
+        <p>
+          The cumulative cost of typing chat messages is underestimated. Workers
+          send hundreds of short messages per day. Any message longer than two
+          sentences is faster to dictate. The lower bar means you can switch to
+          dictation without much deliberation — it's obvious when a message is
+          worth it.
+        </p>
+
+        <h3>Meeting Notes</h3>
+
+        <p>
+          Capturing key points during a meeting while listening is one of the
+          best use cases for push-to-talk dictation. You can hold the key, speak
+          a quick summary of what was just said, and release — without taking
+          your eyes off the speaker or the screen. The result is more complete
+          notes with less effort.
+        </p>
+
+        <h3>First Drafts of Documents</h3>
+
+        <p>
+          Articles, reports, proposals, and memos are all faster to dictate in a
+          first pass. The editing happens afterward at the keyboard. Speaking a
+          first draft at 140 WPM and then editing it is typically faster than
+          typing the polished version directly.
+        </p>
+
+        <h3>Code Comments and Documentation</h3>
+
+        <p>
+          Developers spend significant time on non-code prose: comments,
+          docstrings, README sections, PR descriptions, commit messages. All of
+          these are natural language. A developer who switches these to voice
+          dictation while leaving actual code typed can save 30 to 60 minutes
+          per day without changing their coding workflow.
+        </p>
+
+        <h3>Task Capture</h3>
+
+        <p>
+          When a task or idea occurs to you, capturing it quickly matters.
+          Holding a hotkey and speaking "add error handling to the payment flow
+          and test with a declined card" into your task manager is faster than
+          navigating to it and typing.
+        </p>
+
+        <div class="tip-box">
+          <span class="tip-label">Where dictation loses</span>
+          <p>
+            Code syntax, URLs, passwords, anything with special characters,
+            precise numeric sequences, and any output that requires formatting
+            as you type. For these, the keyboard is faster. Dictation and typing
+            are complements, not replacements.
+          </p>
+        </div>
+
+        <h2>How to Build the Dictation Habit</h2>
+
+        <p>
+          Most people try dictation once, find it slightly awkward, and abandon
+          it before the habit forms. The awkward phase is real but short. Here's
+          how to get through it.
+        </p>
+
+        <ol class="steps-list">
+          <li>
+            <strong>Start with email.</strong> Every time you open an email to
+            reply, dictate the first version. Don't aim for perfect. Just speak
+            the reply and send it. Do this for one week without exception.
+          </li>
+          <li>
+            <strong>Add Slack messages in week two.</strong> Any message longer
+            than one sentence — dictate it. Shorter than one sentence — type it.
+            This creates a clear rule that removes decision fatigue.
+          </li>
+          <li>
+            <strong>Add meeting notes in week three.</strong> Use push-to-talk
+            to capture key points during calls. This practice builds fluency
+            with short, fast dictations — the pattern you'll use most.
+          </li>
+          <li>
+            <strong>Add documents and drafts after that.</strong> Once
+            push-to-talk feels automatic, apply it to longer-form writing.
+            Dictate a first pass, then edit by keyboard.
+          </li>
+        </ol>
+
+        <p>
+          The reason for this staggered approach: each stage builds the muscle
+          memory needed for the next. Email is low-stakes. If the dictation
+          comes out wrong, you fix one sentence. By the time you get to long
+          documents, the hotkey is automatic and you're not thinking about
+          triggering it.
+        </p>
+
+        <h2>The Tool Setup That Makes the Habit Stick</h2>
+
+        <p>
+          The tool matters more than most people realize. The two variables that
+          determine whether a dictation habit sticks are
+          <strong>latency</strong> and <strong>reliability</strong>.
+        </p>
+
+        <p>
+          <strong>Latency:</strong> If there's a 2-second wait after every
+          dictation, the habit breaks down. Your working memory is short. A long
+          pause causes you to lose the next thought. Tools with 1 to 2 second
+          latency — like Windows Voice Typing — fail this test for
+          high-frequency use. Tools with ~200ms latency, like dictate.app using
+          Groq's Whisper, pass it.
+        </p>
+
+        <p>
+          <strong>Reliability:</strong> If the tool fails in VS Code, or doesn't
+          work in Slack, or sometimes doesn't capture the hotkey, you'll stop
+          trusting it and stop using it. The tool needs to work identically
+          everywhere.
+        </p>
+
+        <p>
+          dictate.app was built for this: push-to-talk with a configurable
+          global hotkey, ~200ms paste via Groq Whisper, clipboard-based
+          injection that works in every app on Windows. No configuration per
+          app. No exceptions.
+        </p>
+
+        <h2>Setting Up dictate.app for Productivity</h2>
+
+        <ol class="steps-list">
+          <li>
+            <strong>Download and install</strong> from
+            <a href="https://dictate-app.pages.dev/download"
+              >dictate.app/download</a
+            >
+          </li>
+          <li>
+            <strong>Choose your hotkey.</strong> Pick something you can press
+            without looking. Common choices: Ctrl+Space, side mouse button, a
+            dedicated macro key.
+          </li>
+          <li>
+            <strong>Run the 5-minute test.</strong> Open your email client.
+            Reply to a message using only the hotkey to dictate. If it works
+            smoothly, you're ready.
+          </li>
+          <li>
+            <strong>Follow the staggered habit protocol above.</strong> One week
+            per stage. Don't rush.
+          </li>
+        </ol>
+
+        <div class="tip-box">
+          <span class="tip-label">Microphone matters</span>
+          <p>
+            Whisper handles noise well but accuracy improves with a close
+            microphone. A $30 headset with the mic 3 to 4 inches from your mouth
+            will outperform most desk microphones at 2 feet. If you're seeing
+            more errors than expected, check your mic placement before anything
+            else.
+          </p>
+        </div>
+
+        <h2>What to Expect After 30 Days</h2>
+
+        <p>
+          <strong>Week 1:</strong> Slightly awkward. You'll pause mid-sentence,
+          forget whether recording is active, and occasionally dictate into the
+          wrong app. Normal. Push through.
+        </p>
+
+        <p>
+          <strong>Week 2:</strong> The hotkey becomes automatic. You stop
+          thinking about it. Errors are lower because you've found your rhythm.
+        </p>
+
+        <p>
+          <strong>Week 3:</strong> You start reaching for the hotkey without
+          deciding to. The habit is forming.
+        </p>
+
+        <p>
+          <strong>Month 2+:</strong> Most users report 40 to 60% reduction in
+          time spent on written communication. Some developers report dictating
+          70 to 80% of their prose output within 6 weeks.
+        </p>
+
+        <p>
+          The savings compound. Every week you use dictation is a week of habit
+          reinforcement. After two months, typing a long email by hand starts to
+          feel slow.
+        </p>
+
+        <div class="cta-block">
+          <h2>Start Saving 2 Hours Per Day</h2>
+          <p>
+            30-day free trial. No account. No credit card. Install dictate.app
+            and start the habit today.
+          </p>
+          <a
+            href="https://github.com/howmindswork/dictate-electron/releases/download/v0.1.0/dictate.app-Setup-0.1.0.exe"
+            class="cta-big"
+            >Download dictate.app for Windows →</a
+          >
+          <p class="cta-sub">
+            No credit card &nbsp;·&nbsp; $8.99/month after 30-day trial
+            &nbsp;·&nbsp;
+            <a href="https://dictate-app.pages.dev/download">More options</a>
+          </p>
+        </div>
+
+        <div class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+
+          <div class="faq-item">
+            <div class="faq-q">How much faster is dictation than typing?</div>
+            <p class="faq-a">
+              The average person types at 40-60 words per minute and speaks at
+              130-150 words per minute. That's a 2.5 to 3x speed advantage for
+              voice dictation on prose-based work like emails, messages, notes,
+              and documents.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              What tasks are best suited for voice dictation?
+            </div>
+            <p class="faq-a">
+              Email replies, Slack and Teams messages, meeting notes, first
+              drafts of documents, code comments and docstrings, and task
+              capture. These are all natural-language tasks where speaking is
+              faster than typing. Code syntax itself is faster to type.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              How long does it take to build a voice dictation habit?
+            </div>
+            <p class="faq-a">
+              Most people feel comfortable with push-to-talk dictation within
+              1-2 weeks of daily use. The habit forms fastest when you attach it
+              to high-frequency tasks you already do — like replying to emails
+              or writing Slack messages.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              What is the best voice dictation setup for productivity?
+            </div>
+            <p class="faq-a">
+              A low-latency push-to-talk dictation tool paired with a hotkey you
+              can press without looking. dictate.app uses Groq-powered Whisper
+              for ~200ms latency and works in every Windows app. The low latency
+              is critical — high-latency tools break concentration and don't
+              stick as habits.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>

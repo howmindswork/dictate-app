@@ -19,7 +19,8 @@
 const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/8x2aEX7ree937fw6A3dwc0l";
 const COMMISSION_RATE = 0.4;
 const COOKIE_DAYS = 30;
-const CORS_ORIGIN = "https://dictate.app";
+const CORS_ORIGIN = "*"; // Allow all origins — worker is a public API endpoint
+const WORKER_BASE_URL = "https://affiliate-worker.howmindswork.workers.dev";
 
 const TRIAL_WORKER_URL = "https://trial-worker.howmindswork.workers.dev";
 const INTERNAL_SECRET = "DICTATE_INTERNAL_2026";
@@ -115,7 +116,8 @@ async function handleSignup(request, env) {
       success: true,
       message: "Already registered.",
       ref_code: existing,
-      dashboard_url: `https://affiliate-worker.dictate-app.workers.dev/api/affiliate-dashboard/${existing}`,
+      affiliate_link: `https://dictate.app/go/${existing}`,
+      dashboard_url: `${WORKER_BASE_URL}/api/affiliate-dashboard/${existing}`,
     });
   }
 
@@ -148,12 +150,15 @@ async function handleSignup(request, env) {
   // Initialise conversions list
   await env.AFFILIATES.put(`conversions:${ref_code}`, JSON.stringify([]));
 
+  // Send confirmation email to affiliate
+  await sendAffiliateConfirmationEmail(email, first_name, ref_code, env);
+
   return jsonResponse({
     success: true,
-    message: "Application received. We'll email you within 24 hours.",
+    message: "Application received. Check your email for your affiliate link.",
     ref_code,
     affiliate_link: `https://dictate.app/go/${ref_code}`,
-    dashboard_url: `https://affiliate-worker.dictate-app.workers.dev/api/affiliate-dashboard/${ref_code}`,
+    dashboard_url: `${WORKER_BASE_URL}/api/affiliate-dashboard/${ref_code}`,
   });
 }
 
@@ -467,6 +472,114 @@ async function deliverLicenseKey(email, env, stripeSessionId) {
     await sendLicenseEmail(email, key, env);
   } catch (e) {
     console.error("deliverLicenseKey error:", e);
+  }
+}
+
+async function sendAffiliateConfirmationEmail(email, firstName, refCode, env) {
+  const resendKey = env.RESEND_API_KEY;
+  if (!resendKey) {
+    console.error(
+      "RESEND_API_KEY not set — skipping affiliate confirmation email",
+    );
+    return;
+  }
+
+  const affiliateLink = `https://dictate.app/go/${refCode}`;
+  const dashboardUrl = `${WORKER_BASE_URL}/api/affiliate-dashboard/${refCode}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to the dictate.app Affiliate Program</title>
+</head>
+<body style="margin:0;padding:0;background:#0b0812;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0b0812;padding:40px 20px;">
+  <tr>
+    <td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#111;border-radius:12px;overflow:hidden;border:1px solid #222;">
+        <!-- Header -->
+        <tr>
+          <td style="padding:36px 40px 28px;border-bottom:1px solid #1e1e1e;">
+            <p style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;">dictate.app</p>
+            <p style="margin:8px 0 0;font-size:14px;color:#666;">Affiliate Program</p>
+          </td>
+        </tr>
+        <!-- Body -->
+        <tr>
+          <td style="padding:36px 40px;">
+            <p style="margin:0 0 20px;font-size:16px;color:#bbb;line-height:1.6;">
+              Hey ${firstName}, you're in.
+            </p>
+            <p style="margin:0 0 24px;font-size:15px;color:#bbb;line-height:1.6;">
+              Your affiliate application has been received. Here's your unique affiliate link — start sharing it now and earn <strong style="color:#fff;">40% recurring commission</strong> on every sale.
+            </p>
+            <!-- Affiliate link block -->
+            <div style="background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:20px 24px;margin:0 0 28px;text-align:center;">
+              <p style="margin:0 0 6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#555;">Your Affiliate Link</p>
+              <p style="margin:0;font-size:16px;font-weight:700;color:#c084fc;font-family:'Courier New',monospace;word-break:break-all;">${affiliateLink}</p>
+            </div>
+            <!-- Ref code -->
+            <div style="background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:16px 24px;margin:0 0 28px;text-align:center;">
+              <p style="margin:0 0 4px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#555;">Your Ref Code</p>
+              <p style="margin:0;font-size:18px;font-weight:700;letter-spacing:2px;color:#e8e8e8;font-family:'Courier New',monospace;">${refCode}</p>
+            </div>
+            <!-- Details -->
+            <p style="margin:0 0 12px;font-size:13px;font-weight:600;color:#888;letter-spacing:0.5px;text-transform:uppercase;">Program Details</p>
+            <ul style="margin:0 0 28px;padding:0 0 0 20px;color:#999;font-size:14px;line-height:2.2;">
+              <li><strong style="color:#ccc;">40% recurring commission</strong> — every charge, every renewal</li>
+              <li><strong style="color:#ccc;">30-day cookie</strong> — credited for 30 days after any click</li>
+              <li><strong style="color:#ccc;">Monthly payouts</strong> — via PayPal on the 1st (min. $20)</li>
+            </ul>
+            <!-- Dashboard CTA -->
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="border-radius:8px;background:#c084fc;">
+                  <a href="${dashboardUrl}" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:600;color:#fff;text-decoration:none;">View Your Dashboard</a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0;font-size:13px;color:#666;line-height:1.5;">
+              Bookmark your dashboard to check clicks, conversions, and earnings any time. No login required.
+            </p>
+          </td>
+        </tr>
+        <!-- Footer -->
+        <tr>
+          <td style="padding:20px 40px;border-top:1px solid #1a1a1a;">
+            <p style="margin:0;font-size:12px;color:#444;line-height:1.6;">
+              Questions? Reply to this email or reach us at <a href="mailto:dictate@howmindswork.org" style="color:#666;">dictate@howmindswork.org</a>.<br>
+              You're receiving this because you applied to the dictate.app affiliate program.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>`;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${resendKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "dictate.app Affiliates <dictate@howmindswork.org>",
+      to: [email],
+      subject: `You're in — your dictate.app affiliate link is ready`,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("Affiliate confirmation email failed:", err);
+  } else {
+    console.log("Affiliate confirmation email sent to:", email);
   }
 }
 

@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice to Text in Microsoft Word on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="Word's built-in dictation requires Microsoft 365 and internet. dictate.app works in Word without M365, transcribes offline, and is 3x faster with Groq Whisper."
+    />
+    <meta
+      name="keywords"
+      content="voice to text Microsoft Word Windows, voice dictation Word, Word dictation without Microsoft 365"
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-to-text-microsoft-word-windows"
+    />
+    <meta
+      property="og:title"
+      content="Voice to Text in Microsoft Word on Windows"
+    />
+    <meta
+      property="og:description"
+      content="Word's built-in dictation requires Microsoft 365 and internet. dictate.app works in Word without M365, transcribes offline, and is faster."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-to-text-microsoft-word-windows"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Voice to Text in Microsoft Word on Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Word's built-in dictation requires Microsoft 365. dictate.app works in Word without a subscription, faster."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice to Text in Microsoft Word on Windows",
+        "description": "Word's built-in dictation requires Microsoft 365 and internet. dictate.app works in Word without M365, transcribes via Groq Whisper, and is faster.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-to-text-microsoft-word-windows",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-to-text-microsoft-word-windows"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does Microsoft Word have built-in voice dictation on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, but only with a Microsoft 365 subscription. Word's built-in Dictate feature requires an active M365 account and an internet connection. It does not work in perpetual license versions of Word (2019, 2021)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use voice dictation in Word without Microsoft 365?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works in Microsoft Word regardless of whether you have Microsoft 365. It is a separate Windows app that pastes transcribed text via clipboard into whatever text field your cursor is in, including any version of Word."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is dictate.app faster than Word's built-in dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app uses Groq's LPU hardware for transcription at approximately 200ms latency. Word's built-in dictation routes through Microsoft Azure and typically has 500ms-2 second latency depending on server load. dictate.app is generally faster."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What versions of Microsoft Word does dictate.app work with?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app works with all versions of Microsoft Word on Windows: Word 2016, 2019, 2021, and Word for Microsoft 365. It also works in the web version of Word (Word Online) accessed through a browser."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month with a 7-day free trial. No credit card required to start. It works on Windows 10 and Windows 11."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg-accent: #0f0b18;
+        --text-primary: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --accent: #c084fc;
+        --accent2: #818cf8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.12);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 28px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.12);
+        color: var(--accent);
+        font-weight: 700;
+        text-align: left;
+        padding: 12px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+      }
+      td {
+        padding: 10px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.1);
+        color: var(--text-secondary);
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .check {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .cross {
+        color: #f87171;
+      }
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin: 24px 0;
+      }
+      .tip-box strong {
+        color: var(--accent);
+      }
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(129, 140, 248, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a class="nav-home" href="https://dictate-app.pages.dev">
+            <span class="logo-icon">🎙</span> dictate.app
+          </a>
+          <a class="cta-nav" href="https://dictate-app.pages.dev/download"
+            >Try Free 7 Days</a
+          >
+        </nav>
+      </header>
+      <article>
+        <span class="post-label">How-To</span>
+        <h1>Voice to Text in Microsoft Word on Windows</h1>
+        <p class="post-meta">
+          dictate.app &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; 6 min read
+        </p>
+
+        <p>
+          Microsoft Word has a built-in Dictate button. It only works if you pay
+          for Microsoft 365. And even then, it is slower and less accurate than
+          it needs to be.
+          <strong
+            >Here is how to get fast voice dictation in Word without those
+            limitations.</strong
+          >
+        </p>
+
+        <h2>Word's Built-In Dictation: The Catch</h2>
+        <p>
+          Word's Dictate feature lives in the Home ribbon. Click the microphone
+          icon and start speaking. It works reasonably well for basic
+          transcription.
+        </p>
+        <p>But it has three problems that frustrate everyday users:</p>
+        <ul>
+          <li>
+            <strong>Microsoft 365 required.</strong> If you bought Word 2019 or
+            Word 2021 as a one-time purchase, the Dictate button is grayed out.
+            You need an active M365 subscription to access it.
+          </li>
+          <li>
+            <strong>Internet required.</strong> Word sends your audio to
+            Microsoft Azure for processing. No internet means no dictation, even
+            for a document you are writing offline.
+          </li>
+          <li>
+            <strong>Latency.</strong> Azure processing adds 500ms to 2 seconds
+            of delay depending on server load. That pause interrupts the flow of
+            dictating naturally.
+          </li>
+        </ul>
+
+        <h2>How dictate.app Works in Microsoft Word</h2>
+        <p>
+          dictate.app is a Windows desktop app that runs independently from
+          Word. It captures your speech, sends it to Groq Whisper for
+          transcription at 200ms latency, and pastes the result via clipboard
+          into whatever text field has focus.
+        </p>
+        <p>
+          In practice: click in your Word document where you want text to
+          appear. Hold your hotkey. Speak. Release. Text appears.
+        </p>
+        <p>
+          It works in Word 2016, 2019, 2021, and Microsoft 365. It works in the
+          desktop app and in Word Online.
+          <strong
+            >No M365 subscription required. No internet dependency for the Word
+            portion.</strong
+          >
+        </p>
+
+        <div class="tip-box">
+          <strong>Tip:</strong> Set your hotkey to something you can hold
+          comfortably for extended dictation. Many users choose Ctrl+Shift+Space
+          or a mouse side button. The key should be easy to hold without
+          fatiguing your hand.
+        </div>
+
+        <h2>Speed Comparison</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Speed</th>
+                <th>Requires M365</th>
+                <th>Latency</th>
+                <th>Push-to-Talk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Typing</td>
+                <td>40-60 WPM</td>
+                <td><span class="check">No</span></td>
+                <td>None</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>Word Dictate (M365)</td>
+                <td>90-120 WPM</td>
+                <td><span class="cross">Yes</span></td>
+                <td>500ms-2s</td>
+                <td><span class="cross">No</span></td>
+              </tr>
+              <tr>
+                <td>dictate.app</td>
+                <td>130-160 WPM</td>
+                <td><span class="check">No</span></td>
+                <td>~200ms</td>
+                <td><span class="check">Yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Best Uses in Microsoft Word</h2>
+        <h3>Long-Form Documents</h3>
+        <p>
+          Reports, proposals, essays, technical documentation. Anything over 500
+          words is significantly faster to speak than type. Dictate a rough
+          draft, then edit. First drafts always need editing anyway.
+        </p>
+
+        <h3>Emails via Outlook</h3>
+        <p>
+          dictate.app works in Outlook the same way it works in Word. Hold
+          hotkey, speak the email body, release. The same workflow applies
+          across every Office application.
+        </p>
+
+        <h3>Meeting Notes in OneNote</h3>
+        <p>
+          OneNote is part of Office. dictate.app works there too. Right after a
+          meeting, dictate your notes while the discussion is fresh. Faster than
+          typing, more complete than relying on memory.
+        </p>
+
+        <h3>Templates and Repetitive Text</h3>
+        <p>
+          If you fill out similar documents repeatedly, voice is faster than
+          typing the same phrases. Dictate the variable content, use keyboard
+          shortcuts for the boilerplate.
+        </p>
+
+        <h2>What About Voice Commands?</h2>
+        <p>
+          dictate.app transcribes speech to text. It does not respond to voice
+          commands like "select all" or "bold that." For voice-controlled
+          editing, Word's built-in Dictate handles some commands, or you can
+          look at Talon for full voice control.
+        </p>
+        <p>
+          For most people, the bottleneck is getting words into the document,
+          not editing them. Fix the input speed first.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try It in Word Today</h2>
+          <p>
+            Works in every version of Microsoft Word on Windows. 200ms
+            transcription. No M365 required.
+          </p>
+          <a class="cta-big" href="https://dictate-app.pages.dev/download"
+            >Download dictate.app Free</a
+          >
+          <p class="cta-sub">
+            7-day free trial. No credit card required. Windows 10 and 11.
+          </p>
+        </div>
+
+        <h2>Setup in 2 Minutes</h2>
+        <ol>
+          <li>Download dictate.app for Windows</li>
+          <li>Install and launch it</li>
+          <li>Set your hotkey in the app settings</li>
+          <li>Open Microsoft Word</li>
+          <li>Click where you want text</li>
+          <li>Hold the hotkey and speak</li>
+        </ol>
+        <p>
+          No configuration beyond the hotkey. No Word plugins. No Microsoft
+          account changes. It works immediately.
+        </p>
+
+        <p>
+          Also see:
+          <a
+            href="/blog/how-to-dictate-faster-than-you-type.html"
+            style="color: var(--accent)"
+            >how to dictate faster than you type</a
+          >
+          for a practical guide to building the dictation habit.
+        </p>
+      </article>
+      <footer>
+        <p>
+          <a href="https://dictate-app.pages.dev">dictate.app</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/download">Download</a> &nbsp;·&nbsp;
+          <a href="https://dictate-app.pages.dev/blog/">Blog</a>
+        </p>
+        <p style="margin-top: 8px">2026 dictate.app. All rights reserved.</p>
+      </footer>
+    </div>
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function init() {
+        resize();
+        stars = Array.from({ length: 120 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.5 + 0.1,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.o += (Math.random() - 0.5) * 0.02;
+          s.o = Math.max(0.05, Math.min(0.7, s.o));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener("resize", init);
+      init();
+      draw();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Push to Talk Dictation on Windows 2026 | dictate.app</title>
+    <meta
+      name="description"
+      content="Push-to-talk dictation on Windows is faster than always-on voice typing. Learn how it works, why it beats toggle modes, and how to set it up in dictate.app."
+    />
+    <meta
+      name="keywords"
+      content="push to talk dictation windows, hold to talk voice typing windows, push to talk voice input, windows voice dictation hotkey"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://dictate-app.pages.dev/blog/windows-push-to-talk-dictation" />
+    <meta
+      property="og:title"
+      content="Push to Talk Dictation on Windows 2026's Faster"
+    />
+    <meta
+      property="og:description"
+      content="Push-to-talk dictation on Windows is faster than always-on voice typing. Learn how it works and how to configure it in dictate.app."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/windows-push-to-talk-dictation"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Push-to-Talk Voice Dictation for Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Why push-to-talk beats always-on dictation  -  and how to set it up on Windows with dictate.app."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Push-to-Talk Voice Dictation for Windows: How It Works and Why It's Faster",
+        "description": "Push-to-talk dictation on Windows is faster than always-on voice typing. Learn how it works, why it beats toggle modes, and how to set it up in dictate.app.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/windows-push-to-talk-dictation",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/windows-push-to-talk-dictation"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is push-to-talk dictation on Windows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Push-to-talk dictation means you hold a hotkey while speaking. The app records your voice and transcribes it only while the key is held. When you release, the text pastes at your cursor. It is faster and more accurate than always-on voice typing because it eliminates false activations and background noise."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What hotkey does dictate.app use for push-to-talk?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app defaults to a configurable hotkey that you can set to anything you prefer  -  Ctrl+Space, a side mouse button, or a programmable macro key. The app lives in the system tray and responds globally, so the hotkey works in any app on Windows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is push-to-talk faster than toggle-on dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "With toggle-on dictation, you have to remember whether recording is active. You can accidentally dictate into dead air or forget to turn it off. Push-to-talk has no state to track. Press and speak. Release and done. The physical action of holding the key signals your brain to start forming words."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does push-to-talk dictation work in all Windows apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app uses clipboard-paste to insert text, so it works in any app that accepts typed input  -  including VS Code, Chrome, Slack, Word, Outlook, Notepad, and more. No app-specific setup is required."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .stat-row {
+        display: flex;
+        gap: 16px;
+        margin: 28px 0;
+        flex-wrap: wrap;
+      }
+      .stat-box {
+        flex: 1;
+        min-width: 140px;
+        background: rgba(192, 132, 252, 0.07);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 10px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .stat-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 20px 24px;
+        margin: 28px 0;
+      }
+      .tip-box p {
+        margin: 0;
+      }
+      .tip-box .tip-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .steps-list {
+        counter-reset: steps;
+        padding-left: 0;
+        list-style: none;
+      }
+      .steps-list li {
+        counter-increment: steps;
+        padding-left: 48px;
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .steps-list li::before {
+        content: counter(steps);
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #c084fc, #f472b6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: white;
+        line-height: 28px;
+        text-align: center;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      .faq-section {
+        margin: 48px 0 0;
+      }
+      .faq-item {
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 20px 0;
+      }
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+      .faq-q {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 10px;
+      }
+      .faq-a {
+        color: var(--text-secondary);
+        font-size: 15px;
+        margin: 0;
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .stat-row {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Windows · May 2026</div>
+        <h1>
+          Push-to-Talk Voice Dictation for Windows: How It Works and Why It's
+          Faster
+        </h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 7 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          Most people think voice dictation means talking continuously while the
+          app listens. That's always-on mode. It works, but it has a fundamental
+          problem: the microphone never stops recording.
+        </p>
+
+        <p>
+          Push-to-talk is different. You hold a key while speaking. The moment
+          you release, transcription starts and text pastes at your cursor. It's
+          faster, more accurate, and fits naturally into a normal keyboard
+          workflow. This post covers how it works and why it beats always-on for
+          everyday Windows use.
+        </p>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num">~200ms</div>
+            <div class="stat-desc">Release-to-paste latency in dictate.app</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">0</div>
+            <div class="stat-desc">False activations with push-to-talk</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">Any</div>
+            <div class="stat-desc">Works in any Windows app</div>
+          </div>
+        </div>
+
+        <h2>What Push-to-Talk Dictation Means</h2>
+
+        <p>
+          Push-to-talk (PTT) is borrowed from radio and gaming. You hold a
+          button, speak, release. The system only captures audio while the
+          button is pressed. No hot word detection. No continuous listening.
+        </p>
+
+        <p>
+          In the context of voice dictation on Windows, PTT means: hold your
+          configured hotkey, say what you want to type, release the key. The app
+          sends that audio to a transcription model, gets text back in roughly
+          200 milliseconds, and pastes it wherever your cursor sits.
+        </p>
+
+        <p>
+          That workflow fits how most people use their computer. You're typing,
+          you want to add a sentence, you hold the key and speak it, then keep
+          typing. The two input modes coexist cleanly.
+        </p>
+
+        <h2>Why Push-to-Talk Beats Always-On</h2>
+
+        <p>
+          Always-on dictation tools listen continuously. This creates several
+          problems.
+        </p>
+
+        <p>
+          First, false activations. The tool transcribes background sounds,
+          partial words, and things you say to coworkers that weren't meant for
+          the document. You spend time deleting text you didn't intend to type.
+        </p>
+
+        <p>
+          Second, cognitive overhead. You have to remember whether dictation is
+          active. Toggle modes add a mental state you need to track. Users
+          regularly dictate into dead air  -  recording was off  -  or forget to
+          stop recording  -  recording was still on.
+        </p>
+
+        <p>
+          Third, privacy. Always-on means continuous audio capture. That data
+          goes somewhere. Push-to-talk sends only the audio you explicitly
+          trigger, nothing more.
+        </p>
+
+        <p>
+          Push-to-talk eliminates all three problems. The physical act of
+          holding a key is the trigger. You always know when the mic is active.
+          There is no ambiguity.
+        </p>
+
+        <div class="tip-box">
+          <span class="tip-label">Why it feels natural</span>
+          <p>
+            The push-to-talk pattern mirrors walkie-talkies, radio comms, and
+            Discord's PTT mode. Millions of people already have this muscle
+            memory. Your brain doesn't have to learn a new behavior  -  it just
+            adapts an existing one to a new context.
+          </p>
+        </div>
+
+        <h2>How dictate.app Implements Push-to-Talk</h2>
+
+        <p>
+          dictate.app runs as a lightweight system tray app on Windows. It
+          intercepts your configured hotkey globally  -  meaning the key works
+          regardless of which app has focus.
+        </p>
+
+        <p>
+          When you press and hold the hotkey, the app starts recording from your
+          default microphone. When you release, it sends the audio to Groq's
+          Whisper API. Groq runs Whisper inference on fast hardware. The
+          transcript comes back in roughly 200 milliseconds. dictate.app pastes
+          the text at your cursor using clipboard injection.
+        </p>
+
+        <p>
+          The clipboard approach is important. Some dictation tools try to
+          inject text via accessibility APIs. Those break in Electron apps like
+          VS Code, Slack, and Discord. Clipboard paste works everywhere because
+          every app supports Ctrl+V.
+        </p>
+
+        <h2>Setting Up the Hotkey</h2>
+
+        <p>
+          The default hotkey in dictate.app is configurable on first launch. You
+          can set it to any key combination that doesn't conflict with your
+          other software. Common choices:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Ctrl+Space</strong>  -  default, easy to reach, rarely
+            conflicts
+          </li>
+          <li>
+            <strong>Side mouse button (back/forward)</strong>  -  popular choice
+            for people who dictate often; no keyboard hand movement required
+          </li>
+          <li>
+            <strong>Macro pad key</strong>  -  dedicated hardware button for zero
+            ambiguity
+          </li>
+          <li>
+            <strong>Right Ctrl</strong>  -  comfortable for touch typists who
+            already rest a thumb near Ctrl
+          </li>
+        </ul>
+
+        <p>
+          The goal is a key you can press without looking. If you have to search
+          for it, you'll lose the thought you were about to dictate. Pick
+          something that sits under a finger at rest.
+        </p>
+
+        <div class="tip-box">
+          <span class="tip-label">Setup tip</span>
+          <p>
+            Avoid hotkeys that Windows or other apps already use. Ctrl+Space
+            conflicts with some IDEs. Test your chosen hotkey in a few apps
+            before committing to it. The dictate.app settings screen flags
+            common conflicts.
+          </p>
+        </div>
+
+        <h2>Push-to-Talk vs Toggle Mode: When to Use Each</h2>
+
+        <p>
+          Push-to-talk is better for short dictations  -  a sentence, a paragraph,
+          a reply. You press, speak, release, and continue what you were doing.
+          The rhythm is fast.
+        </p>
+
+        <p>
+          Toggle mode (click once to start, click again to stop) is better for
+          long continuous dictation sessions  -  transcribing a meeting, narrating
+          a long document, or writing an article in a single uninterrupted flow.
+          Holding a key for five minutes is uncomfortable.
+        </p>
+
+        <p>
+          For most knowledge workers, the split is roughly 80/20 in favor of
+          push-to-talk. The majority of dictation is short-form: emails,
+          messages, comments, notes. Toggle mode is the exception.
+        </p>
+
+        <h2>Accuracy and Latency in Practice</h2>
+
+        <p>
+          Whisper is one of the most accurate speech recognition models
+          available. It handles accents, background noise, and technical
+          vocabulary better than older models like Google's speech-to-text or
+          Windows Speech Recognition.
+        </p>
+
+        <p>
+          Groq's infrastructure runs Whisper at speeds that make the latency
+          nearly imperceptible. From the moment you release the key to the
+          moment text appears in your app, you're looking at around 200
+          milliseconds under normal conditions. That's fast enough that your
+          working memory doesn't break between dictating and seeing the result.
+        </p>
+
+        <p>
+          For context: Windows Voice Typing (Win+H) averages 1 to 2 seconds.
+          Dragon NaturallySpeaking averages 1 to 3 seconds. At 200 milliseconds,
+          dictate.app feels closer to instant.
+        </p>
+
+        <h2>Works in Any App on Windows</h2>
+
+        <p>
+          Because dictate.app uses clipboard paste, it works in every app that
+          accepts text input. That includes apps where other dictation tools
+          fail:
+        </p>
+
+        <ul>
+          <li>
+            <strong>VS Code</strong>  -  works in editor, terminal, commit box
+          </li>
+          <li>
+            <strong>Slack, Discord, Teams</strong>  -  Electron apps that break
+            accessibility-based tools
+          </li>
+          <li><strong>Chrome, Edge, Firefox</strong>  -  any web text field</li>
+          <li><strong>Word, Outlook, Excel</strong>  -  standard Office apps</li>
+          <li><strong>Notion, Obsidian, Roam</strong>  -  note-taking tools</li>
+          <li>
+            <strong>Any other Windows application with a text field</strong>
+          </li>
+        </ul>
+
+        <p>
+          You configure the hotkey once. After that, push-to-talk works
+          identically in every app with no additional setup.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try Push-to-Talk Dictation on Windows</h2>
+          <p>
+            Download dictate.app and start your 30-day free trial. Set your
+            hotkey, hold to speak, release to paste. Works in any app.
+          </p>
+          <a
+            href="https://github.com/howmindswork/dictate-electron/releases/download/v0.1.0/dictate.app-Setup-0.1.0.exe"
+            class="cta-big"
+            >Download dictate.app for Windows →</a
+          >
+          <p class="cta-sub">
+            No credit card &nbsp;·&nbsp; $8.99/month after 30-day trial
+            &nbsp;·&nbsp;
+            <a href="https://dictate-app.pages.dev/download"
+              >More download options</a
+            >
+          </p>
+        </div>
+
+        <div class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+
+          <div class="faq-item">
+            <div class="faq-q">What is push-to-talk dictation on Windows?</div>
+            <p class="faq-a">
+              Push-to-talk dictation means you hold a hotkey while speaking. The
+              app records your voice and transcribes it only while the key is
+              held. When you release, the text pastes at your cursor. It is
+              faster and more accurate than always-on voice typing because it
+              eliminates false activations and background noise.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              What hotkey does dictate.app use for push-to-talk?
+            </div>
+            <p class="faq-a">
+              dictate.app defaults to a configurable hotkey that you can set to
+              anything you prefer  -  Ctrl+Space, a side mouse button, or a
+              programmable macro key. The app lives in the system tray and
+              responds globally, so the hotkey works in any app on Windows.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              Why is push-to-talk faster than toggle-on dictation?
+            </div>
+            <p class="faq-a">
+              With toggle-on dictation, you have to remember whether recording
+              is active. You can accidentally dictate into dead air or forget to
+              turn it off. Push-to-talk has no state to track. Press and speak.
+              Release and done. The physical action of holding the key signals
+              your brain to start forming words.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-q">
+              Does push-to-talk dictation work in all Windows apps?
+            </div>
+            <p class="faq-a">
+              dictate.app uses clipboard-paste to insert text, so it works in
+              any app that accepts typed input  -  including VS Code, Chrome,
+              Slack, Word, Outlook, Notepad, and more. No app-specific setup is
+              required.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>

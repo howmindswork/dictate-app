@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best Dictation Software for Real Estate Agents | dictate.app</title>
+    <meta
+      name="description"
+      content="Real estate agents write thousands of words a week. Property descriptions, emails, MLS listings, offer letters. Voice dictation cuts that time by 60%. Here's what to use in 2026."
+    />
+    <meta
+      name="keywords"
+      content="dictation software real estate agents, voice dictation real estate, speech to text real estate, property description dictation"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/dictation-software-real-estate-agents"
+    />
+    <meta
+      property="og:title"
+      content="Best Dictation Software for Real Estate Agents"
+    />
+    <meta
+      property="og:description"
+      content="Real estate agents write thousands of words a week. Voice dictation cuts that time by 60%. Here's what to use in 2026."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/dictation-software-real-estate-agents"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Best Dictation Software for Real Estate Agents"
+    />
+    <meta
+      name="twitter:description"
+      content="Real estate agents write a lot. Voice dictation fixes that."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Best Dictation Software for Real Estate Agents",
+        "description": "Real estate agents write thousands of words a week. Voice dictation cuts that time by 60%. Here's what to use in 2026.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/dictation-software-real-estate-agents",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/dictation-software-real-estate-agents"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the best dictation software for real estate agents?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app is the best dictation software for real estate agents in 2026. It works in every Windows application, costs $8.99/month, and transcribes speech in ~200ms using Groq's Whisper API. Agents use it for property descriptions, client emails, MLS listing notes, and offer letters."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can real estate agents use voice dictation for MLS listings?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works in any text field in any Windows application, including MLS portals, CRM systems, and email clients. Click into the text field, hold the hotkey, speak, and release. Text is pasted instantly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much time does voice dictation save a real estate agent?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Speaking is 3x faster than typing. An agent who types 1,500 words per day in emails and listings (about 33 minutes) can dictate the same content in 11 minutes. That is 22 minutes saved per day, or roughly 90 hours per year."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work on Windows 10 and 11?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works on Windows 10 (version 1903+) and Windows 11. It is not available on Mac."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does dictate.app cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month after a 7-day free trial. No credit card is required to start the trial."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg2: #0f0b18;
+        --accent: #c084fc;
+        --accent2: #818cf8;
+        --text: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --border: rgba(192, 132, 252, 0.2);
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Georgia, serif;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+      canvas#stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-brand {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-family: system-ui, sans-serif;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-cta {
+        background: var(--accent);
+        color: #0b0812 !important;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+      }
+      .post-tag {
+        font-family: system-ui, sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        line-height: 1.25;
+        margin-bottom: 1rem;
+        color: var(--text);
+      }
+      .post-meta {
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 1.4rem;
+        margin: 2.5rem 0 1rem;
+        color: var(--text);
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin: 2rem 0 0.75rem;
+        color: var(--accent);
+      }
+      p {
+        margin-bottom: 1.25rem;
+        color: var(--text-secondary);
+      }
+      p strong {
+        color: var(--text);
+      }
+      ul,
+      ol {
+        margin: 1rem 0 1.5rem 1.5rem;
+        color: var(--text-secondary);
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+      .stat-box {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem 1.5rem;
+        margin: 1.5rem 0;
+        font-family: system-ui, sans-serif;
+      }
+      .stat-num {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-family: system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.15);
+        color: var(--accent);
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 600;
+      }
+      td {
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-secondary);
+      }
+      tr:hover td {
+        background: rgba(192, 132, 252, 0.05);
+      }
+      .cta-block {
+        margin: 3rem 0;
+        padding: 2rem;
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-align: center;
+      }
+      .cta-block p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+      }
+      .cta-btn {
+        display: inline-block;
+        background: var(--accent);
+        color: #0b0812;
+        font-family: system-ui, sans-serif;
+        font-weight: 700;
+        padding: 0.85rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: opacity 0.2s;
+      }
+      .cta-btn:hover {
+        opacity: 0.85;
+      }
+      .cta-sub {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 0.75rem;
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars"></canvas>
+    <nav>
+      <a href="https://dictate-app.pages.dev" class="nav-brand">dictate.app</a>
+      <div class="nav-links">
+        <a href="https://dictate-app.pages.dev">Home</a>
+        <a href="https://dictate-app.pages.dev/blog/">Blog</a>
+        <a href="https://dictate-app.pages.dev/download" class="nav-cta">Try Free</a>
+      </div>
+    </nav>
+    <main>
+      <div class="post-tag">Real Estate</div>
+      <h1>Best Dictation Software for Real Estate Agents</h1>
+      <div class="post-meta">May 2026 &nbsp;&middot;&nbsp; 7 min read</div>
+
+      <p>
+        Real estate agents write more than almost anyone in their workday.
+        Property descriptions. Client emails. Offer letters. CRM notes from
+        showings. MLS listing copy. Follow-up messages after open houses.
+      </p>
+      <p>
+        A busy agent easily writes 2,000 words a day. At 45 words per minute,
+        that is 44 minutes of typing. Speaking at 140 words per minute, it is 14
+        minutes. The 30-minute difference compounds across a year into roughly
+        130 hours.
+      </p>
+      <p>Voice dictation is the obvious fix. Here is what to use.</p>
+
+      <h2>The Writing Load on Real Estate Agents</h2>
+      <p>Let us be specific about where the words go:</p>
+      <ul>
+        <li>
+          <strong>Property descriptions:</strong> 150-400 words per listing. A
+          high-volume agent lists 3-5 properties per month.
+        </li>
+        <li>
+          <strong>Client emails:</strong> 20-40 per day across buyers, sellers,
+          lenders, attorneys, and other agents.
+        </li>
+        <li>
+          <strong>CRM notes:</strong> Notes from every showing, every call,
+          every offer conversation.
+        </li>
+        <li>
+          <strong>Offer letters and disclosures:</strong> Long documents with
+          significant repetition across transactions.
+        </li>
+        <li>
+          <strong>Social media:</strong> Listing announcements, market updates,
+          open house invites.
+        </li>
+      </ul>
+      <p>
+        None of this requires creative typing skill. It requires getting
+        information from your brain onto a screen as fast as possible. Voice
+        dictation is purpose-built for that.
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-num">3x</div>
+          <div class="stat-label">
+            Faster than typing at average speaking speed
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">130+</div>
+          <div class="stat-label">
+            Hours saved per year for a 2,000 word/day agent
+          </div>
+        </div>
+      </div>
+
+      <h2>What dictate.app Does</h2>
+      <p>
+        dictate.app is a push-to-talk voice dictation app for Windows 10 and 11.
+        You hold a hotkey, speak, and release. In about 200 milliseconds,
+        transcribed text appears at your cursor.
+      </p>
+      <p>
+        It works in every Windows application that accepts a paste command. MLS
+        portals, CRM systems, Gmail, Outlook, Word, your brokerage's internal
+        tools. Anywhere you can click and type, you can click and speak instead.
+      </p>
+      <p>
+        Push-to-talk is the right design for real estate. You are not dictating
+        a continuous stream of text. You are writing in short bursts. A CRM
+        note. A follow-up sentence. A property highlight. Push-to-talk handles
+        bursts. Always-on microphones do not.
+      </p>
+
+      <h2>Use Cases by Task</h2>
+
+      <h3>Property Descriptions</h3>
+      <p>
+        Open your MLS portal or listing software. Click into the description
+        field. Hold the hotkey. Walk through the property highlights from memory
+        or your notes. Release. Edit as needed.
+      </p>
+      <p>
+        A 300-word property description takes about two minutes to speak.
+        Editing typically takes another three. Total: five minutes. Typing the
+        same description from scratch takes twelve to fifteen minutes.
+      </p>
+
+      <h3>CRM Notes After Showings</h3>
+      <p>
+        This is where agents lose the most time. You finish a showing, get back
+        to your car, and now you need to capture everything before it fades.
+        Open your laptop or phone (note: dictate.app is Windows-only), dictate
+        your notes while the details are fresh, done.
+      </p>
+      <p>
+        The push-to-talk design lets you speak a sentence, pause to think, speak
+        another. No need to speak continuously. Think the way you actually
+        think, in fragments.
+      </p>
+
+      <h3>Client Emails</h3>
+      <p>
+        Most agent emails follow a pattern. Dictating from a mental template is
+        fast. You still personalize each one, but speaking personalization is
+        faster than typing it character by character.
+      </p>
+      <p>
+        High-volume agents report cutting daily email time from 45-60 minutes to
+        15-20 minutes after switching to dictation. The math is simple: same
+        words, three times faster.
+      </p>
+
+      <h3>Offer Letters</h3>
+      <p>
+        Offer letters and cover letters for offers involve significant standard
+        language with personalized details swapped in. Dictating the variable
+        sections while using templates for the fixed sections can cut
+        preparation time substantially.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Typing Time</th>
+            <th>Dictation Time</th>
+            <th>Saved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Property description (300 words)</td>
+            <td>12-15 min</td>
+            <td>5 min</td>
+            <td>~10 min</td>
+          </tr>
+          <tr>
+            <td>Showing notes (200 words)</td>
+            <td>8-10 min</td>
+            <td>3 min</td>
+            <td>~7 min</td>
+          </tr>
+          <tr>
+            <td>Client email (100 words)</td>
+            <td>4-5 min</td>
+            <td>90 sec</td>
+            <td>~3 min</td>
+          </tr>
+          <tr>
+            <td>Daily total (2,000 words)</td>
+            <td>44 min</td>
+            <td>14 min</td>
+            <td>30 min</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Why Not Dragon or Windows Speech Recognition?</h2>
+      <p>
+        Dragon NaturallySpeaking's consumer line is discontinued. The
+        professional version costs $699. For occasional real estate use, that
+        cost is not justified.
+      </p>
+      <p>
+        Windows Speech Recognition (Win+H) is free and decent. But it has 1-2
+        seconds of latency, no push-to-talk mode, and inconsistent behavior in
+        browser-based MLS portals.
+      </p>
+      <p>
+        dictate.app costs $8.99/month. That is less than two lattes. For an
+        agent billing $100,000+ per year, the ROI from 130 hours of time
+        recovery is immediate.
+      </p>
+
+      <div class="cta-block">
+        <p>
+          Try dictate.app free for 7 days. Works in every Windows app your
+          brokerage uses.
+        </p>
+        <a href="https://dictate-app.pages.dev/download" class="cta-btn">Download Free</a>
+        <div class="cta-sub">
+          $8.99/month after trial. No credit card required to start.
+        </div>
+      </div>
+
+      <h2>Setup Takes Two Minutes</h2>
+      <ol>
+        <li>
+          Download from
+          <a href="https://dictate-app.pages.dev/download" style="color: var(--accent)"
+            >dictate.app/download</a
+          >
+        </li>
+        <li>Install. Runs in the Windows system tray.</li>
+        <li>Click into any text field in any app.</li>
+        <li>Hold your hotkey. Speak. Release.</li>
+      </ol>
+      <p>
+        No training required. No vocabulary building. No per-app configuration.
+        It works on day one.
+      </p>
+    </main>
+    <script>
+      const c = document.getElementById("stars"),
+        ctx = c.getContext("2d");
+      let stars = [];
+      function resize() {
+        c.width = innerWidth;
+        c.height = innerHeight;
+      }
+      function init() {
+        stars = Array.from({ length: 160 }, () => ({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.6 + 0.2,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.8 || s.o < 0.2) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      init();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        init();
+      });
+    </script>
+  </body>
+</html>

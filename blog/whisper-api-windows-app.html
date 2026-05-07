@@ -3,27 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Building a Whisper API Windows App: How dictate.app Uses Groq |
-      dictate.app
-    </title>
-    <meta
-      name="description"
-      content="How dictate.app achieves ~200ms voice transcription on Windows using Groq's Whisper API. Technical breakdown of the architecture, latency, and privacy model."
-    />
+    <title>Whisper API on Windows: How dictate.app Gets to 200ms | dictate.app</title>
+    <meta name="description" content="How dictate.app uses Groq Whisper LPU inference to hit 200ms transcription latency on Windows. Faster than OpenAI Whisper API, same Whisper large-v3 model." />
     <meta
       name="keywords"
       content="whisper api windows app, groq whisper api, openai whisper windows, whisper transcription windows 2026"
     />
     <meta name="author" content="dictate.app" />
     <meta name="robots" content="index, follow" />
-    <link
-      rel="canonical"
-      href="https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
-    />
+    <link rel="canonical" href="https://dictate-app.pages.dev/blog/whisper-api-windows-app" />
     <meta
       property="og:title"
-      content="Building a Whisper API Windows App: How dictate.app Uses Groq"
+      content="Whisper API on Windows: How dictate.app Gets to 200ms"
     />
     <meta
       property="og:description"
@@ -32,7 +23,7 @@
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content="https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
+      content="https://dictate-app.pages.dev/blog/whisper-api-windows-app"
     />
     <meta property="og:site_name" content="dictate.app" />
     <meta name="twitter:card" content="summary" />
@@ -54,8 +45,8 @@
         "publisher": { "@type": "Organization", "name": "dictate.app" },
         "datePublished": "2026-05-06",
         "dateModified": "2026-05-06",
-        "url": "https://dictate-app.pages.dev/blog/whisper-api-windows-app.html",
-        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
+        "url": "https://dictate-app.pages.dev/blog/whisper-api-windows-app",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/whisper-api-windows-app"
       }
     </script>
 
@@ -407,7 +398,7 @@
             <span class="logo-icon">🎤</span>
             dictate.app
           </a>
-          <a href="https://dictate-app.pages.dev" class="cta-nav"
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
             >Try Free 30 Days</a
           >
         </nav>
@@ -424,7 +415,7 @@
         <p>
           Most developers who build on Windows know OpenAI's Whisper model. It's
           state-of-the-art for speech recognition. The standard question is
-          where you run it — local CPU, local GPU, or cloud API. Each path has a
+          where you run it  -  local CPU, local GPU, or cloud API. Each path has a
           radically different latency profile.
         </p>
 
@@ -444,8 +435,8 @@
           Running Whisper locally on CPU is free, fully private, and works
           offline. It's also slow. On a modern mid-range laptop without a
           dedicated GPU, a 10-second audio clip takes 8–15 seconds to transcribe
-          using the medium or large model. Even the tiny model — with noticeably
-          worse accuracy — takes 2–4 seconds.
+          using the medium or large model. Even the tiny model  -  with noticeably
+          worse accuracy  -  takes 2–4 seconds.
         </p>
 
         <p>
@@ -473,7 +464,7 @@
         <h3>Option 3: Groq Whisper API (what dictate.app uses)</h3>
 
         <p>
-          Groq built custom silicon — LPUs (Language Processing Units) —
+          Groq built custom silicon  -  LPUs (Language Processing Units)  - 
           specifically optimized for transformer inference. Their Whisper Large
           v3 Turbo implementation is the fastest publicly available Whisper
           inference. dictate.app sends audio to Groq's API and receives the
@@ -524,23 +515,23 @@
 
         <ol>
           <li>
-            <strong>Hotkey press</strong> — Ctrl+Space triggers audio recording
+            <strong>Hotkey press</strong>  -  Ctrl+Space triggers audio recording
             from the default input device.
           </li>
           <li>
-            <strong>Audio capture</strong> — Recorded as PCM audio, converted to
+            <strong>Audio capture</strong>  -  Recorded as PCM audio, converted to
             the format Groq expects (16kHz mono, compressed for transmission).
           </li>
           <li>
-            <strong>API call</strong> — Audio chunk sent to Groq's
+            <strong>API call</strong>  -  Audio chunk sent to Groq's
             <code>whisper-large-v3-turbo</code> endpoint.
           </li>
           <li>
-            <strong>Response</strong> — JSON response with transcript text,
+            <strong>Response</strong>  -  JSON response with transcript text,
             typically within 150–250ms.
           </li>
           <li>
-            <strong>Paste</strong> — Text injected at the current cursor
+            <strong>Paste</strong>  -  Text injected at the current cursor
             position via clipboard paste (Ctrl+V).
           </li>
         </ol>
@@ -555,7 +546,7 @@
         <p>
           OpenAI also exposes a Whisper API. The accuracy is comparable. The
           latency is not. OpenAI's API typically returns in 700ms–1.5 seconds
-          for short clips — fast enough for batch work, but perceptibly slow for
+          for short clips  -  fast enough for batch work, but perceptibly slow for
           push-to-talk dictation.
         </p>
 
@@ -578,7 +569,7 @@
 
         <p>
           Whisper's accuracy is sensitive to audio quality. dictate.app shows a
-          real-time waveform during recording — partly for UX feedback, but also
+          real-time waveform during recording  -  partly for UX feedback, but also
           to help users calibrate microphone placement. A few things that affect
           accuracy:
         </p>
@@ -626,7 +617,7 @@
             to dictate.app's servers.
           </li>
           <li>
-            The transcript is pasted and stored in local history only — never
+            The transcript is pasted and stored in local history only  -  never
             transmitted.
           </li>
         </ul>
@@ -675,11 +666,11 @@
           <p>
             Groq Whisper. ~200ms. Any Windows app. No account required to start.
           </p>
-          <a href="https://dictate-app.pages.dev" class="cta-big"
+          <a href="https://dictate-app.pages.dev/download" class="cta-big"
             >Start Free Trial →</a
           >
           <p class="cta-sub">
-            No credit card · $9/month after trial ·
+            No credit card · $8.99/month after trial ·
             <a href="/privacy">Privacy policy</a>
           </p>
         </div>

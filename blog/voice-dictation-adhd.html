@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation for ADHD on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="ADHD thoughts move faster than fingers can type. Voice dictation captures the full thought before it disappears. Push-to-talk, 200ms, works in every Windows app."
+    />
+    <meta
+      name="keywords"
+      content="voice dictation ADHD, dictation app ADHD Windows, ADHD voice to text, speech to text ADHD"
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-adhd"
+    />
+    <meta property="og:title" content="Voice Dictation for ADHD on Windows" />
+    <meta
+      property="og:description"
+      content="ADHD thoughts move faster than fingers can type. Voice dictation captures the full thought before it disappears."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-adhd"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Voice Dictation for ADHD on Windows" />
+    <meta
+      name="twitter:description"
+      content="ADHD thoughts move faster than fingers can type. Voice dictation captures the full thought before it disappears."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation for ADHD on Windows",
+        "description": "How push-to-talk voice dictation helps people with ADHD capture thoughts before they disappear.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-dictation-adhd",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-dictation-adhd"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is voice dictation good for ADHD?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. People with ADHD often have thoughts that move faster than they can type, causing them to lose ideas mid-sentence. Voice dictation lets you speak at the speed of thought, capturing the full idea before working memory clears it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is push-to-talk dictation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Push-to-talk means you hold a hotkey while speaking and release it when done. This is useful for ADHD because it creates a clear activation signal. The physical act of pressing the key can serve as a focus anchor."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work on Windows for ADHD users?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works in every Windows application via clipboard injection. You can use it in email, Slack, Word, Notion, browsers, and any other app where you need to write."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use dictate.app in open offices or with people around?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The push-to-talk model means you only record when holding the hotkey. You can speak quietly and still get accurate transcription. Many users dictate in offices by speaking softly or using a directional microphone."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month with a 7-day free trial. No credit card required to start."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg-accent: #0f0b18;
+        --text-primary: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.6);
+        --accent: #c084fc;
+        --accent2: #818cf8;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.15);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      main {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 60px 24px 100px;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      h1 span {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .meta {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 40px;
+      }
+      h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 40px 0 16px;
+        color: var(--accent);
+      }
+      p {
+        margin-bottom: 18px;
+        color: rgba(241, 240, 245, 0.85);
+      }
+      .callout {
+        background: rgba(192, 132, 252, 0.08);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 12px;
+        padding: 28px;
+        margin: 32px 0;
+        font-style: italic;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text-primary);
+      }
+      .tip {
+        background: rgba(129, 140, 248, 0.08);
+        border-left: 3px solid var(--accent2);
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+      .use-case-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 32px 0;
+      }
+      .use-case-card {
+        background: rgba(192, 132, 252, 0.06);
+        border: 1px solid rgba(192, 132, 252, 0.15);
+        border-radius: 10px;
+        padding: 20px;
+      }
+      .use-case-card h3 {
+        font-size: 1rem;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .use-case-card p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin: 0;
+      }
+      .cta-block {
+        text-align: center;
+        margin: 60px 0 0;
+        padding: 48px 32px;
+        background: rgba(192, 132, 252, 0.06);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-radius: 16px;
+      }
+      .cta-block h2 {
+        margin-top: 0;
+        font-size: 1.6rem;
+        color: var(--text-primary);
+      }
+      .cta-main {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 20px;
+        transition: all 0.2s;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.4);
+      }
+      .cta-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(192, 132, 252, 0.6);
+      }
+      .trial-note {
+        color: var(--text-secondary);
+        font-size: 13px;
+        margin-top: 12px;
+      }
+      @media (max-width: 600px) {
+        .use-case-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="https://dictate-app.pages.dev" class="nav-home"
+            ><span class="logo-icon">🎙</span> dictate.app</a
+          >
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav">Try Free</a>
+        </nav>
+      </header>
+      <main>
+        <h1>Voice Dictation for <span>ADHD</span> on Windows</h1>
+        <p class="meta">May 2026 · 6 min read</p>
+
+        <p>
+          You start typing a sentence. By word three you have already thought of
+          word eight. By the time you get there, words four through seven are
+          gone.
+        </p>
+
+        <p>
+          This is not a memory problem. This is what ADHD does to working memory
+          under cognitive load. Typing is slow enough that your thoughts run
+          ahead of your fingers, and the gap between thinking and capturing
+          becomes a place where ideas disappear.
+        </p>
+
+        <p>
+          Voice dictation is different. Speaking and thinking happen at nearly
+          the same speed. The bottleneck disappears.
+        </p>
+
+        <div class="callout">
+          "I wrote more in one hour of dictating than I had in the entire
+          previous week of trying to type. My thoughts finally kept up with
+          themselves."
+          <br /><br />
+          <span
+            style="
+              font-style: normal;
+              font-size: 0.9rem;
+              color: var(--text-secondary);
+            "
+            >dictate.app user, software developer</span
+          >
+        </div>
+
+        <h2>The Working Memory Problem</h2>
+
+        <p>
+          Working memory is the mental scratch pad. You use it to hold a thought
+          while doing something else with it. For most people, typing is
+          automatic enough that it barely uses working memory at all.
+        </p>
+
+        <p>
+          ADHD changes this. The cognitive overhead of typing can compete with
+          the overhead of thinking. The result: you lose the idea before you
+          finish writing it. You re-read what you have written, try to
+          reconstruct where you were going, and lose focus in the process.
+        </p>
+
+        <p>
+          Speaking externalizes the thought immediately. It does not sit in
+          working memory waiting to be typed. It comes out in real time. The
+          sentence forms as you say it, not as you try to hold it and transcribe
+          it simultaneously.
+        </p>
+
+        <h2>Push-to-Talk as a Focus Anchor</h2>
+
+        <p>
+          dictate.app uses push-to-talk: you hold a hotkey while speaking,
+          release when done. This is different from always-on dictation that
+          listens constantly.
+        </p>
+
+        <p>
+          For ADHD, the physical action of pressing the key matters. It creates
+          a clear mode switch. You are either in "capture mode" (key held,
+          speaking) or in "thinking mode" (key released). The physical signal
+          helps anchor attention.
+        </p>
+
+        <p>
+          It also removes one of the biggest frustrations with always-on
+          dictation: accidentally transcribing things you did not mean to say.
+          With push-to-talk, nothing is captured unless you chose to capture it.
+        </p>
+
+        <div class="tip">
+          <strong>Tip:</strong> Set your hotkey to a key that feels intentional.
+          Middle mouse button (the default) works well because it requires a
+          deliberate press. Something you would not hit accidentally.
+        </div>
+
+        <h2>Where It Helps Most</h2>
+
+        <div class="use-case-grid">
+          <div class="use-case-card">
+            <h3>Email replies</h3>
+            <p>
+              Speak the reply as fast as you think it. No staring at a blank
+              compose window.
+            </p>
+          </div>
+          <div class="use-case-card">
+            <h3>Notes and ideas</h3>
+            <p>
+              Capture a thought the moment it appears. In Notion, Obsidian,
+              Notepad, anywhere.
+            </p>
+          </div>
+          <div class="use-case-card">
+            <h3>Slack messages</h3>
+            <p>
+              Respond before the context switches. Dictate while you still have
+              the thread in mind.
+            </p>
+          </div>
+          <div class="use-case-card">
+            <h3>Long-form writing</h3>
+            <p>
+              Drafts, reports, essays. Speaking a first draft is faster and
+              often less blocked than typing it.
+            </p>
+          </div>
+          <div class="use-case-card">
+            <h3>Meeting notes</h3>
+            <p>
+              Dictate observations immediately after a meeting while they are
+              still clear.
+            </p>
+          </div>
+          <div class="use-case-card">
+            <h3>To-do lists</h3>
+            <p>
+              Speak tasks as they occur to you. Capture the full thought without
+              slowing down.
+            </p>
+          </div>
+        </div>
+
+        <h2>The Speed Difference</h2>
+
+        <p>
+          Average typing speed is 40 to 60 words per minute. Average speaking
+          speed is 130 to 150 words per minute. For most writing tasks, voice
+          dictation is 2 to 3 times faster than typing.
+        </p>
+
+        <p>
+          For ADHD, the real gain is not just speed. It is the reduction in the
+          gap between thought and capture. A shorter gap means fewer lost ideas.
+          Fewer lost ideas means less frustration. Less frustration means longer
+          focus windows.
+        </p>
+
+        <h2>How to Start</h2>
+
+        <p>
+          Download dictate.app. Set your hotkey. Open whatever app you want to
+          write in. Hold the key, speak one sentence, release. See the text
+          appear.
+        </p>
+
+        <p>
+          Start with low-stakes tasks. A Slack message. A quick email reply. A
+          note to yourself. The goal for day one is to make the muscle memory
+          feel natural, not to write a novel.
+        </p>
+
+        <p>
+          After a few days, the hotkey press becomes as automatic as reaching
+          for the keyboard. At that point, dictation starts replacing typing for
+          almost everything.
+        </p>
+
+        <h2>It Works in Every App</h2>
+
+        <p>
+          dictate.app works via clipboard injection. It works in any Windows
+          application that accepts Ctrl+V paste. Email, Slack, Notion, Word,
+          Google Docs, VS Code, your browser, your task manager. One tool. One
+          hotkey. Everywhere.
+        </p>
+
+        <p>
+          You do not need a different tool for different apps. You do not need
+          to set up integrations. It just works wherever your cursor is.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try it free for 7 days</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px">
+            No credit card required. Works on Windows 10 and 11.
+          </p>
+          <a href="https://dictate-app.pages.dev/download" class="cta-main"
+            >Download Free</a
+          >
+          <p class="trial-note">$8.99/month after trial. Cancel anytime.</p>
+        </div>
+      </main>
+    </div>
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      let stars = [];
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function initStars() {
+        stars = Array.from({ length: 150 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.5 + 0.2,
+          s: Math.random() * 0.3 + 0.1,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.7 || s.o < 0.2) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      initStars();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        initStars();
+      });
+    </script>
+  </body>
+</html>

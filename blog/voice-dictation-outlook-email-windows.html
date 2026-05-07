@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation in Outlook on Windows</title>
+    <meta name="description" content="Dictate emails in Outlook faster than you can type them. dictate.app's push-to-talk works in every Outlook text field. 7-day free trial, no credit card." />
+    <link rel="canonical" href="https://dictate-app.pages.dev/blog/voice-dictation-outlook-email-windows" />
+    <meta property="og:title" content="Voice Dictation in Outlook on Windows" />
+    <meta property="og:description" content="Dictate emails in Outlook faster than you can type them. dictate.app's push-to-talk works in every Outlook text field." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dictate-app.pages.dev/blog/voice-dictation-outlook-email-windows" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Voice Dictation in Outlook on Windows" />
+    <meta name="twitter:description" content="Dictate emails in Outlook faster than you can type them. dictate.app's push-to-talk works in every Outlook text field." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation in Outlook on Windows",
+        "description": "Dictate emails in Outlook faster than you can type them using dictate.app's push-to-talk on Windows.",
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app", "url": "https://dictate.app" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work in Microsoft Outlook?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. dictate.app works in every Outlook text field including the email body, subject line, and search bar. It uses clipboard paste so it works in all Outlook versions." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I dictate emails in Outlook on Windows?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Install dictate.app, open an Outlook email compose window, click in the body or subject field, hold the dictate.app hotkey, speak your email, and release. The transcribed text pastes at your cursor automatically." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a built-in dictation feature in Outlook?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Outlook has a built-in Dictate button in Microsoft 365, but it requires an active M365 subscription and an internet connection routed through Microsoft servers. dictate.app works with any Outlook version and uses Groq Whisper for faster transcription." }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "dictate.app costs $8.99/month after a 7-day free trial. No credit card is required to start the trial." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I dictate the email subject line in Outlook?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. dictate.app works in any text field including the Outlook subject line. Click into the subject field, hold your hotkey, speak the subject, and release." }
+          }
+        ]
+      }
+    </script>
+    <style>
+      :root {
+        --bg: #0b0812; --bg2: #0f0b18; --accent: #c084fc; --accent2: #818cf8;
+        --accent-dim: rgba(192, 132, 252, 0.12); --accent-border: rgba(192, 132, 252, 0.3);
+        --text: #f1f0f5; --text-secondary: rgba(241, 240, 245, 0.55); --border: rgba(241, 240, 245, 0.08);
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; }
+      canvas#stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+      nav { position: sticky; top: 0; z-index: 100; background: rgba(11,8,18,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+      nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+      nav a:hover { color: var(--accent); }
+      nav .logo { color: var(--text); font-weight: 600; font-size: 1rem; }
+      .container { max-width: 760px; margin: 0 auto; padding: 3rem 1.5rem 6rem; position: relative; z-index: 1; }
+      h1 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+      h2 { font-size: 1.4rem; font-weight: 600; margin: 2.5rem 0 0.75rem; }
+      p { margin-bottom: 1.2rem; color: rgba(241,240,245,0.85); }
+      .meta { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 2.5rem; }
+      .highlight { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
+      .highlight p { margin: 0; }
+      .stat-box { background: var(--bg2); border: 1px solid var(--accent-border); border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; display: flex; align-items: center; gap: 1rem; }
+      .stat-num { font-size: 2rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+      .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+      table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+      th { background: var(--accent-dim); color: var(--accent); text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--accent-border); }
+      td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: rgba(241,240,245,0.8); }
+      tr:last-child td { border-bottom: none; }
+      .cta-box { background: linear-gradient(135deg, var(--accent-dim), rgba(129,140,248,0.08)); border: 1px solid var(--accent-border); border-radius: 16px; padding: 2.5rem; text-align: center; margin: 3rem 0; }
+      .cta-box h3 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+      .cta-box p { margin-bottom: 1.5rem; }
+      .btn { display: inline-block; background: var(--accent); color: #0b0812; padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: opacity 0.2s; }
+      .btn:hover { opacity: 0.85; }
+      .trial-note { display: block; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars"></canvas>
+    <nav>
+      <a href="/" class="logo">dictate.app</a>
+      <div style="display:flex;gap:1.5rem;">
+        <a href="/blog/">Blog</a>
+        <a href="/download">Download</a>
+        <a href="/affiliates">Affiliates</a>
+      </div>
+    </nav>
+    <div class="container">
+      <p class="meta">May 2026 &middot; Email Productivity</p>
+      <h1>Voice Dictation in Outlook on Windows</h1>
+      <p>Email is where most knowledge workers spend most of their time. The average professional sends 40 or more emails per day. That is thousands of sentences typed every single day, year after year.</p>
+      <p>Voice dictation in Outlook is the single highest-ROI use case for speech-to-text software. You already know what you want to say. You just have to stop typing it.</p>
+
+      <div class="stat-box">
+        <div class="stat-num">40+</div>
+        <div class="stat-label">Emails per day for the average knowledge worker. At 3 minutes each, that is 2 hours of typing every day, just for email.</div>
+      </div>
+
+      <h2>How dictate.app Works in Outlook</h2>
+      <p>dictate.app is a Windows push-to-talk dictation app. You hold a configurable hotkey, speak, and release. The transcribed text pastes wherever your cursor is. That includes every Outlook text field.</p>
+      <p>Email body, subject line, reply field, search bar. If Outlook accepts keyboard input, dictate.app works in it. There is no special Outlook integration required. It works the same way in every app.</p>
+
+      <div class="highlight">
+        <p>Workflow: Open a compose window, click in the body, hold your hotkey, speak your email, release. Done. The whole email in one take, no typing.</p>
+      </div>
+
+      <h2>Outlook's Built-In Dictation vs dictate.app</h2>
+      <p>Microsoft 365 includes a Dictate button in the Outlook compose ribbon. It works, but it has several limitations that make it frustrating for daily use.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Outlook Built-In Dictate</th>
+            <th>dictate.app</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Requires M365 subscription</td><td>Yes</td><td>No</td></tr>
+          <tr><td>Push-to-talk mode</td><td>No (always-on)</td><td>Yes</td></tr>
+          <tr><td>Works in subject line</td><td>Inconsistent</td><td>Yes</td></tr>
+          <tr><td>Works outside Outlook</td><td>No</td><td>Yes, every app</td></tr>
+          <tr><td>Transcription latency</td><td>500ms to 2s</td><td>~200ms</td></tr>
+          <tr><td>Price</td><td>Included with M365</td><td>$8.99/month</td></tr>
+        </tbody>
+      </table>
+
+      <p>If you already have M365 and only ever write emails, the built-in Dictate button is free and adequate. If you want faster transcription, push-to-talk control, and a tool that works in every app on your computer, dictate.app is the better choice.</p>
+
+      <h2>Best Outlook Use Cases for Dictation</h2>
+      <p>Not every email is the same. Some are two sentences. Some are 500 words. Dictation helps most with the long ones.</p>
+      <p>These are the highest-value Outlook tasks to move to voice:</p>
+      <p><strong>Long replies</strong> — explaining a decision, giving feedback, summarizing a meeting. These take 5 to 10 minutes to type. Dictating cuts that to 90 seconds.</p>
+      <p><strong>First-draft emails</strong> — weekly updates, project reports, client summaries. Speak the whole thing, then clean it up. The editing pass is faster than writing from scratch.</p>
+      <p><strong>Quick replies</strong> — push-to-talk is perfect for short responses. Click the reply field, hold the hotkey, say "sounds good, I will have it by Thursday," release. Done.</p>
+
+      <div class="stat-box">
+        <div class="stat-num">3x</div>
+        <div class="stat-label">Faster email writing when dictating vs typing. A 300-word email takes 6 minutes to type and 2 minutes to speak.</div>
+      </div>
+
+      <h2>Setting Up dictate.app for Outlook</h2>
+      <p>Install dictate.app. It runs in the system tray. Configure your hotkey in the settings panel. The default is middle mouse button but you can set any key combination.</p>
+      <p>Open Outlook and start an email. Click in the body or subject field. Hold your hotkey and speak. Release when done. The text appears at your cursor.</p>
+      <p>That is the entire setup. No Outlook plugins. No configuration inside Outlook. No Microsoft account required.</p>
+
+      <h2>Tips for Better Email Dictation</h2>
+      <p>Speak in complete sentences. The Whisper model handles natural speech better than fragments. Say "I will send the report by Friday" not "send report Friday."</p>
+      <p>Dictate punctuation aloud. Say "period," "comma," or "new paragraph" and Whisper will insert them. It's faster than correcting punctuation after the fact.</p>
+      <p>Do one take per email, then edit. Do not try to dictate perfectly. Speak the whole thing, then read it over and fix what needs fixing. The edit pass is faster than trying to dictate in small corrected pieces.</p>
+
+      <div class="cta-box">
+        <h3>Stop Typing Your Emails</h3>
+        <p>Works in Outlook, Gmail, Apple Mail, and every other email client on Windows.</p>
+        <a href="https://dictate-app.pages.dev/download" class="btn">Download dictate.app Free</a>
+        <span class="trial-note">7-day free trial. No credit card. $8.99/month after trial.</span>
+      </div>
+    </div>
+    <script>
+      const c = document.getElementById('stars'), ctx = c.getContext('2d');
+      let stars = [];
+      function init() {
+        c.width = window.innerWidth; c.height = window.innerHeight;
+        stars = Array.from({length: 120}, () => ({
+          x: Math.random() * c.width, y: Math.random() * c.height,
+          r: Math.random() * 1.2 + 0.3, o: Math.random() * 0.5 + 0.1, s: Math.random() * 0.003 + 0.001
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach(s => {
+          s.o += s.s; if (s.o > 0.7 || s.o < 0.1) s.s *= -1;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`; ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      init(); draw();
+      window.addEventListener('resize', init);
+    </script>
+  </body>
+</html>

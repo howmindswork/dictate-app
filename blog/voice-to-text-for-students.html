@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice to Text for Students on Windows | dictate.app</title>
+    <meta
+      name="description"
+      content="Students write thousands of words per week. Voice dictation cuts that time by 60%. dictate.app works in every app — Google Docs, Word, email. 7-day free trial."
+    />
+    <meta
+      name="keywords"
+      content="voice to text for students, student dictation software, speech to text Windows student, voice typing essays"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-to-text-for-students"
+    />
+    <meta property="og:title" content="Voice to Text for Students on Windows" />
+    <meta
+      property="og:description"
+      content="Students write thousands of words per week. Voice dictation cuts that time by 60%. Try dictate.app free for 7 days."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-to-text-for-students"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Voice to Text for Students on Windows"
+    />
+    <meta
+      name="twitter:description"
+      content="Students write thousands of words per week. Voice dictation cuts that time by 60%."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice to Text for Students on Windows",
+        "description": "Students write thousands of words per week. Voice dictation cuts that time by 60%.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-to-text-for-students",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-to-text-for-students"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is voice dictation good for writing essays?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Speaking your essay out loud is often faster and more natural than typing. You can dictate a full draft, then edit with the keyboard. Most students find this approach produces better first drafts too."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work in Google Docs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app injects text via the clipboard, so it works in any text field including Google Docs in Chrome, Microsoft Word, Notion, and any other writing tool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does dictate.app cost for students?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app costs $8.99/month with a 7-day free trial. No credit card required to start. That's less than most textbook chapters."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use voice dictation for note-taking in class?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Push-to-talk mode is ideal for note-taking. You press the hotkey, speak a note, release, and the text appears instantly. It's quiet and discreet compared to always-on dictation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my audio stored or used for training?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. dictate.app transcribes your audio via Groq's Whisper API and discards it immediately. Your recordings are never stored, shared, or used for model training."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg2: #0f0b18;
+        --accent: #c084fc;
+        --accent2: #818cf8;
+        --text: #f1f0f5;
+        --text2: rgba(241, 240, 245, 0.55);
+        --border: rgba(192, 132, 252, 0.2);
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.88);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text2);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.12);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text2);
+      }
+      p strong {
+        color: var(--text);
+      }
+      .stat-box {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin: 32px 0;
+      }
+      .stat-box .stat-num {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .stat-box .stat-label {
+        font-size: 14px;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+      .tip-box p {
+        margin: 0;
+        font-size: 15px;
+      }
+      .cta-section {
+        text-align: center;
+        margin: 60px 0 20px;
+        padding: 48px 32px;
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+      }
+      .cta-section h2 {
+        color: var(--text);
+        margin: 0 0 12px;
+        font-size: 26px;
+      }
+      .cta-section p {
+        color: var(--text2);
+        margin-bottom: 28px;
+      }
+      .btn-primary {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.35);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(192, 132, 252, 0.5);
+      }
+      .faq-section {
+        margin-top: 60px;
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--border);
+        padding: 20px 0;
+      }
+      .faq-item h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 10px;
+      }
+      .faq-item p {
+        margin: 0;
+        font-size: 15px;
+      }
+      footer {
+        text-align: center;
+        padding: 40px 24px;
+        color: var(--text2);
+        font-size: 13px;
+        border-top: 1px solid var(--border);
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="https://dictate-app.pages.dev" class="nav-home">
+            <span class="logo-icon">🎙</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav">Try Free</a>
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Students</div>
+        <h1>Voice to Text for Students on Windows</h1>
+        <p class="post-meta">May 7, 2026 &nbsp;&middot;&nbsp; 7 min read</p>
+
+        <p>
+          The average undergraduate writes 5,000 to 10,000 words per week.
+          Essays, notes, emails to professors, discussion posts, lab reports.
+          That's a lot of typing.
+        </p>
+        <p>
+          Voice dictation cuts that time by more than half. You speak at 130 to
+          150 words per minute. You type at 40 to 60. The math is obvious.
+        </p>
+
+        <h2>Why Students Don't Use Voice Dictation</h2>
+        <p>
+          Most students have tried Windows speech recognition once and given up.
+          It's slow, it's inaccurate, and it doesn't work in most apps. Win+H
+          requires an internet connection and breaks constantly in
+          Electron-based apps.
+        </p>
+        <p>
+          The result: students stick with typing, even when it's slower and more
+          painful.
+        </p>
+        <p>
+          dictate.app is different. It uses Groq's Whisper API, which delivers
+          95%+ accuracy at 200ms latency. It works in every Windows app via
+          clipboard injection. And it costs $8.99/month — less than most
+          textbook chapters.
+        </p>
+
+        <div class="stat-box">
+          <div class="stat-num">60%</div>
+          <div class="stat-label">
+            Average time saved when switching from typing to voice dictation for
+            long-form writing.
+          </div>
+        </div>
+
+        <h2>Essay Writing</h2>
+        <p>
+          Essays are the best use case for voice dictation. You already know
+          what you want to say — you just need to get it out of your head and
+          onto the page.
+        </p>
+        <p>
+          The process: open your document, press the push-to-talk hotkey, and
+          start talking. Speak in full sentences. Don't stop to edit. Get a full
+          paragraph out, then review.
+        </p>
+        <p>
+          Most students find their first drafts are actually better when
+          dictated. Speaking forces you to form complete thoughts before they
+          hit the page. There's no backspace to hide behind.
+        </p>
+
+        <div class="tip-box">
+          <p>
+            <strong>Dictate the outline first.</strong> Speak each section
+            heading and two or three supporting points. Then dictate each
+            section as a block. Review and edit after.
+          </p>
+        </div>
+
+        <h2>Note-Taking in Class</h2>
+        <p>
+          Push-to-talk mode is perfect for note-taking. You press the hotkey,
+          speak a key point, release. The text appears in whatever app you have
+          open. No one around you hears anything unusual.
+        </p>
+        <p>
+          The advantage over typing: you can look at the board, the slides, or
+          the professor while you're capturing what they said. Typing forces you
+          to look at the keyboard.
+        </p>
+        <p>
+          Best apps for student notes: Notion, Obsidian, OneNote, Google Docs.
+          All of them work with dictate.app because it uses clipboard injection
+          — not app-specific integrations.
+        </p>
+
+        <h2>Research Notes</h2>
+        <p>
+          When you're reading a source and want to capture a summary, dictate
+          it. Read the paragraph, close the tab, speak your summary. This is
+          faster than typing and produces better notes because you're
+          paraphrasing in your own words rather than copying.
+        </p>
+        <p>
+          Researchers call this the "retrieval practice" effect. Formulating
+          what you just read into spoken language forces deeper processing than
+          transcribing it.
+        </p>
+
+        <div class="stat-box">
+          <div class="stat-num">150 WPM</div>
+          <div class="stat-label">
+            Average spoken speed vs 50-60 WPM for most student typists. You can
+            get a full paragraph out in under 30 seconds.
+          </div>
+        </div>
+
+        <h2>Emails and Discussion Posts</h2>
+        <p>
+          Emails to professors, TAs, and classmates are the most underrated use
+          case. They feel like they should be quick, but they eat time. A
+          5-minute email is actually 5 minutes of typing, thinking, revising,
+          typing again.
+        </p>
+        <p>
+          Dictate the email in 45 seconds. Read it back. Fix anything weird.
+          Send. The whole thing takes under two minutes.
+        </p>
+        <p>
+          Discussion board posts work the same way. Most are 200 to 300 words.
+          That's 90 seconds of speaking. Done.
+        </p>
+
+        <h2>What Doesn't Work Great</h2>
+        <p>
+          Code. Math notation. Citation formatting (you'd still need to type the
+          author name and year). Technical terminology with unusual spellings
+          sometimes needs correction.
+        </p>
+        <p>
+          For everything else — which is most of your writing — voice dictation
+          works well.
+        </p>
+
+        <div class="tip-box">
+          <p>
+            <strong>The correction rule:</strong> Speak the whole sentence
+            before correcting anything. If you stop mid-sentence to fix a word,
+            you'll lose your train of thought and spend more time than you
+            saved. Speak, then review.
+          </p>
+        </div>
+
+        <h2>Getting Started</h2>
+        <p>
+          Download dictate.app. Install it. Pick a push-to-talk hotkey
+          (something easy to hold — many users pick the right Alt key or a mouse
+          button). Start with email for the first week. Then add notes. Then
+          essays.
+        </p>
+        <p>
+          The learning curve is about two weeks. After that, most students don't
+          go back to typing for long-form work.
+        </p>
+
+        <div class="cta-section">
+          <h2>Write Faster. Starting Today.</h2>
+          <p>7-day free trial. No credit card. Works on Windows 10 and 11.</p>
+          <a href="https://dictate-app.pages.dev/download" class="btn-primary"
+            >Download Free</a
+          >
+        </div>
+
+        <div class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+          <div class="faq-item">
+            <h3>Is voice dictation good for writing essays?</h3>
+            <p>
+              Yes. Speaking your essay out loud is often faster and more natural
+              than typing. You dictate a full draft, then edit. Most students
+              find this produces better first drafts too.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Does dictate.app work in Google Docs?</h3>
+            <p>
+              Yes. dictate.app injects text via the clipboard, so it works in
+              any text field including Google Docs in Chrome, Microsoft Word,
+              Notion, and any other writing tool.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>How much does dictate.app cost for students?</h3>
+            <p>
+              $8.99/month with a 7-day free trial. No credit card required to
+              start. That's less than most textbook chapters.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I use voice dictation for note-taking in class?</h3>
+            <p>
+              Push-to-talk mode is ideal for note-taking. Press the hotkey,
+              speak a note, release. The text appears instantly. Quiet and
+              discreet.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Is my audio stored or used for training?</h3>
+            <p>
+              No. dictate.app transcribes your audio via Groq's Whisper API and
+              discards it immediately. Your recordings are never stored, shared,
+              or used for model training.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <footer>
+        <p>
+          <a href="https://dictate-app.pages.dev">dictate.app</a> &nbsp;&middot;&nbsp;
+          <a href="https://dictate-app.pages.dev/blog">Blog</a> &nbsp;&middot;&nbsp;
+          <a href="https://dictate-app.pages.dev/download">Download</a>
+        </p>
+        <p style="margin-top: 12px">
+          Windows voice dictation powered by Groq Whisper. 2026.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const c = document.getElementById("starfield");
+      const ctx = c.getContext("2d");
+      let stars = [];
+      function resize() {
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+      }
+      function init() {
+        resize();
+        stars = Array.from({ length: 150 }, () => ({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: Math.random() * 1.2 + 0.2,
+          o: Math.random() * 0.5 + 0.1,
+          s: Math.random() * 0.3 + 0.05,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.7 || s.o < 0.1) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener("resize", () => {
+        resize();
+      });
+      init();
+      draw();
+    </script>
+  </body>
+</html>

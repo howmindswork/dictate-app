@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation for Windows 10: What Works in 2026</title>
+    <meta
+      name="description"
+      content="Voice dictation on Windows 10 is broken by default. Here's what actually works, how to set it up, and why dictate.app beats Win+H on every machine."
+    />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-windows-10"
+    />
+    <meta
+      property="og:title"
+      content="Voice Dictation for Windows 10: What Works in 2026"
+    />
+    <meta
+      property="og:description"
+      content="Voice dictation on Windows 10 is broken by default. Here's what actually works, how to set it up, and why dictate.app beats Win+H on every machine."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-windows-10"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Voice Dictation for Windows 10: What Works in 2026"
+    />
+    <meta
+      name="twitter:description"
+      content="Voice dictation on Windows 10 is broken by default. Here's what actually works, how to set it up, and why dictate.app beats Win+H on every machine."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation for Windows 10: What Works in 2026",
+        "description": "Voice dictation on Windows 10 is broken by default. Here's what actually works, how to set it up, and why dictate.app beats Win+H on every machine.",
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "dictate.app",
+          "url": "https://dictate.app"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does dictate.app work on Windows 10?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app works on Windows 10 version 1903 and later. It installs as a standard desktop app and works in every Windows app including Chrome, Word, Outlook, and Slack."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is Windows 10 voice typing not working?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Windows 10 voice typing (Win+H) only works in specific text fields and requires a Microsoft account and internet connection. It fails silently in many apps. dictate.app uses a different method that works everywhere."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is voice dictation on Windows 10 free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Win+H is free but limited. dictate.app offers a 7-day free trial with no credit card required, then $8.99/month for unlimited use."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best dictation software for Windows 10?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app is the best option for Windows 10 in 2026. It uses Groq Whisper for 99%+ accuracy, works offline, and has push-to-talk so you control exactly when it listens."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      :root {
+        --bg: #0b0812;
+        --bg2: #0f0b18;
+        --accent: #c084fc;
+        --accent2: #818cf8;
+        --accent-dim: rgba(192, 132, 252, 0.12);
+        --accent-border: rgba(192, 132, 252, 0.3);
+        --text: #f1f0f5;
+        --text-secondary: rgba(241, 240, 245, 0.55);
+        --border: rgba(255, 255, 255, 0.08);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: Georgia, serif;
+        line-height: 1.75;
+      }
+      canvas#starfield {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+        height: 56px;
+      }
+      nav a.logo {
+        color: var(--accent);
+        font-family: system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+      }
+      nav a.cta {
+        background: var(--accent);
+        color: #0b0812;
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 0.45rem 1.1rem;
+        border-radius: 6px;
+        text-decoration: none;
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 6rem;
+      }
+      .tag {
+        display: inline-block;
+        background: var(--accent-dim);
+        color: var(--accent);
+        border: 1px solid var(--accent-border);
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-family: system-ui, sans-serif;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+      }
+      h1 {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        line-height: 1.25;
+        margin-bottom: 1rem;
+      }
+      .meta {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-family: system-ui, sans-serif;
+        margin-bottom: 2.5rem;
+      }
+      h2 {
+        font-size: 1.35rem;
+        margin: 2.5rem 0 0.8rem;
+        color: var(--accent);
+        font-family: system-ui, sans-serif;
+      }
+      p {
+        margin-bottom: 1.2rem;
+      }
+      a {
+        color: var(--accent);
+      }
+      .stat-box {
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 8px;
+        padding: 1.2rem 1.5rem;
+        margin: 2rem 0;
+        font-family: system-ui, sans-serif;
+      }
+      .stat-box .num {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .stat-box .label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 0.2rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+        font-family: system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      th {
+        background: var(--accent-dim);
+        color: var(--accent);
+        text-align: left;
+        padding: 0.7rem 1rem;
+        border: 1px solid var(--accent-border);
+      }
+      td {
+        padding: 0.65rem 1rem;
+        border: 1px solid var(--border);
+        vertical-align: top;
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .cta-block {
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        margin: 3rem 0;
+        font-family: system-ui, sans-serif;
+      }
+      .cta-block h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+      }
+      .cta-block p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
+      }
+      .cta-block a {
+        display: inline-block;
+        background: var(--accent);
+        color: #0b0812;
+        font-weight: 700;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+      .tip {
+        background: rgba(129, 140, 248, 0.08);
+        border-left: 3px solid var(--accent2);
+        padding: 0.8rem 1.2rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <nav>
+      <a class="logo" href="/">dictate.app</a>
+      <a class="cta" href="https://dictate-app.pages.dev/download">Try Free</a>
+    </nav>
+    <main>
+      <span class="tag">Windows 10</span>
+      <h1>Voice Dictation for Windows 10: What Actually Works in 2026</h1>
+      <p class="meta">May 7, 2026 &middot; 8 min read</p>
+
+      <p>
+        Windows 10 voice dictation is a mess. The built-in tool barely works.
+        Dragon is expensive and mostly discontinued. Most guides tell you to
+        just press Win+H and hope for the best.
+      </p>
+      <p>
+        This guide covers what actually works on Windows 10 in 2026, why the
+        built-in options fail, and what to use instead.
+      </p>
+
+      <div class="stat-box">
+        <div class="num">130+ WPM</div>
+        <div class="label">
+          Average speaking speed vs. 40 WPM typing — dictation is 3x faster
+        </div>
+      </div>
+
+      <h2>The Problem with Win+H on Windows 10</h2>
+      <p>
+        Win+H is Microsoft's built-in voice typing shortcut. On Windows 11 it
+        got a major upgrade. On Windows 10 it is still the old version from
+        2019.
+      </p>
+      <p>The Windows 10 version has three hard limits:</p>
+      <p>
+        First, it only works in certain text fields. Try using it in Chrome, VS
+        Code, Slack, or Outlook and it either silently fails or produces garbage
+        output. It was designed for Microsoft apps and that is essentially all
+        it supports reliably.
+      </p>
+      <p>
+        Second, it requires a constant internet connection to Microsoft's
+        servers. If your connection drops mid-sentence, the whole thing stops.
+        There is no offline fallback.
+      </p>
+      <p>
+        Third, accuracy is poor compared to modern models. Microsoft's Windows
+        10 speech engine predates the Whisper era. You get roughly 85-90%
+        accuracy on a good day, which means fixing multiple errors per sentence.
+      </p>
+
+      <div class="tip">
+        Win+H on Windows 10 was built before modern AI speech models existed. It
+        is not getting updated. Microsoft's energy went into Windows 11.
+      </div>
+
+      <h2>Windows 10 Compatibility: What You Need</h2>
+      <p>
+        dictate.app runs on Windows 10 version 1903 and later. That covers
+        essentially every Windows 10 machine still in use. If you are on an
+        older build, run Windows Update first.
+      </p>
+      <p>
+        No special hardware required. A standard laptop microphone works fine. A
+        USB headset improves accuracy. A Blue Yeti or similar condenser mic gets
+        you near-perfect results.
+      </p>
+      <p>
+        The app installs in under a minute and does not require administrator
+        privileges for normal use.
+      </p>
+
+      <h2>How dictate.app Is Different on Windows 10</h2>
+      <p>
+        dictate.app uses the Groq Whisper API. Whisper was trained on 680,000
+        hours of audio. Accuracy is 99%+ on clear speech. That is a different
+        category from what Win+H offers.
+      </p>
+      <p>
+        The key technical difference is how text gets inserted. Win+H hooks into
+        Windows accessibility APIs, which only some apps expose. dictate.app
+        uses clipboard paste, which works in every single Windows app without
+        exception. Chrome, Word, Notepad, VS Code, Slack, Discord, Outlook,
+        Excel — all of them.
+      </p>
+      <p>
+        Push-to-talk mode means you hold a hotkey, speak, and release. Dictation
+        only runs when you want it to. No accidental transcription of background
+        noise. No always-on microphone.
+      </p>
+
+      <div class="stat-box">
+        <div class="num">&lt; 200ms</div>
+        <div class="label">
+          Transcription latency via Groq — faster than most people finish their
+          thought
+        </div>
+      </div>
+
+      <h2>Comparison: Voice Dictation Options on Windows 10</h2>
+      <table>
+        <tr>
+          <th>Tool</th>
+          <th>Accuracy</th>
+          <th>Works in all apps</th>
+          <th>Offline</th>
+          <th>Cost</th>
+        </tr>
+        <tr>
+          <td>Win+H (Windows 10)</td>
+          <td>~85%</td>
+          <td>No</td>
+          <td>No</td>
+          <td>Free</td>
+        </tr>
+        <tr>
+          <td>Dragon Professional</td>
+          <td>~95%</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>$699 one-time</td>
+        </tr>
+        <tr>
+          <td>Windows Speech Recognition</td>
+          <td>~80%</td>
+          <td>Partial</td>
+          <td>Yes</td>
+          <td>Free</td>
+        </tr>
+        <tr>
+          <td>dictate.app</td>
+          <td>99%+</td>
+          <td>Yes</td>
+          <td>Mode available</td>
+          <td>$8.99/mo</td>
+        </tr>
+      </table>
+
+      <h2>Setting Up Voice Dictation on Windows 10</h2>
+      <p>
+        Download dictate.app from
+        <a href="https://dictate-app.pages.dev/download">dictate.app/download</a>. Run the
+        installer. It drops a small icon in your system tray.
+      </p>
+      <p>
+        Open settings and assign your push-to-talk hotkey. The default is right
+        Ctrl. Hold it, speak naturally, release. Your words appear wherever your
+        cursor is.
+      </p>
+      <p>
+        First-run tip: speak a few test sentences in a quiet room. The app
+        calibrates to your voice pattern over the first few sessions and gets
+        noticeably better within a week of daily use.
+      </p>
+
+      <div class="tip">
+        If you use a laptop microphone, position yourself about 30-40cm from the
+        screen. Closer causes distortion. Farther reduces accuracy. That
+        distance is the sweet spot.
+      </div>
+
+      <h2>Use Cases That Work Best on Windows 10</h2>
+      <p>
+        Email and Slack are the fastest wins. Most people type the same kinds of
+        messages hundreds of times per week. Speaking them takes a third of the
+        time.
+      </p>
+      <p>
+        Long documents and reports. Anything over a few paragraphs is
+        dramatically faster by voice. Writers routinely hit 2,000 to 3,000 words
+        per hour by dictation.
+      </p>
+      <p>
+        Code comments and documentation. Not code itself — variable names and
+        syntax do not translate well to speech — but the prose around code is
+        perfect for dictation.
+      </p>
+      <p>
+        Meeting notes and summaries. Dictate your notes immediately after a
+        meeting while the content is fresh. Takes five minutes instead of
+        twenty.
+      </p>
+
+      <h2>What About Dragon on Windows 10?</h2>
+      <p>
+        Dragon Professional Individual still runs on Windows 10. It costs $699
+        as a one-time purchase. Nuance (now Microsoft) discontinued the consumer
+        product line in 2024. The professional version still exists but is aimed
+        at enterprise buyers.
+      </p>
+      <p>
+        For most users the math is simple. dictate.app at $8.99/month reaches
+        Dragon's price point in about 6.5 years. Dragon has no recurring cloud
+        improvements. dictate.app gets Whisper model updates automatically. See
+        our full
+        <a href="/blog/dragon-naturallyspeaking-alternative.html"
+          >Dragon NaturallySpeaking alternative guide</a
+        >
+        for the complete breakdown.
+      </p>
+
+      <div class="cta-block">
+        <h3>Try It Free on Windows 10</h3>
+        <p>
+          7-day free trial. No credit card. Works on Windows 10 version 1903+.
+        </p>
+        <a href="https://dictate-app.pages.dev/download">Download dictate.app</a>
+      </div>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <p>
+        <strong>Does dictate.app work on Windows 10?</strong><br />Yes. Windows
+        10 version 1903 and later. Installs in under a minute.
+      </p>
+
+      <p>
+        <strong>Why is Win+H not working on Windows 10?</strong><br />Win+H on
+        Windows 10 only supports certain Microsoft app text fields and requires
+        constant internet. It predates modern AI speech models. It is not being
+        updated.
+      </p>
+
+      <p>
+        <strong>Is voice dictation on Windows 10 free?</strong><br />Win+H is
+        free but limited. dictate.app offers a 7-day free trial, then
+        $8.99/month.
+      </p>
+
+      <p>
+        <strong>Does dictate.app work offline on Windows 10?</strong><br />The
+        standard mode uses Groq's servers for Whisper transcription. An offline
+        mode is available for users who need to keep audio fully local.
+      </p>
+    </main>
+    <script>
+      const c = document.getElementById("starfield");
+      const ctx = c.getContext("2d");
+      let stars = [];
+      function resize() {
+        c.width = innerWidth;
+        c.height = innerHeight;
+      }
+      function init() {
+        stars = Array.from({ length: 160 }, () => ({
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          r: Math.random() * 1.2 + 0.3,
+          o: Math.random() * 0.5 + 0.2,
+          s: Math.random() * 0.15 + 0.05,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach((s) => {
+          s.o += (Math.random() - 0.5) * 0.02;
+          s.o = Math.max(0.1, Math.min(0.7, s.o));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      init();
+      draw();
+      window.addEventListener("resize", () => {
+        resize();
+        init();
+      });
+    </script>
+  </body>
+</html>

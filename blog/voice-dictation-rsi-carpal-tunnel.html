@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Dictation for RSI and Carpal Tunnel | dictate.app</title>
+    <meta
+      name="description"
+      content="RSI and carpal tunnel don't have to end your career. Voice dictation lets your hands rest while you keep working. Start free with dictate.app for Windows."
+    />
+    <meta
+      name="keywords"
+      content="voice dictation RSI, dictation carpal tunnel, speech to text repetitive strain injury, voice typing wrist pain Windows"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/voice-dictation-rsi-carpal-tunnel"
+    />
+    <meta
+      property="og:title"
+      content="Voice Dictation for RSI and Carpal Tunnel"
+    />
+    <meta
+      property="og:description"
+      content="RSI and carpal tunnel don't have to end your career. Voice dictation lets your hands rest while you keep working. Start free with dictate.app for Windows."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/voice-dictation-rsi-carpal-tunnel"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Voice Dictation for RSI and Carpal Tunnel"
+    />
+    <meta
+      name="twitter:description"
+      content="RSI and carpal tunnel don't have to end your career. Voice dictation lets your hands rest while you keep working."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Voice Dictation for RSI and Carpal Tunnel",
+        "description": "RSI and carpal tunnel don't have to end your career. Voice dictation lets your hands rest while you keep working.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/voice-dictation-rsi-carpal-tunnel",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/voice-dictation-rsi-carpal-tunnel"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can voice dictation help with RSI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Voice dictation removes the repetitive motion that causes RSI flare-ups. You speak instead of type, and your hands rest completely between phrases."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is dictate.app good for people with carpal tunnel?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app uses push-to-talk mode, which means your hands are at rest except when you press the hotkey. This is the most ergonomic dictation workflow available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is voice dictation for professional work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "dictate.app uses Groq's Whisper API, which achieves over 95% accuracy on clear speech. Most users report needing minimal corrections after a short adjustment period."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does voice dictation work in all Windows apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. dictate.app injects text via the clipboard, so it works in every Windows application that accepts text input — including browsers, Word, Outlook, Slack, and code editors."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to get used to dictating instead of typing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most users feel comfortable within one to two weeks. Starting with email and short messages helps build the habit before tackling longer documents."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0b0812;
+        --bg2: #0f0b18;
+        --accent: #c084fc;
+        --accent2: #818cf8;
+        --text: #f1f0f5;
+        --text2: rgba(241, 240, 245, 0.55);
+        --border: rgba(192, 132, 252, 0.2);
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(11, 8, 18, 0.88);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text2);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #818cf8 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.12);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text2);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text2);
+      }
+      p strong {
+        color: var(--text);
+      }
+      .stat-box {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin: 32px 0;
+      }
+      .stat-box .stat-num {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--accent);
+      }
+      .stat-box .stat-label {
+        font-size: 14px;
+        color: var(--text2);
+        margin-top: 4px;
+      }
+      .tip-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+      .tip-box p {
+        margin: 0;
+        font-size: 15px;
+      }
+      .cta-section {
+        text-align: center;
+        margin: 60px 0 20px;
+        padding: 48px 32px;
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+      }
+      .cta-section h2 {
+        color: var(--text);
+        margin: 0 0 12px;
+        font-size: 26px;
+      }
+      .cta-section p {
+        color: var(--text2);
+        margin-bottom: 28px;
+      }
+      .btn-primary {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent2) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 4px 20px rgba(192, 132, 252, 0.35);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(192, 132, 252, 0.5);
+      }
+      .faq-section {
+        margin-top: 60px;
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--border);
+        padding: 20px 0;
+      }
+      .faq-item h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 10px;
+      }
+      .faq-item p {
+        margin: 0;
+        font-size: 15px;
+      }
+      footer {
+        text-align: center;
+        padding: 40px 24px;
+        color: var(--text2);
+        font-size: 13px;
+        border-top: 1px solid var(--border);
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="https://dictate-app.pages.dev" class="nav-home">
+            <span class="logo-icon">🎙</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav">Try Free</a>
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Health &amp; Ergonomics</div>
+        <h1>Voice Dictation for RSI and Carpal Tunnel</h1>
+        <p class="post-meta">May 7, 2026 &nbsp;&middot;&nbsp; 8 min read</p>
+
+        <p>
+          Your hands hurt. Every keystroke is a reminder. You've tried wrist
+          braces, ergonomic keyboards, standing desks. But you're still typing.
+          And it's still getting worse.
+        </p>
+        <p>
+          Voice dictation is not a productivity trick. For people with RSI and
+          carpal tunnel syndrome, it's pain management.
+        </p>
+
+        <h2>What RSI Actually Does to You</h2>
+        <p>
+          Repetitive strain injury (RSI) is cumulative damage to tendons,
+          nerves, and muscles from repeated motion. Typing is one of the most
+          common causes.
+        </p>
+        <p>
+          The tendons in your wrist pass through a narrow tunnel. When they're
+          inflamed, they press against the median nerve. That's carpal tunnel
+          syndrome. The symptoms — tingling, numbness, burning, weakness — get
+          worse the more you type.
+        </p>
+        <p>
+          Most people wait too long to change. They push through the pain until
+          they can't. Some end up unable to work for months.
+        </p>
+
+        <div class="stat-box">
+          <div class="stat-num">8 million+</div>
+          <div class="stat-label">
+            Americans affected by carpal tunnel syndrome. Knowledge workers are
+            among the highest-risk group.
+          </div>
+        </div>
+
+        <h2>Why Typing Keeps Making It Worse</h2>
+        <p>
+          The problem with typing is that it never stops. You're making the same
+          micro-movements thousands of times per day. Each keystroke requires
+          finger extension, flexion, and lateral movement. Multiply that by
+          40,000 keystrokes per day and you start to understand what's happening
+          inside your wrist.
+        </p>
+        <p>
+          Even "ergonomic" keyboards don't eliminate the root problem. They
+          reduce some stress, but the repetition continues.
+        </p>
+        <p>
+          The only real solution is to reduce the number of keystrokes. Voice
+          dictation can cut that number by 80% or more.
+        </p>
+
+        <h2>How Voice Dictation Helps</h2>
+        <p>
+          When you dictate instead of type, your hands rest. Between phrases,
+          they sit still. The tendons stop moving. The inflammation has time to
+          subside.
+        </p>
+        <p>This is not about speed. It's about load reduction.</p>
+
+        <div class="tip-box">
+          <p>
+            <strong>Push-to-talk mode is key.</strong> With push-to-talk, you
+            hold a hotkey, speak, then release. Between recordings your hands
+            are completely still. That rest period is where healing happens.
+          </p>
+        </div>
+
+        <p>
+          Compare that to always-on dictation software, where you're constantly
+          monitoring, correcting, stopping and starting. Your hands are still
+          active. The benefit is diminished.
+        </p>
+
+        <h2>What You Can Dictate</h2>
+        <p>
+          Most knowledge workers spend the bulk of their day on things that work
+          great with voice:
+        </p>
+        <p>
+          <strong>Email.</strong> The average professional sends 40+ emails per
+          day. Dictating replies takes seconds. Your hands barely touch the
+          keyboard.
+        </p>
+        <p>
+          <strong>Slack and Teams messages.</strong> Short, conversational
+          messages are the easiest thing to dictate. Press hotkey, speak,
+          release. Done.
+        </p>
+        <p>
+          <strong>Documents and reports.</strong> Long-form writing is where
+          voice dictation shines. Speaking at 150 words per minute is faster
+          than typing at 60, and your hands rest the whole time.
+        </p>
+        <p>
+          <strong>Meeting notes.</strong> Dictate notes right after a meeting
+          while memory is fresh. No keyboard required.
+        </p>
+        <p>
+          <strong>Search queries, form fields, notes apps.</strong> dictate.app
+          works in every Windows application that accepts text. No switching
+          workflows.
+        </p>
+
+        <h2>What's Hard to Dictate</h2>
+        <p>
+          Code syntax is difficult. Punctuation can require verbal commands.
+          Numbers and proper nouns sometimes need correction. These are the
+          realistic limitations.
+        </p>
+        <p>
+          For developers, the strategy is different: dictate comments,
+          documentation, commit messages, Slack, and email. Leave the actual
+          code to typing, but reduce everything else to near zero.
+        </p>
+
+        <div class="stat-box">
+          <div class="stat-num">80%</div>
+          <div class="stat-label">
+            Reduction in keystrokes achievable by dictating email, documents,
+            and messages instead of typing them.
+          </div>
+        </div>
+
+        <h2>How to Transition Without Losing Productivity</h2>
+        <p>
+          Don't try to switch everything at once. That's overwhelming and you'll
+          quit.
+        </p>
+        <p>
+          Start with email only. For one week, dictate every email reply.
+          Nothing else changes. Get comfortable with the rhythm of push-to-talk.
+        </p>
+        <p>
+          Week two, add Slack. Week three, try longer documents. By week four,
+          you'll have a natural sense of what works with voice and what doesn't.
+        </p>
+
+        <div class="tip-box">
+          <p>
+            <strong>The correction habit:</strong> Don't stop speaking to fix
+            mistakes. Finish the sentence, then go back. Stopping mid-sentence
+            to correct breaks your flow and adds keyboard time. Speak the whole
+            thought, then review.
+          </p>
+        </div>
+
+        <h2>dictate.app on Windows</h2>
+        <p>
+          dictate.app runs on Windows 10 and 11. It uses Groq's Whisper API for
+          transcription at 200ms latency — fast enough that it feels instant.
+          Audio is never stored. The transcription happens, the text is injected
+          via clipboard, and that's it.
+        </p>
+        <p>
+          Setup takes under two minutes. Download, install, set a push-to-talk
+          hotkey, and you're dictating. There's nothing to configure. No voice
+          training. No cloud account beyond the 7-day free trial signup.
+        </p>
+
+        <div class="cta-section">
+          <h2>Give Your Hands a Break</h2>
+          <p>Start your 7-day free trial. No credit card required.</p>
+          <a href="https://dictate-app.pages.dev/download" class="btn-primary"
+            >Download Free for Windows</a
+          >
+        </div>
+
+        <div class="faq-section">
+          <h2>Frequently Asked Questions</h2>
+          <div class="faq-item">
+            <h3>Can voice dictation help with RSI?</h3>
+            <p>
+              Yes. Voice dictation removes the repetitive motion that causes RSI
+              flare-ups. You speak instead of type, and your hands rest
+              completely between phrases.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Is dictate.app good for people with carpal tunnel?</h3>
+            <p>
+              dictate.app uses push-to-talk mode, which means your hands are at
+              rest except when you press the hotkey. This is the most ergonomic
+              dictation workflow available on Windows.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>How accurate is voice dictation for professional work?</h3>
+            <p>
+              dictate.app uses Groq's Whisper API, which achieves over 95%
+              accuracy on clear speech. Most users report needing minimal
+              corrections after a short adjustment period.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Does voice dictation work in all Windows apps?</h3>
+            <p>
+              Yes. dictate.app injects text via the clipboard, so it works in
+              every Windows application that accepts text input — including
+              browsers, Word, Outlook, Slack, and code editors.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>How long does it take to get used to dictating?</h3>
+            <p>
+              Most users feel comfortable within one to two weeks. Starting with
+              email and short messages helps build the habit before tackling
+              longer documents.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <footer>
+        <p>
+          <a href="https://dictate-app.pages.dev">dictate.app</a> &nbsp;&middot;&nbsp;
+          <a href="https://dictate-app.pages.dev/blog">Blog</a> &nbsp;&middot;&nbsp;
+          <a href="https://dictate-app.pages.dev/download">Download</a>
+        </p>
+        <p style="margin-top: 12px">
+          Windows voice dictation powered by Groq Whisper. 2026.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const c = document.getElementById("starfield");
+      const ctx = c.getContext("2d");
+      let stars = [];
+      function resize() {
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+      }
+      function init() {
+        resize();
+        stars = Array.from({ length: 150 }, () => ({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: Math.random() * 1.2 + 0.2,
+          o: Math.random() * 0.5 + 0.1,
+          s: Math.random() * 0.3 + 0.05,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        stars.forEach((s) => {
+          s.o += s.s * 0.01;
+          if (s.o > 0.7 || s.o < 0.1) s.s *= -1;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener("resize", () => {
+        resize();
+      });
+      init();
+      draw();
+    </script>
+  </body>
+</html>
