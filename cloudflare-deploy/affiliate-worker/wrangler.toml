@@ -1,0 +1,50 @@
+name = "affiliate-worker"
+main = "index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Account-level settings — fill in your Cloudflare account ID
+# account_id = "YOUR_ACCOUNT_ID_HERE"
+
+# ─── ROUTES ───────────────────────────────────────────────────────────────────
+# Uncomment and update once the custom domain is configured in Cloudflare Pages.
+#
+# routes = [
+#   { pattern = "dictate.app/go/*", zone_name = "dictate.app" },
+#   { pattern = "dictate.app/api/affiliate-*", zone_name = "dictate.app" },
+# ]
+
+# Worker is also reachable at:
+#   https://affiliate-worker.dictate-app.workers.dev
+# for use during development or as the form's action URL before custom routes.
+
+# ─── KV NAMESPACES ────────────────────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "AFFILIATES"
+id = "1dfe5e3b6c054804b5ae1ad499f258ea"
+# To create: wrangler kv:namespace create AFFILIATES
+# Then paste the returned ID above.
+# For local dev preview_id is optional:
+# preview_id = "REPLACE_WITH_PREVIEW_KV_ID"
+
+# ─── ENVIRONMENT VARIABLES ────────────────────────────────────────────────────
+# Set secrets via CLI — do NOT hardcode them here:
+#   wrangler secret put STRIPE_WEBHOOK_SECRET
+#
+# Stripe webhook secret is stored as a secret (set via wrangler secret put).
+# It is NOT listed in [vars] to avoid committing it to source control.
+
+[vars]
+# Non-sensitive config
+STRIPE_PAYMENT_LINK = "https://buy.stripe.com/8x2aEX7ree937fw6A3dwc0l"
+COMMISSION_RATE = "0.40"
+COOKIE_DAYS = "30"
+
+# ─── OBSERVABILITY ────────────────────────────────────────────────────────────
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+# ─── LOCAL DEV ────────────────────────────────────────────────────────────────
+# Run locally: wrangler dev
+# Deploy:      wrangler deploy

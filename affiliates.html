@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affiliate Program — dictate.app</title>
+    <meta
+      name="description"
+      content="Earn 40% recurring commission forever on every dictate.app sale and renewal you refer. No cap. No expiry."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://dictate.app/affiliates" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0f;
+        --bg2: #0f0f1a;
+        --accent: #3b82f6;
+        --accent-dim: rgba(59, 130, 246, 0.15);
+        --accent-border: rgba(59, 130, 246, 0.3);
+        --accent-glow: rgba(59, 130, 246, 0.5);
+        --text: #f0f4ff;
+        --text-secondary: rgba(240, 244, 255, 0.55);
+        --card: rgba(255, 255, 255, 0.04);
+        --card-hover: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-accent: rgba(59, 130, 246, 0.25);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 18px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(10, 10, 15, 0.8);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-logo {
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      .nav-logo span {
+        color: var(--accent);
+      }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          opacity 0.15s,
+          transform 0.15s;
+      }
+
+      .nav-cta:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      /* ─── LAYOUT ─── */
+      main {
+        position: relative;
+        z-index: 1;
+        padding-top: 80px;
+      }
+
+      section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+
+      section.narrow {
+        max-width: 700px;
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        text-align: center;
+        padding-top: 120px;
+        padding-bottom: 100px;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 100px;
+        padding: 6px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 32px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .hero-badge::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.8);
+        }
+      }
+
+      h1 {
+        font-size: clamp(42px, 7vw, 80px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 24px;
+        background: linear-gradient(
+          135deg,
+          #f0f4ff 0%,
+          #93c5fd 60%,
+          var(--accent) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-sub {
+        font-size: clamp(17px, 2.5vw, 22px);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        max-width: 560px;
+        margin: 0 auto 48px;
+      }
+
+      .hero-sub strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .hero-stats {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 48px;
+        margin-bottom: 56px;
+        flex-wrap: wrap;
+      }
+
+      .stat {
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 40px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #f0f4ff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+
+      .stat-label {
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        letter-spacing: 0.01em;
+      }
+
+      .stat-divider {
+        width: 1px;
+        height: 48px;
+        background: var(--border);
+      }
+
+      .hero-cta-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 40px;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 4px 32px rgba(59, 130, 246, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 48px rgba(59, 130, 246, 0.55);
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        color: var(--text-secondary);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 15px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--accent-border);
+        color: var(--text);
+      }
+
+      /* ─── HOW IT WORKS ─── */
+      .section-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+      }
+
+      h2 {
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-bottom: 16px;
+      }
+
+      .section-sub {
+        font-size: 17px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        max-width: 520px;
+        margin-bottom: 56px;
+      }
+
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+      }
+
+      .step-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px 28px;
+        position: relative;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+
+      .step-card:hover {
+        border-color: var(--border-accent);
+        background: var(--card-hover);
+      }
+
+      .step-num-big {
+        font-size: 48px;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.4),
+          rgba(59, 130, 246, 0.1)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 20px;
+      }
+
+      .step-icon {
+        width: 48px;
+        height: 48px;
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .step-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .step-title {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+      }
+
+      .step-desc {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .step-arrow {
+        display: none;
+      }
+
+      /* ─── EARNINGS CALCULATOR ─── */
+      .calc-section {
+        background: var(--bg2);
+      }
+
+      .calc-card {
+        background: var(--card);
+        border: 1px solid var(--border-accent);
+        border-radius: 24px;
+        padding: 48px;
+        max-width: 620px;
+        margin: 0 auto;
+      }
+
+      .calc-row {
+        margin-bottom: 32px;
+      }
+
+      .calc-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .calc-label span {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        cursor: pointer;
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .calc-result {
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 16px;
+        padding: 32px;
+        text-align: center;
+      }
+
+      .calc-monthly {
+        font-size: 56px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        background: linear-gradient(135deg, #f0f4ff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 8px;
+      }
+
+      .calc-monthly-label {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .calc-annual {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--text-secondary);
+      }
+
+      .calc-annual strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .calc-note {
+        font-size: 13px;
+        color: rgba(240, 244, 255, 0.35);
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      /* ─── WHY US ─── */
+      .perks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .perk-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px 24px;
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+        transition: border-color 0.2s;
+      }
+
+      .perk-card:hover {
+        border-color: var(--border-accent);
+      }
+
+      .perk-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .perk-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .perk-title {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        letter-spacing: -0.01em;
+      }
+
+      .perk-desc {
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.55;
+      }
+
+      /* ─── SIGNUP FORM ─── */
+      .form-section {
+        background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      }
+
+      .form-card {
+        background: var(--card);
+        border: 1px solid var(--border-accent);
+        border-radius: 24px;
+        padding: 56px 48px;
+        max-width: 580px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 600px) {
+        .form-card {
+          padding: 36px 24px;
+        }
+      }
+
+      .form-card h2 {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .form-subtitle {
+        font-size: 15px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        line-height: 1.55;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+        letter-spacing: 0.01em;
+      }
+
+      input,
+      select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 13px 16px;
+        font-size: 15px;
+        color: var(--text);
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        font-family: inherit;
+      }
+
+      input::placeholder {
+        color: rgba(240, 244, 255, 0.25);
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+      }
+
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(240,244,255,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 40px;
+        cursor: pointer;
+      }
+
+      select option {
+        background: #1a1a2e;
+        color: var(--text);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 480px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .form-hint {
+        font-size: 12px;
+        color: rgba(240, 244, 255, 0.3);
+        margin-top: 6px;
+        line-height: 1.4;
+      }
+
+      .form-submit {
+        width: 100%;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 16px;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s,
+          opacity 0.15s;
+        box-shadow: 0 4px 32px rgba(59, 130, 246, 0.4);
+        margin-top: 12px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .form-submit:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 48px rgba(59, 130, 246, 0.55);
+      }
+
+      .form-submit:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .form-legal {
+        font-size: 12px;
+        color: rgba(240, 244, 255, 0.3);
+        text-align: center;
+        margin-top: 16px;
+        line-height: 1.5;
+      }
+
+      .form-legal a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      /* Form success state */
+      .form-success {
+        display: none;
+        text-align: center;
+        padding: 24px 0;
+      }
+
+      .form-success.visible {
+        display: block;
+      }
+
+      .success-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: var(--accent-dim);
+        border: 1.5px solid var(--accent-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.25);
+      }
+
+      .success-icon svg {
+        width: 36px;
+        height: 36px;
+        stroke: var(--accent);
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .success-title {
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+      }
+
+      .success-desc {
+        font-size: 15px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+
+      .ref-link-box {
+        background: rgba(59, 130, 246, 0.08);
+        border: 1px solid var(--accent-border);
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .ref-link-text {
+        font-size: 14px;
+        color: var(--accent);
+        font-family: monospace;
+        word-break: break-all;
+      }
+
+      .copy-btn {
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--accent);
+        cursor: pointer;
+        transition: background 0.15s;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .copy-btn:hover {
+        background: rgba(59, 130, 246, 0.2);
+      }
+
+      /* ─── FAQ ─── */
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+      }
+
+      .faq-item:hover {
+        border-color: var(--border-accent);
+      }
+
+      .faq-q {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 22px 24px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-family: inherit;
+        letter-spacing: -0.01em;
+        line-height: 1.4;
+      }
+
+      .faq-q:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: -2px;
+      }
+
+      .faq-chevron {
+        width: 20px;
+        height: 20px;
+        stroke: var(--text-secondary);
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+        transition: transform 0.2s;
+      }
+
+      .faq-item.open .faq-chevron {
+        transform: rotate(180deg);
+      }
+
+      .faq-a {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .faq-item.open .faq-a {
+        max-height: 400px;
+      }
+
+      .faq-a-inner {
+        padding: 0 24px 22px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        border-top: 1px solid var(--border);
+        padding-top: 18px;
+      }
+
+      .faq-a-inner strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 40px 24px;
+        text-align: center;
+      }
+
+      .footer-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        font-size: 14px;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+
+      .footer-links a:hover {
+        color: var(--text);
+      }
+
+      .footer-copy {
+        font-size: 13px;
+        color: rgba(240, 244, 255, 0.25);
+      }
+
+      /* ─── DIVIDER ─── */
+      .section-divider {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 768px) {
+        nav {
+          padding: 16px 20px;
+        }
+
+        .hero-stats {
+          gap: 28px;
+        }
+
+        .stat-divider {
+          display: none;
+        }
+
+        .steps-grid {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 60px 20px;
+        }
+
+        .calc-card {
+          padding: 32px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+
+    <!-- NAV -->
+    <nav>
+      <a href="/" class="nav-logo">dictate<span>.</span>app</a>
+      <a href="#signup" class="nav-cta">Apply Now</a>
+    </nav>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-badge">Affiliate Program</div>
+
+        <h1>Earn 40% forever.<br />Every sale. Every renewal.</h1>
+
+        <p class="hero-sub">
+          Share dictate.app with your audience. You get
+          <strong>40% recurring commission</strong>
+          on every payment — month after month, year after year. No cap. No
+          expiry.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value">40%</div>
+            <div class="stat-label">Recurring commission</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">30d</div>
+            <div class="stat-label">Cookie window</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">∞</div>
+            <div class="stat-label">Lifetime tracking</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-value">$0</div>
+            <div class="stat-label">Cost to join</div>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#signup" class="btn-primary">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+            Apply to become an affiliate
+          </a>
+          <a href="#how-it-works" class="btn-secondary">See how it works</a>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- HOW IT WORKS -->
+      <section id="how-it-works">
+        <div class="section-label">How it works</div>
+        <h2>Four steps. That's it.</h2>
+        <p class="section-sub">
+          No complex dashboards. No waiting months for approval. You're up and
+          sharing within minutes of signing up.
+        </p>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num-big">01</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <div class="step-title">Sign up below</div>
+            <div class="step-desc">
+              Fill in the form. Name, email, your platform. Takes 60 seconds. We
+              confirm within 24 hours.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-big">02</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"
+                />
+                <path
+                  d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"
+                />
+              </svg>
+            </div>
+            <div class="step-title">Get your unique link</div>
+            <div class="step-desc">
+              You get a personal link like
+              <code style="color: var(--accent); font-size: 13px"
+                >dictate.app/go/yourname</code
+              >. Every click through it is tracked for 30 days.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-big">03</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M22 2L11 13" />
+                <path d="M22 2L15 22l-4-9-9-4 20-7z" />
+              </svg>
+            </div>
+            <div class="step-title">Share with your audience</div>
+            <div class="step-desc">
+              Mention it in a YouTube video, tweet it, add it to a newsletter.
+              If your audience types a lot, they'll love it.
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num-big">04</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="5" width="20" height="14" rx="2" />
+                <path d="M2 10h20" />
+              </svg>
+            </div>
+            <div class="step-title">Get paid forever</div>
+            <div class="step-desc">
+              40% of every charge, recurring, sent to your PayPal monthly. As
+              long as they stay subscribed, you keep earning.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- EARNINGS CALCULATOR -->
+      <section style="background: var(--bg2); max-width: 100%; padding: 80px 0">
+        <div style="max-width: 700px; margin: 0 auto; padding: 0 24px">
+          <div class="section-label">Earnings calculator</div>
+          <h2>See what you could earn</h2>
+          <p class="section-sub">
+            Adjust the sliders. See what recurring income looks like at your
+            scale.
+          </p>
+
+          <div class="calc-card">
+            <div class="calc-row">
+              <div class="calc-label">
+                Monthly referrals
+                <span id="ref-count-val">10 sales/month</span>
+              </div>
+              <input
+                type="range"
+                id="ref-count"
+                min="1"
+                max="200"
+                value="10"
+                step="1"
+              />
+            </div>
+
+            <div class="calc-row">
+              <div class="calc-label">
+                Plan price
+                <span id="plan-price-val">$12/month</span>
+              </div>
+              <input
+                type="range"
+                id="plan-price"
+                min="8"
+                max="20"
+                value="12"
+                step="1"
+              />
+            </div>
+
+            <div class="calc-result">
+              <div class="calc-monthly" id="calc-monthly">$57.60</div>
+              <div class="calc-monthly-label">per month recurring</div>
+
+              <div class="calc-annual">
+                Annualizes to
+                <strong id="calc-annual">$691.20 / year</strong>
+                — and compounds as your audience grows
+              </div>
+            </div>
+
+            <p class="calc-note">
+              Based on 40% commission. Real payouts depend on actual
+              subscription prices at time of sale.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- WHY DICTATE.APP -->
+      <section>
+        <div class="section-label">Why it converts</div>
+        <h2>Built for creators who actually use the product.</h2>
+        <p class="section-sub">
+          The best affiliates are the ones who've tried it. dictate.app does one
+          thing obsessively well — and that story is easy to tell.
+        </p>
+
+        <div class="perks-grid">
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">~200ms transcription</div>
+              <div class="perk-desc">
+                Powered by Groq Whisper. Fastest voice-to-text on the market.
+                Easy demo, instant wow moment.
+              </div>
+            </div>
+          </div>
+
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">Recurring revenue for you</div>
+              <div class="perk-desc">
+                Monthly subscriptions mean your commission doesn't stop after
+                the first charge. You earn every renewal.
+              </div>
+            </div>
+          </div>
+
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                <path d="M16 3.13a4 4 0 010 7.75" />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">Massive addressable audience</div>
+              <div class="perk-desc">
+                Anyone who writes — developers, writers, marketers, students.
+                Windows-only means a focused, eager niche.
+              </div>
+            </div>
+          </div>
+
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 11l3 3L22 4" />
+                <path
+                  d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">Free trial removes friction</div>
+              <div class="perk-desc">
+                7-day free trial means zero purchase resistance for your
+                audience. They try it first, pay after they're hooked.
+              </div>
+            </div>
+          </div>
+
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <path d="M8 21h8M12 17v4" />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">Works in every app</div>
+              <div class="perk-desc">
+                Press hotkey anywhere on Windows. Notion, Slack, email, browser,
+                terminal — it just works.
+              </div>
+            </div>
+          </div>
+
+          <div class="perk-card">
+            <div class="perk-icon">
+              <svg viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+              </svg>
+            </div>
+            <div>
+              <div class="perk-title">Real-time dashboard</div>
+              <div class="perk-desc">
+                Check your clicks, conversions, and total earned any time via
+                your unique affiliate dashboard link.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- SIGNUP FORM -->
+      <section id="signup" class="form-section narrow">
+        <div class="form-card">
+          <div class="section-label">Apply now</div>
+          <h2>Join the affiliate program</h2>
+          <p class="form-subtitle">
+            We approve applications within 24 hours. You'll get your unique link
+            immediately after approval.
+          </p>
+
+          <div id="signup-form-wrap">
+            <form id="affiliate-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="first-name">First name</label>
+                  <input
+                    type="text"
+                    id="first-name"
+                    name="first_name"
+                    placeholder="Alex"
+                    required
+                    autocomplete="given-name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="last-name">Last name</label>
+                  <input
+                    type="text"
+                    id="last-name"
+                    name="last_name"
+                    placeholder="Rivera"
+                    required
+                    autocomplete="family-name"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="alex@example.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="platform">Primary platform</label>
+                <select id="platform" name="platform" required>
+                  <option value="" disabled selected>
+                    Select your main platform
+                  </option>
+                  <option value="youtube">YouTube</option>
+                  <option value="twitter">X / Twitter</option>
+                  <option value="newsletter">Newsletter / Substack</option>
+                  <option value="tiktok">TikTok</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="blog">Blog / Website</option>
+                  <option value="podcast">Podcast</option>
+                  <option value="reddit">Reddit</option>
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="handle">Your handle or channel URL</label>
+                <input
+                  type="text"
+                  id="handle"
+                  name="handle"
+                  placeholder="@yourusername or https://..."
+                  required
+                />
+                <div class="form-hint">
+                  Paste your main profile or channel URL so we can verify your
+                  audience.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="paypal">PayPal email for payouts</label>
+                <input
+                  type="email"
+                  id="paypal"
+                  name="paypal_email"
+                  placeholder="payouts@example.com"
+                  required
+                  autocomplete="off"
+                />
+                <div class="form-hint">
+                  This is where we'll send your commission payments each month.
+                </div>
+              </div>
+
+              <button type="submit" class="form-submit" id="submit-btn">
+                Apply to become an affiliate →
+              </button>
+
+              <p class="form-legal">
+                By applying you agree to our
+                <a href="/privacy">privacy policy</a>. We never sell your data.
+                Commission terms are subject to change with 30-day notice.
+              </p>
+            </form>
+          </div>
+
+          <!-- Success state (hidden initially) -->
+          <div class="form-success" id="form-success">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="success-title">Application received.</div>
+            <p class="success-desc">
+              We'll review your application and send your unique affiliate link
+              within 24 hours. Check your inbox at
+              <strong id="success-email"></strong>.
+            </p>
+
+            <div class="ref-link-box" id="ref-link-box" style="display: none">
+              <span class="ref-link-text" id="ref-link-text"></span>
+              <button class="copy-btn" onclick="copyRefLink()">Copy</button>
+            </div>
+
+            <p
+              style="
+                font-size: 13px;
+                color: rgba(240, 244, 255, 0.35);
+                margin-top: 8px;
+              "
+            >
+              Questions?
+              <a
+                href="mailto:hello@dictate.app"
+                style="color: var(--accent); text-decoration: none"
+                >hello@dictate.app</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- FAQ -->
+      <section class="narrow" style="padding-top: 80px; padding-bottom: 80px">
+        <div style="text-align: center; margin-bottom: 48px">
+          <div class="section-label">FAQ</div>
+          <h2>Everything you need to know</h2>
+        </div>
+
+        <div class="faq-list" id="faq">
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              When do I get paid?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Payouts go out on the <strong>1st of each month</strong> via
+                PayPal for all commissions earned in the previous month. Minimum
+                payout threshold is $20. If you haven't hit $20 yet, your
+                balance rolls over to the next month.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              What counts as a sale I get credit for?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Any subscription started by someone who clicked your unique link
+                within the last 30 days. That includes the initial charge
+                <strong>and every renewal</strong> — monthly or annual — for as
+                long as they stay subscribed. If they cancel and resubscribe,
+                you get credit for the new subscription too, provided they use
+                your link again.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              How long does the cookie last?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <strong>30 days.</strong> If someone clicks your link and
+                subscribes any time within 30 days, you get the commission.
+                After they convert, the attribution is permanent — there's no
+                expiry on the recurring commission once someone becomes your
+                referral.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              How much do I earn per sale?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <strong>40% of every charge.</strong> On a $12/month plan that's
+                $4.80/month per subscriber. On annual plans it's 40% of the
+                annual price. Payments go through Stripe — commissions are
+                calculated after processing fees are deducted.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Is there a minimum audience size to apply?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                No hard requirement. We look at relevance over size. A developer
+                with 500 Twitter followers who tweets about productivity tools
+                will outperform a general creator with 50k followers. If your
+                audience uses Windows and types a lot, you're a good fit.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Can I see my stats?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Yes. You get a private dashboard URL when you're approved. It
+                shows your total clicks, conversions, and earnings in real time.
+                No login required — just bookmark your unique dashboard link.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              What if someone uses a different device or browser?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                The 30-day cookie works per-browser. If they click your link on
+                Chrome and buy on Chrome, you're covered. Cross-device tracking
+                isn't possible with cookie-only attribution — that's standard
+                across all affiliate platforms.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Can I run paid ads with my affiliate link?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Organic promotion only for now — YouTube, newsletters, social,
+                blog posts, word of mouth. Paid ad campaigns using your
+                affiliate link require prior written approval. Email
+                <a href="mailto:hello@dictate.app" style="color: var(--accent)"
+                  >hello@dictate.app</a
+                >
+                to discuss.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              When will I hear back after applying?
+              <svg class="faq-chevron" viewBox="0 0 24 24">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                Within <strong>24 hours</strong>, usually much faster. If
+                approved, your unique link arrives by email immediately. If you
+                haven't heard back in 24 hours, check spam or email
+                <a href="mailto:hello@dictate.app" style="color: var(--accent)"
+                  >hello@dictate.app</a
+                >.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-links">
+        <a href="/">dictate.app</a>
+        <a href="/privacy">Privacy</a>
+        <a href="mailto:hello@dictate.app">Contact</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 dictate.app. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // ─── STARFIELD ───
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const stars = Array.from({ length: 200 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.0,
+        o: Math.random() * 0.4 + 0.15,
+        vx: (Math.random() - 0.5) * 0.06,
+        vy: (Math.random() - 0.5) * 0.06,
+      }));
+
+      function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x = (s.x + s.vx + canvas.width) % canvas.width;
+          s.y = (s.y + s.vy + canvas.height) % canvas.height;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(147,197,253,${s.o})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+      }
+      drawStars();
+
+      // ─── EARNINGS CALCULATOR ───
+      const refSlider = document.getElementById("ref-count");
+      const priceSlider = document.getElementById("plan-price");
+      const refVal = document.getElementById("ref-count-val");
+      const priceVal = document.getElementById("plan-price-val");
+      const monthly = document.getElementById("calc-monthly");
+      const annual = document.getElementById("calc-annual");
+
+      function updateCalc() {
+        const refs = parseInt(refSlider.value);
+        const price = parseInt(priceSlider.value);
+        const monthlyEarning = refs * price * 0.4;
+        const annualEarning = monthlyEarning * 12;
+
+        refVal.textContent = `${refs} sale${refs === 1 ? "" : "s"}/month`;
+        priceVal.textContent = `$${price}/month`;
+        monthly.textContent = `$${monthlyEarning.toFixed(2)}`;
+        annual.textContent = `$${annualEarning.toFixed(2)} / year`;
+      }
+
+      refSlider.addEventListener("input", updateCalc);
+      priceSlider.addEventListener("input", updateCalc);
+      updateCalc();
+
+      // ─── FAQ ACCORDION ───
+      function toggleFaq(btn) {
+        const item = btn.closest(".faq-item");
+        const isOpen = item.classList.contains("open");
+        document
+          .querySelectorAll(".faq-item.open")
+          .forEach((el) => el.classList.remove("open"));
+        if (!isOpen) item.classList.add("open");
+      }
+
+      // ─── AFFILIATE FORM ───
+      const form = document.getElementById("affiliate-form");
+      const submitBtn = document.getElementById("submit-btn");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+          first_name: form.first_name.value.trim(),
+          last_name: form.last_name.value.trim(),
+          email: form.email.value.trim(),
+          platform: form.platform.value,
+          handle: form.handle.value.trim(),
+          paypal_email: form.paypal_email.value.trim(),
+        };
+
+        // Basic validation
+        if (
+          !data.first_name ||
+          !data.last_name ||
+          !data.email ||
+          !data.platform ||
+          !data.handle ||
+          !data.paypal_email
+        ) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting…";
+
+        try {
+          const res = await fetch(
+            "https://affiliate-worker.howmindswork.workers.dev/api/affiliate-signup",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            },
+          );
+
+          const json = await res.json();
+
+          if (res.ok && json.success) {
+            // Show success state
+            document.getElementById("signup-form-wrap").style.display = "none";
+            const successEl = document.getElementById("form-success");
+            successEl.classList.add("visible");
+            document.getElementById("success-email").textContent = data.email;
+
+            if (json.ref_code) {
+              const refLinkBox = document.getElementById("ref-link-box");
+              const refLinkText = document.getElementById("ref-link-text");
+              refLinkText.textContent = `https://dictate.app/go/${json.ref_code}`;
+              refLinkBox.style.display = "flex";
+              window._refLink = `https://dictate.app/go/${json.ref_code}`;
+            }
+          } else {
+            const msg = json.error || "Something went wrong. Please try again.";
+            alert(msg);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Apply to become an affiliate →";
+          }
+        } catch (err) {
+          alert("Network error. Please check your connection and try again.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Apply to become an affiliate →";
+        }
+      });
+
+      function copyRefLink() {
+        const link = window._refLink;
+        if (!link) return;
+        navigator.clipboard.writeText(link).then(() => {
+          const btn = document.querySelector(".copy-btn");
+          btn.textContent = "Copied!";
+          setTimeout(() => (btn.textContent = "Copy"), 2000);
+        });
+      }
+    </script>
+  </body>
+</html>
