@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Windows Dictation Not Working? Fix It or Switch | dictate.app</title>
+    <meta
+      name="description"
+      content="Windows dictation (Win+H) not working in 2026? Dragon stopped transcribing? Here's the full fix guide — and when to stop fighting broken tools and switch to something that actually works."
+    />
+    <meta
+      name="keywords"
+      content="windows dictation not working, win+h not working, dragon naturallyspeaking not working, windows voice typing fix 2026, windows speech recognition fix"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/windows-dictation-not-working-fix.html"
+    />
+    <meta
+      property="og:title"
+      content="Windows Dictation Not Working? Fix It or Switch"
+    />
+    <meta
+      property="og:description"
+      content="Windows dictation (Win+H) not working in 2026? Dragon stopped transcribing? Here's the full fix guide — and when to stop fighting broken tools and switch to something that actually works."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/windows-dictation-not-working-fix.html"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Windows Dictation Not Working? Fix It or Switch"
+    />
+    <meta
+      name="twitter:description"
+      content="Win+H broken? Dragon not transcribing? Full fix guide for Windows dictation in 2026."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Windows Dictation Not Working? Fix It or Switch",
+        "description": "Windows dictation (Win+H) not working in 2026? Dragon stopped transcribing? Full fix guide.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-06",
+        "dateModified": "2026-05-06",
+        "url": "https://dictate-app.pages.dev/blog/windows-dictation-not-working-fix.html",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/windows-dictation-not-working-fix.html"
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .fix-step {
+        background: rgba(192, 132, 252, 0.06);
+        border-left: 3px solid var(--accent);
+        padding: 16px 20px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      .fix-step strong {
+        color: var(--text-primary);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Troubleshooting · May 2026</div>
+        <h1>
+          Windows Dictation Not Working? Here's How to Fix It (And When to Just
+          Switch)
+        </h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 7 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          Windows dictation tools break more often than they should. Win+H stops
+          responding. Dragon throws a microphone error. Voice Access opens but
+          doesn't transcribe. You say words and nothing happens.
+        </p>
+
+        <p>
+          This guide covers the most common causes and fixes for Windows
+          dictation failures in 2026 — for both the built-in Windows voice
+          typing and Dragon NaturallySpeaking. If the fixes don't work, there's
+          a section at the end on switching to something that doesn't require
+          constant maintenance.
+        </p>
+
+        <h2>Win+H (Windows Voice Typing) Not Working</h2>
+
+        <p>
+          Windows voice typing is triggered by pressing <strong>Win+H</strong>.
+          If the bar doesn't appear, or it appears but doesn't transcribe, work
+          through these in order.
+        </p>
+
+        <h3>Fix 1: Check Microphone Permissions</h3>
+
+        <div class="fix-step">
+          <strong>Settings &gt; Privacy &amp; security &gt; Microphone</strong>
+          Make sure "Microphone access" is On and "Let apps access your
+          microphone" is On. If it was Off, turn it on, restart, and test again.
+        </div>
+
+        <h3>Fix 2: Check the Default Microphone</h3>
+
+        <p>
+          Windows voice typing uses the default input device. If you recently
+          plugged in a headset or USB audio interface, the default may have
+          changed to a device that isn't working or isn't physically connected.
+        </p>
+
+        <div class="fix-step">
+          <strong>Settings &gt; System &gt; Sound &gt; Input</strong>
+          Set your working microphone as the default. Speak into it — you should
+          see the volume bar respond. If the bar doesn't move, the mic isn't
+          being picked up at the OS level. Fix the mic before troubleshooting
+          dictation.
+        </div>
+
+        <h3>Fix 3: Toggle Voice Typing in Settings</h3>
+
+        <div class="fix-step">
+          <strong>Settings &gt; Time &amp; language &gt; Voice typing</strong>
+          Toggle "Voice typing launcher" off, wait 5 seconds, toggle it back on.
+          This resets the listener process. Try Win+H again.
+        </div>
+
+        <h3>Fix 4: Restart the Speech Service</h3>
+
+        <p>
+          The Windows Speech Recognition service can hang without any visible
+          error. Restarting it often clears the problem.
+        </p>
+
+        <div class="fix-step">
+          <strong
+            >Press Win+R &gt; type "services.msc" &gt; find "Windows Speech
+            Recognition"</strong
+          >
+          Right-click &gt; Restart. If it shows as Stopped, right-click &gt;
+          Start. Then test Win+H.
+        </div>
+
+        <h3>Fix 5: Check for Windows Updates</h3>
+
+        <p>
+          Voice typing bugs are occasionally introduced in Windows updates and
+          fixed in subsequent patches. Check Settings &gt; Windows Update and
+          install any pending updates. If a recent update broke it, check the
+          Microsoft Feedback Hub — others may have reported the same issue with
+          a known workaround.
+        </p>
+
+        <h3>Fix 6: Re-register the Voice Typing Package</h3>
+
+        <p>
+          If nothing else works, the voice typing component may be corrupted.
+          Open PowerShell as Administrator and run:
+        </p>
+
+        <div class="fix-step">
+          <strong>PowerShell (Admin):</strong>
+          Get-AppxPackage -AllUsers *SpeechRecognition* | Foreach
+          {Add-AppxPackage -DisableDevelopmentMode -Register
+          "$($_.InstallLocation)\AppXManifest.xml"}
+        </div>
+
+        <p>
+          Restart after running this. It re-registers the speech package without
+          affecting your other apps.
+        </p>
+
+        <h2>Dragon NaturallySpeaking Not Working</h2>
+
+        <p>
+          Dragon failures fall into a smaller set of categories. These are the
+          most common ones.
+        </p>
+
+        <h3>Microphone Not Detected</h3>
+
+        <p>
+          Dragon is picky about audio devices. It doesn't always pick up system
+          default changes automatically. Go to Dragon's Audio menu &gt; Check
+          Microphone. If your device isn't listed, disconnect any other audio
+          interfaces and restart Dragon. USB microphones and audio interfaces
+          sometimes require Dragon to be restarted after plugging in.
+        </p>
+
+        <h3>Transcription Stops Mid-Session</h3>
+
+        <p>
+          This usually means Dragon lost its focus on the active window. It
+          happens most often with apps that have custom UI frameworks (Electron
+          apps like Slack, VS Code, Discord). Dragon's accessibility hooks can
+          lose the handle to the text field when the window repaints.
+        </p>
+
+        <p>
+          Workaround: click directly into the text field before dictating, not
+          just into the window frame. Some Electron apps need the "Enable Dragon
+          support in web views" option toggled in Dragon's advanced settings.
+        </p>
+
+        <h3>Dragon Running Slowly After Windows Update</h3>
+
+        <p>
+          Windows security updates occasionally conflict with Dragon's audio
+          processing pipeline. Check Nuance's support site for the specific
+          update version that broke things — they usually release a Dragon patch
+          within a few weeks. Temporary fix: roll back the specific Windows
+          update through Settings &gt; Windows Update &gt; Update history &gt;
+          Uninstall updates.
+        </p>
+
+        <h3>Activation or License Errors</h3>
+
+        <p>
+          Dragon's DRM and licensing server can cause activation failures,
+          especially after reinstalling Windows or changing hardware. Contact
+          Nuance support directly — this is not something you can fix without
+          their help. Be ready to prove your purchase and provide your hardware
+          ID.
+        </p>
+
+        <h2>The Honest Assessment: When to Stop Troubleshooting</h2>
+
+        <p>
+          Both Win+H and Dragon have the same structural problem: they're
+          fragile. Windows updates break them. Audio device changes break them.
+          App updates break them. You end up spending more time maintaining the
+          tool than using it.
+        </p>
+
+        <p>
+          If you've spent more than 30 minutes troubleshooting Windows dictation
+          and it's still broken, that's a signal worth listening to. The
+          underlying technology is old. The maintenance burden is real.
+        </p>
+
+        <div class="cta-block">
+          <h2>Done Troubleshooting? Try This Instead.</h2>
+          <p>
+            dictate.app installs in 2 minutes. No training. No microphone setup
+            wizard. No fragile OS hooks. It works in any Windows app with ~200ms
+            latency. 30 days free, no credit card.
+          </p>
+          <a href="https://dictate-app.pages.dev" class="cta-big"
+            >Try dictate.app Free →</a
+          >
+          <p class="cta-sub">
+            No credit card · No account required ·
+            <a href="/privacy">Privacy policy</a>
+          </p>
+        </div>
+
+        <h2>Why dictate.app Doesn't Break the Same Way</h2>
+
+        <p>
+          dictate.app uses a fundamentally different architecture. Instead of
+          hooking into Windows speech recognition or maintaining a complex local
+          speech model, it:
+        </p>
+        <ul>
+          <li>Records audio using standard Windows audio APIs</li>
+          <li>Sends it to Groq's Whisper API (no local model to corrupt)</li>
+          <li>Pastes the result using Windows clipboard APIs</li>
+        </ul>
+
+        <p>
+          There's no speech recognition engine to break. No user profile to
+          corrupt. No licensing server to fail. The microphone setup takes 30
+          seconds — pick your default device and you're done.
+        </p>
+
+        <p>
+          Windows updates don't affect it because it doesn't rely on the Windows
+          speech stack. Electron apps work fine because it pastes via clipboard
+          rather than trying to hook into accessibility APIs. It's a simpler
+          design that's harder to break.
+        </p>
+
+        <h2>Quick Diagnostic Checklist</h2>
+
+        <p>Before concluding something is broken, run through this:</p>
+        <ol>
+          <li>
+            Is the microphone physically working? (Test in Sound settings)
+          </li>
+          <li>Is it set as the default input device?</li>
+          <li>Do apps have microphone permission?</li>
+          <li>Is Windows fully updated?</li>
+          <li>Has the speech service been restarted?</li>
+          <li>Does the problem persist after a full system restart?</li>
+        </ol>
+
+        <p>
+          If you've checked all six and it's still broken, the tool is the
+          problem — not your setup. Time to switch.
+        </p>
+
+        <p>
+          Questions? Email support@dictate.app or check the
+          <a href="/">homepage</a> for more on how dictate.app works.
+        </p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>
