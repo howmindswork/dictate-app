@@ -2,7 +2,8 @@ name: Auto-Poster
 
 on:
   schedule:
-    - cron: "0 14 * * 2"   # Every Tuesday 9am ET
+    - cron: "0 15 * * *"   # 10 AM ET daily (morning slot)
+    - cron: "0 23 * * *"   # 7 PM ET daily  (evening slot)
   workflow_dispatch:         # Manual trigger anytime
 
 jobs:
