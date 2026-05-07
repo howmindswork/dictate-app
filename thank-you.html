@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to dictate.app — Your Download is Ready</title>
+    <title>You're in — dictate.app</title>
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -15,11 +15,12 @@
       }
 
       :root {
-        --bg: #0b0812;
+        --bg: #0a0a14;
         --accent: #c084fc;
         --accent2: #818cf8;
-        --text: #f1f0f5;
-        --text-secondary: rgba(241, 240, 245, 0.55);
+        --pink: #f472b6;
+        --text: #e2d9f3;
+        --text-secondary: rgba(226, 217, 243, 0.55);
         --card: rgba(255, 255, 255, 0.04);
         --border: rgba(255, 255, 255, 0.08);
       }
@@ -52,7 +53,7 @@
       .container {
         position: relative;
         z-index: 1;
-        max-width: 560px;
+        max-width: 580px;
         width: 100%;
         text-align: center;
       }
@@ -110,12 +111,12 @@
       }
 
       h1 {
-        font-size: clamp(28px, 5vw, 40px);
+        font-size: clamp(28px, 5vw, 42px);
         font-weight: 800;
         letter-spacing: -0.03em;
         line-height: 1.1;
-        margin-bottom: 16px;
-        background: linear-gradient(135deg, #f1f0f5 0%, var(--accent) 100%);
+        margin-bottom: 14px;
+        background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -125,74 +126,44 @@
         font-size: 17px;
         color: var(--text-secondary);
         line-height: 1.6;
-        margin-bottom: 40px;
+        margin-bottom: 36px;
       }
 
-      .download-card {
+      .subtitle .email-placeholder {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .card {
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: 20px;
-        padding: 32px;
-        margin-bottom: 32px;
-      }
-
-      .download-status {
-        font-size: 14px;
-        color: var(--text-secondary);
+        padding: 28px 28px 24px;
         margin-bottom: 20px;
-        min-height: 20px;
+        text-align: left;
       }
 
-      .download-status.ready {
-        color: rgba(52, 211, 153, 0.9);
-      }
-
-      .download-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        color: #fff;
-        border: none;
-        border-radius: 12px;
-        padding: 16px 40px;
-        font-size: 17px;
+      .card-label {
+        font-size: 12px;
         font-weight: 700;
-        letter-spacing: -0.02em;
-        cursor: pointer;
-        text-decoration: none;
-        transition:
-          transform 0.15s,
-          box-shadow 0.15s;
-        box-shadow: 0 4px 24px rgba(192, 132, 252, 0.3);
-        width: 100%;
-        justify-content: center;
-      }
-
-      .download-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 32px rgba(192, 132, 252, 0.45);
-      }
-
-      .download-btn svg {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        opacity: 0.8;
       }
 
       .steps {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        margin-top: 24px;
-        text-align: left;
+        gap: 10px;
       }
 
       .step {
         display: flex;
         align-items: flex-start;
         gap: 14px;
-        padding: 14px 16px;
+        padding: 12px 14px;
         background: rgba(255, 255, 255, 0.02);
         border-radius: 10px;
         border: 1px solid var(--border);
@@ -229,12 +200,12 @@
         font-weight: 600;
       }
 
-      .hotkey-badge {
+      .step-text .badge {
         display: inline-block;
         background: rgba(192, 132, 252, 0.12);
         border: 1px solid rgba(192, 132, 252, 0.3);
         border-radius: 6px;
-        padding: 2px 8px;
+        padding: 1px 7px;
         font-size: 12px;
         font-family: monospace;
         color: var(--accent);
@@ -242,10 +213,45 @@
         white-space: nowrap;
       }
 
+      .download-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 16px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        cursor: pointer;
+        text-decoration: none;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 4px 24px rgba(192, 132, 252, 0.3);
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .download-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 32px rgba(192, 132, 252, 0.45);
+      }
+
+      .download-btn svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
       .footer-note {
         font-size: 13px;
-        color: rgba(241, 240, 245, 0.35);
-        line-height: 1.6;
+        color: rgba(226, 217, 243, 0.35);
+        line-height: 1.7;
+        text-align: center;
       }
 
       .footer-note a {
@@ -268,94 +274,87 @@
         </svg>
       </div>
 
-      <h1>You're In.</h1>
+      <h1>You're in. Check your email.</h1>
       <p class="subtitle">
-        Your 7-day trial starts now. Download the app, install it, and you're
-        dictating in under 60 seconds.
+        Your license key is on its way to
+        <span class="email-placeholder" id="email-display">your inbox</span>.
+        Check spam if you don't see it in 2 minutes.
       </p>
 
-      <div class="download-card">
-        <div class="download-status" id="dl-status">
-          Preparing your download...
-        </div>
-
-        <a
-          id="download-btn"
-          href="https://github.com/howmindswork/dictate-app/releases/latest/download/dictate.app-Setup.exe"
-          class="download-btn"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-            <polyline points="7,10 12,15 17,10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          Download dictate.app for Windows
-        </a>
-
+      <div class="card">
+        <div class="card-label">4 steps to start dictating</div>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
             <div class="step-text">
-              <strong>Run the installer.</strong> It takes about 10 seconds. No
-              admin required.
+              <strong>Open dictate.app.</strong> Don't have it yet? Download
+              below.
             </div>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <div class="step-text">
-              <strong>dictate.app starts in your tray.</strong> Look for the mic
-              icon bottom-right.
+              <strong>Go to Settings → License.</strong>
             </div>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <div class="step-text">
-              <strong
-                >Press <span class="hotkey-badge">Ctrl+Space</span></strong
-              >
-              anywhere. Speak. Watch it appear.
+              <strong>Paste your key</strong> from the email.
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              Press <span class="badge">Ctrl+Space</span> anywhere.
+              <strong>Start dictating.</strong>
             </div>
           </div>
         </div>
       </div>
 
+      <a href="/download" class="download-btn">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7,10 12,15 17,10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download dictate.app for Windows
+      </a>
+
       <p class="footer-note">
-        Questions? Email
-        <a href="mailto:hello@dictate.app">hello@dictate.app</a>
-        &bull; You can access your license anytime from the tray icon →
-        Settings.
+        Any issues? Email
+        <a href="mailto:dictate@howmindswork.org">dictate@howmindswork.org</a>
+        and we'll sort it out fast.
       </p>
     </div>
 
     <script>
-      // Auto-trigger download after 1.5s
-      window.addEventListener("DOMContentLoaded", () => {
-        const status = document.getElementById("dl-status");
-        const btn = document.getElementById("download-btn");
-
-        setTimeout(() => {
-          status.textContent = "✓ Download started automatically";
-          status.className = "download-status ready";
-          btn.click();
-        }, 1500);
-      });
+      // Pull email from Stripe redirect URL if present
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email") || params.get("customer_email");
+      if (email) {
+        const el = document.getElementById("email-display");
+        if (el) el.textContent = email;
+      }
 
       // Starfield
       const canvas = document.getElementById("starfield");
       const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      window.addEventListener("resize", () => {
+      function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-      });
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
       const stars = Array.from({ length: 160 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -364,6 +363,7 @@
         vx: (Math.random() - 0.5) * 0.08,
         vy: (Math.random() - 0.5) * 0.08,
       }));
+
       function drawStars() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         stars.forEach((s) => {
