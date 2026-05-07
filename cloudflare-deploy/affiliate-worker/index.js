@@ -251,7 +251,7 @@ async function handleStripeWebhook(request, env, ctx) {
   // Always deliver a license key to the paying customer regardless of affiliate
   const customerEmail = session.customer_details?.email || null;
   if (customerEmail) {
-    ctx.waitUntil(deliverLicenseKey(customerEmail, env));
+    ctx.waitUntil(deliverLicenseKey(customerEmail, env, session.id));
   }
 
   // client_reference_id holds the affiliate ref code
@@ -417,7 +417,7 @@ async function handleValidateLicense(request, env) {
 //  LICENSE KEY GENERATION + EMAIL DELIVERY
 // ─────────────────────────────────────────
 
-async function deliverLicenseKey(email, env) {
+async function deliverLicenseKey(email, env, stripeSessionId) {
   try {
     // 1. Generate key via trial-worker
     const genRes = await fetch(`${TRIAL_WORKER_URL}/api/generate-key`, {
@@ -438,7 +438,7 @@ async function deliverLicenseKey(email, env) {
       return;
     }
 
-    // 2. Register license with email
+    // 2. Register license in trial-worker (TRIAL_FINGERPRINTS KV)
     const regRes = await fetch(`${TRIAL_WORKER_URL}/api/register-license`, {
       method: "POST",
       headers: {
@@ -453,7 +453,17 @@ async function deliverLicenseKey(email, env) {
       return;
     }
 
-    // 3. Send email via Resend
+    // 3. Also store in AFFILIATES KV for local validate-license lookup
+    const licenseRecord = {
+      email,
+      key,
+      createdAt: new Date().toISOString(),
+      stripeSessionId: stripeSessionId || null,
+    };
+    await env.AFFILIATES.put(`license:${key}`, JSON.stringify(licenseRecord));
+    await env.AFFILIATES.put(`email-license:${email.toLowerCase()}`, key);
+
+    // 4. Send email via Resend
     await sendLicenseEmail(email, key, env);
   } catch (e) {
     console.error("deliverLicenseKey error:", e);

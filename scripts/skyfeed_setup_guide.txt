@@ -1,0 +1,35 @@
+SKYFEED CUSTOM FEED SETUP — dictate.app
+Keywords: "dictation", "voice typing", "groq whisper", "productivity windows"
+
+STEP-BY-STEP (no code, takes ~5 min):
+
+1. Go to https://skyfeed.app
+2. Sign in with your Bluesky handle (hmwofficial.bsky.social)
+   - It prompts for an app password — use one from bsky.app Settings > App Passwords
+   - The BLUESKY_APP_PASSWORD in .claude_secrets works (6a3m-x373-32be-i66o)
+
+3. Click "Feed Builder" in the left sidebar → "Create Feed"
+
+4. Name the feed: "Dictation & Voice Typing"
+   Description: "Posts about voice dictation, Groq Whisper, and Windows productivity"
+
+5. Set Input block:
+   - Change from "Entire Network" to "Entire Network" (keep default, we'll filter by keyword)
+
+6. Delete the default RegEx block, then add a new RegEx filter:
+   - Target: "Post Text"
+   - Pattern: dictation|voice typing|groq whisper|productivity windows|voice dictate
+   - Invert: OFF (include matches)
+
+7. Optionally add a "Remove Duplicates" block after the RegEx filter.
+
+8. Click "Preview" to see live posts matching.
+
+9. Click "Publish" to make it live. Bluesky will host it.
+
+10. Find the feed in your profile > Feeds tab > pin it.
+
+WHY SKYFEED VS NATIVE:
+- Bluesky's native feed builder requires running your own server (TypeScript, port 443, deployed).
+- Skyfeed hosts the feed generator for you, zero infrastructure.
+- No API available to create SkyFeed feeds programmatically — must use the web UI.

@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      How to Dictate Emails on Windows: Gmail, Outlook &amp; More (2026) |
+      dictate.app
+    </title>
+    <meta
+      name="description"
+      content="How to dictate emails on Windows in 2026. Step-by-step for Gmail, Outlook desktop, and other mail clients. Cover each app's quirks and get the fastest setup."
+    />
+    <meta
+      name="keywords"
+      content="how to dictate emails on windows, voice dictation email windows, dictate outlook windows, speech to text email gmail windows"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/dictate-emails-windows.html"
+    />
+    <meta
+      property="og:title"
+      content="How to Dictate Emails on Windows: Gmail, Outlook &amp; More (2026)"
+    />
+    <meta
+      property="og:description"
+      content="Step-by-step guide for dictating emails on Windows. Works in Gmail, Outlook, Apple Mail, and any other client — no special setup per app."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/dictate-emails-windows.html"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="How to Dictate Emails on Windows (Gmail, Outlook, and more)"
+    />
+    <meta
+      name="twitter:description"
+      content="The fastest way to write emails on Windows: hold a hotkey, speak, release. Works in every mail client."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "How to Dictate Emails on Windows: Gmail, Outlook & More (2026)",
+        "description": "Step-by-step guide to dictating emails on Windows in Gmail, Outlook desktop, and other mail clients. Covers each app's quirks and the best tool for the job.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/dictate-emails-windows.html",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/dictate-emails-windows.html"
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .step-block {
+        background: rgba(192, 132, 252, 0.06);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin: 20px 0;
+      }
+      .step-block p {
+        margin: 0;
+      }
+      .step-num {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        display: block;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav"
+            >Try Free 7 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">How-To · May 2026</div>
+        <h1>How to Dictate Emails on Windows: Gmail, Outlook, and More</h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 6 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          Email is the highest-volume writing task for most people — and one of
+          the slowest, because typing short conversational messages feels harder
+          than it should. Dictation changes that. You talk the way you'd reply
+          in person, and the text is there in seconds.
+        </p>
+
+        <p>
+          The tricky part on Windows is that each email client has its own
+          quirks. This guide covers the three most common setups — Gmail in
+          Chrome, Outlook desktop, and other mail clients — and shows you the
+          fastest path to dictating in each.
+        </p>
+
+        <h2>The Fastest Setup: dictate.app (Works Everywhere)</h2>
+
+        <p>
+          Before going app-by-app, the simplest approach is a system-wide
+          dictation tool. <strong>dictate.app</strong> runs in the background on
+          Windows and pastes transcribed text into whatever app has focus — no
+          configuration per email client, no browser extension, no special mode.
+        </p>
+
+        <p>The workflow is always the same:</p>
+
+        <ol>
+          <li>Click into the email compose window (subject or body)</li>
+          <li>Hold <strong>Ctrl+Shift</strong> (or your custom hotkey)</li>
+          <li>Speak your sentence or paragraph</li>
+          <li>Release the hotkey — text appears at your cursor</li>
+        </ol>
+
+        <p>
+          That's it. It works in Gmail, Outlook, Thunderbird, the new Windows
+          Mail app, Apple Mail for Windows, or any webmail interface. No per-app
+          setup required.
+        </p>
+
+        <h2>Gmail in Chrome</h2>
+
+        <p>
+          Gmail has a built-in voice typing option in Google Docs but not in
+          Gmail itself. If you're composing in Chrome, your options are:
+        </p>
+
+        <ul>
+          <li>
+            <strong>dictate.app</strong> — hold the hotkey, speak into any Gmail
+            field (To, Subject, body), release. Works immediately.
+          </li>
+          <li>
+            <strong>Voice In extension</strong> — a Chrome extension that adds
+            voice typing to browser text fields. Free, but limited to Chrome and
+            requires clicking an icon to activate.
+          </li>
+          <li>
+            <strong>Windows Voice Access</strong> — can dictate into browser
+            fields but struggles with Gmail's compose window specifically due to
+            how Gmail renders its editor.
+          </li>
+        </ul>
+
+        <p>
+          The Gmail compose window uses a rich text editor (not a standard input
+          field), which causes Windows Voice Access to miss some keystrokes.
+          dictate.app pastes via the clipboard so it bypasses this issue
+          entirely.
+        </p>
+
+        <h3>Step-by-Step for Gmail</h3>
+
+        <div class="step-block">
+          <span class="step-num">Step 1</span>
+          <p>Open Gmail and click <strong>Compose</strong>.</p>
+        </div>
+        <div class="step-block">
+          <span class="step-num">Step 2</span>
+          <p>
+            Click into the <strong>Subject</strong> field or
+            <strong>body</strong> area.
+          </p>
+        </div>
+        <div class="step-block">
+          <span class="step-num">Step 3</span>
+          <p>
+            Hold <strong>Ctrl+Shift</strong>, speak your text, release. Subject
+            and body both work.
+          </p>
+        </div>
+        <div class="step-block">
+          <span class="step-num">Step 4</span>
+          <p>
+            Continue holding and releasing for additional sentences. Each
+            release pastes a chunk.
+          </p>
+        </div>
+
+        <p>
+          Tip: dictate punctuation explicitly — say "comma," "period," or "new
+          line" and Whisper will insert them. Say "question mark" at the end of
+          a question if your tone doesn't make it obvious.
+        </p>
+
+        <h2>Outlook Desktop</h2>
+
+        <p>
+          Outlook desktop (the Microsoft 365 version) has its own Dictate button
+          in the toolbar. It uses Microsoft's speech-to-text engine, which is
+          decent but significantly slower and less accurate than Groq Whisper.
+          You'll see a latency of 800ms–1.5 seconds versus dictate.app's ~200ms.
+        </p>
+
+        <p>
+          If you're already in Outlook's built-in dictate mode and it's working
+          well enough, there's no reason to change. But if accuracy is an issue
+          — especially with names, technical terms, or non-standard vocabulary —
+          Whisper handles those significantly better.
+        </p>
+
+        <h3>Using dictate.app with Outlook</h3>
+
+        <div class="step-block">
+          <span class="step-num">Step 1</span>
+          <p>Open a new email in Outlook. Click into the message body.</p>
+        </div>
+        <div class="step-block">
+          <span class="step-num">Step 2</span>
+          <p>
+            Hold your dictate.app hotkey and speak. The transcription pastes
+            directly.
+          </p>
+        </div>
+        <div class="step-block">
+          <span class="step-num">Step 3</span>
+          <p>
+            To dictate the Subject line, click that field first, then use the
+            same hotkey.
+          </p>
+        </div>
+
+        <p>
+          One Outlook-specific tip: Outlook's autocorrect can sometimes modify
+          dictated text after it's pasted. If that happens, go to
+          <strong>File → Options → Proofing → AutoCorrect Options</strong> and
+          adjust as needed.
+        </p>
+
+        <h2>Other Mail Clients</h2>
+
+        <h3>Thunderbird</h3>
+
+        <p>
+          Thunderbird is a standard desktop application with a plain text
+          compose window. dictate.app works without any quirks. Click the body,
+          hold hotkey, speak, release.
+        </p>
+
+        <h3>Windows Mail / New Outlook (Web-Based)</h3>
+
+        <p>
+          Microsoft has been transitioning the built-in Windows Mail app to a
+          web-based version of Outlook. It behaves like a browser — dictate.app
+          pastes correctly because it uses clipboard injection. You may
+          occasionally see a brief paste delay if the compose field is slow to
+          focus.
+        </p>
+
+        <h3>Webmail (Yahoo, Proton, Fastmail, etc.)</h3>
+
+        <p>
+          Any browser-based mail client works the same way as Gmail. Click into
+          the compose area, use the hotkey, speak. dictate.app doesn't care what
+          site is loaded in the browser.
+        </p>
+
+        <h2>Useful Dictation Phrases for Email</h2>
+
+        <p>
+          Whisper handles these naturally — just say them aloud and they'll
+          appear correctly:
+        </p>
+
+        <ul>
+          <li><strong>"new line"</strong> — starts a new paragraph</li>
+          <li>
+            <strong>"comma," "period," "colon"</strong> — inserts punctuation
+          </li>
+          <li><strong>"open paren," "close paren"</strong> — parentheses</li>
+          <li><strong>"dash"</strong> — inserts a hyphen</li>
+          <li><strong>"at sign"</strong> — for email addresses</li>
+        </ul>
+
+        <div class="cta-block">
+          <h2>Dictate Every Email in Seconds</h2>
+          <p>
+            dictate.app works in Gmail, Outlook, and every other mail client on
+            Windows. Groq Whisper backend. ~200ms response. 7-day free trial.
+          </p>
+          <a href="https://dictate-app.pages.dev/download" class="cta-big"
+            >Download dictate.app →</a
+          >
+          <p class="cta-sub">
+            No credit card · No account required ·
+            <a href="/privacy">Privacy policy</a>
+          </p>
+        </div>
+
+        <p>
+          Email dictation takes a few sessions to feel natural, but most people
+          find they write longer, warmer emails by voice than by keyboard. The
+          conversational tone comes through differently when you're speaking.
+          Try it on a few replies and see.
+        </p>
+
+        <p>
+          Questions? Reach out at support@dictate.app or check the
+          <a href="/">homepage</a> for the full feature breakdown.
+        </p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>

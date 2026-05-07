@@ -390,9 +390,10 @@
         </p>
 
         <p>
-          This guide covers every approach to <strong>voice dictation in VS Code
-          on Windows</strong> in 2026 — which methods work, which ones break,
-          and how to set up the fastest workflow.
+          This guide covers every approach to
+          <strong>voice dictation in VS Code on Windows</strong> in 2026 — which
+          methods work, which ones break, and how to set up the fastest
+          workflow.
         </p>
 
         <h2>Why VS Code Is Tricky for Dictation Tools</h2>
@@ -406,12 +407,12 @@
         </p>
 
         <p>
-          The reliable approach is simpler: <strong>dictate, paste via
-          clipboard</strong>. Tools that record your voice, transcribe it, and
-          paste the result using Ctrl+V work in every Electron app because they
-          use the clipboard rather than trying to hook into accessibility APIs.
-          VS Code, Slack, Discord, and every other Electron-based tool work
-          cleanly with this approach.
+          The reliable approach is simpler:
+          <strong>dictate, paste via clipboard</strong>. Tools that record your
+          voice, transcribe it, and paste the result using Ctrl+V work in every
+          Electron app because they use the clipboard rather than trying to hook
+          into accessibility APIs. VS Code, Slack, Discord, and every other
+          Electron-based tool work cleanly with this approach.
         </p>
 
         <h2>Option 1: dictate.app (Recommended)</h2>
@@ -440,7 +441,8 @@
         <h2>Option 2: VS Code Voice Extension (VS Code Built-in)</h2>
 
         <p>
-          Microsoft released an official <strong>VS Code Speech extension</strong>
+          Microsoft released an official
+          <strong>VS Code Speech extension</strong>
           that adds a "Dictate" button to the chat and input panels. It's built
           on Azure Speech Services and works reasonably well for dictating into
           the Copilot chat panel and quick input fields.
@@ -478,10 +480,10 @@
 
         <p>
           Dragon can inject text into VS Code but requires extra configuration.
-          You need to enable Dragon's "Enhanced support for web views" (since
-          VS Code renders in Chromium). Even with this enabled, Dragon
-          occasionally loses track of the active field and types into the wrong
-          location or doesn't type at all.
+          You need to enable Dragon's "Enhanced support for web views" (since VS
+          Code renders in Chromium). Even with this enabled, Dragon occasionally
+          loses track of the active field and types into the wrong location or
+          doesn't type at all.
         </p>
 
         <p>
@@ -495,18 +497,37 @@
         <p>The highest-value use cases for voice dictation in VS Code:</p>
 
         <ul>
-          <li><strong>Code comments and inline documentation</strong> — The most natural fit. Speak the comment, it appears.</li>
-          <li><strong>Docstrings</strong> — Function descriptions, parameter explanations, return value notes.</li>
-          <li><strong>Git commit messages</strong> — The VS Code source control commit box works perfectly with clipboard-paste dictation.</li>
-          <li><strong>PR descriptions and GitHub issues</strong> — Open in VS Code's browser-view, dictate directly.</li>
-          <li><strong>README and documentation files</strong> — Markdown files in VS Code accept dictation like any text file.</li>
-          <li><strong>Terminal commands you know but don't want to type</strong> — Rare, but dictating long file paths or curl commands is faster sometimes.</li>
+          <li>
+            <strong>Code comments and inline documentation</strong> — The most
+            natural fit. Speak the comment, it appears.
+          </li>
+          <li>
+            <strong>Docstrings</strong> — Function descriptions, parameter
+            explanations, return value notes.
+          </li>
+          <li>
+            <strong>Git commit messages</strong> — The VS Code source control
+            commit box works perfectly with clipboard-paste dictation.
+          </li>
+          <li>
+            <strong>PR descriptions and GitHub issues</strong> — Open in VS
+            Code's browser-view, dictate directly.
+          </li>
+          <li>
+            <strong>README and documentation files</strong> — Markdown files in
+            VS Code accept dictation like any text file.
+          </li>
+          <li>
+            <strong>Terminal commands you know but don't want to type</strong> —
+            Rare, but dictating long file paths or curl commands is faster
+            sometimes.
+          </li>
         </ul>
 
         <p>
-          Note: dictating <em>code syntax</em> itself is rarely worth it. Speaking
-          punctuation and indentation aloud is slower than typing it. Voice
-          dictation shines for natural language, not syntax-heavy code.
+          Note: dictating <em>code syntax</em> itself is rarely worth it.
+          Speaking punctuation and indentation aloud is slower than typing it.
+          Voice dictation shines for natural language, not syntax-heavy code.
         </p>
 
         <h2>Comparison for VS Code Use</h2>
@@ -568,8 +589,13 @@
         </p>
 
         <ol>
-          <li>Download and install dictate.app from <a href="https://dictate-app.pages.dev">dictate-app.pages.dev</a></li>
-          <li>The app runs in the system tray — look for the microphone icon</li>
+          <li>
+            Download and install dictate.app from
+            <a href="https://dictate-app.pages.dev">dictate-app.pages.dev</a>
+          </li>
+          <li>
+            The app runs in the system tray — look for the microphone icon
+          </li>
           <li>Open VS Code, click into any comment or text area</li>
           <li>Hold the dictation hotkey, speak, release</li>
           <li>Text appears at your cursor via clipboard paste</li>
