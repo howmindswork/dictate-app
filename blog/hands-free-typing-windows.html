@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Hands-Free Typing on Windows 2026: Voice Input for RSI and Accessibility |
+      dictate.app
+    </title>
+    <meta
+      name="description"
+      content="Voice typing as an accessibility tool on Windows. RSI, carpal tunnel, disability. How dictate.app's global hotkey enables truly hands-free typing in any app."
+    />
+    <meta
+      name="keywords"
+      content="hands free typing windows, voice typing for accessibility, RSI dictation software windows, carpal tunnel voice to text, disability voice typing windows"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/hands-free-typing-windows.html"
+    />
+    <meta
+      property="og:title"
+      content="Hands-Free Typing on Windows 2026: Voice Input for RSI and Accessibility"
+    />
+    <meta
+      property="og:description"
+      content="RSI, carpal tunnel, disability — voice typing as a real accessibility tool on Windows. How dictate.app enables hands-free input in any app."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/hands-free-typing-windows.html"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Hands-Free Typing on Windows 2026: Voice Input for RSI and Accessibility"
+    />
+    <meta
+      name="twitter:description"
+      content="Voice typing isn't just a productivity tool. For RSI, carpal tunnel, and disability users, it's essential. Here's the honest guide."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hands-Free Typing on Windows 2026: Voice Input for RSI and Accessibility",
+        "description": "Voice typing as an accessibility tool on Windows. RSI, carpal tunnel, disability. How dictate.app's global hotkey enables truly hands-free typing.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/hands-free-typing-windows.html",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/hands-free-typing-windows.html"
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin: 28px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th {
+        background: rgba(192, 132, 252, 0.15);
+        color: var(--accent);
+        font-weight: 700;
+        text-align: left;
+        padding: 12px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+      }
+      td {
+        padding: 10px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.1);
+        color: var(--text-secondary);
+      }
+      tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .check {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .cross {
+        color: var(--accent-rose);
+      }
+      .win {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Accessibility · May 2026</div>
+        <h1>
+          Hands-Free Typing on Windows: Voice Input for RSI, Carpal Tunnel, and
+          Disability
+        </h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 6 min read &nbsp;·&nbsp; dictate.app
+          editorial
+        </div>
+
+        <p>
+          For most people, voice dictation is a productivity choice. For others,
+          it's a necessity. Repetitive strain injury, carpal tunnel syndrome,
+          tendinitis, essential tremor, motor disabilities — any condition that
+          makes sustained keyboard use painful or impossible turns voice input
+          from a nice-to-have into a critical accommodation.
+        </p>
+
+        <p>
+          This article covers hands-free typing on Windows from an accessibility
+          angle: what works, what doesn't, and why dictate.app's design makes it
+          particularly useful for users who need to minimize keyboard and mouse
+          interaction.
+        </p>
+
+        <h2>The Accessibility Gap in Built-In Windows Tools</h2>
+
+        <p>
+          Windows 11 includes two voice-related accessibility features: Voice
+          Access and the Win+H voice typing toolbar. Both are useful. Neither is
+          sufficient for users who need comprehensive hands-free computing.
+        </p>
+
+        <p>
+          <strong>Windows Voice Access</strong> is designed specifically for
+          hands-free OS navigation. You can open apps, click buttons, navigate
+          menus, and scroll — all by voice. For users with motor disabilities,
+          this is genuinely valuable. The limitation is that it wasn't built
+          primarily for high-volume text dictation. Accuracy is moderate, and
+          the interface for extended dictation sessions is clunky.
+        </p>
+
+        <p>
+          <strong>Win+H voice typing</strong> is better for text entry but
+          requires you to position the cursor correctly, activate the toolbar,
+          and manage focus manually. For users with limited hand mobility, that
+          sequence of interactions adds friction at exactly the point where
+          friction is most costly.
+        </p>
+
+        <h2>Why the Hotkey Model Matters for Accessibility</h2>
+
+        <p>
+          dictate.app uses a push-to-talk model triggered by a configurable
+          global hotkey. Press and hold to start recording, release to
+          transcribe and paste. That's the entire interaction.
+        </p>
+
+        <p>
+          For RSI and carpal tunnel users, this model is meaningful for a
+          specific reason: <strong>it dramatically reduces keystrokes</strong>.
+          Instead of typing 50 words, you press one key, speak 50 words, and
+          release. The only keyboard interaction is a single key hold. For users
+          managing finger, wrist, or forearm pain, reducing keyboard time from
+          50 keypresses to 1 is a real reduction in strain.
+        </p>
+
+        <p>
+          The global hotkey works across every application. You don't need to
+          click a toolbar, navigate to a specific interface, or switch contexts.
+          Wherever your cursor is — email, document, chat, browser text field —
+          the hotkey works. That consistency matters when switching apps is
+          itself a source of friction.
+        </p>
+
+        <h2>Who Benefits Most</h2>
+
+        <h3>RSI and carpal tunnel sufferers</h3>
+
+        <p>
+          The most common group searching for hands-free typing tools. Often
+          knowledge workers — developers, writers, managers — whose job requires
+          heavy typing and who've hit a wall with pain. The typical pattern is:
+          pain starts, physical therapy begins, typing restrictions are imposed,
+          they look for voice alternatives.
+        </p>
+
+        <p>
+          dictate.app fits this use case because the friction to use it is low.
+          You don't restructure your workflow. You open whatever app you already
+          use, hold the hotkey when you need to enter text, and release. The
+          rest of the workflow is unchanged. You can still use the keyboard for
+          navigation, shortcuts, and editing — just not for generating
+          paragraphs of text.
+        </p>
+
+        <h3>Users with tremor or motor control limitations</h3>
+
+        <p>
+          Essential tremor, Parkinson's, and other conditions affecting fine
+          motor control make precise typing difficult. Voice input bypasses the
+          mechanical input entirely. The transcription model doesn't care how
+          steady your hands are — only how clearly you speak.
+        </p>
+
+        <h3>Users recovering from hand or arm injuries</h3>
+
+        <p>
+          A broken wrist, a post-surgical recovery period, a repetitive motion
+          injury — short-term situations where typing is impossible or
+          contraindicated. Dictation bridges the gap while recovery continues.
+        </p>
+
+        <h3>Users with visual impairments who type by voice</h3>
+
+        <p>
+          Some users with visual impairments combine screen readers with voice
+          input. dictate.app works alongside screen reader software —
+          transcribed text appears in whatever focused field the screen reader
+          is tracking.
+        </p>
+
+        <h2>Pairing dictate.app with Windows Accessibility Tools</h2>
+
+        <p>
+          dictate.app handles text entry. For users who need comprehensive
+          hands-free computing — including navigation, clicking, and app control
+          — the recommended approach is to pair dictate.app with Windows Voice
+          Access for navigation and dictate.app for text generation.
+        </p>
+
+        <ul>
+          <li>
+            <strong>Windows Voice Access</strong> — use for navigating the OS,
+            clicking buttons, switching apps, scrolling. Voice commands like
+            "click Start," "open Outlook," and "scroll down" are Voice Access's
+            strength.
+          </li>
+          <li>
+            <strong>dictate.app</strong> — use for text entry. Once focus is in
+            a text field, switch to dictate.app's push-to-talk model for faster,
+            more accurate transcription.
+          </li>
+        </ul>
+
+        <p>
+          The two tools don't conflict. They address different parts of the
+          interaction surface. Together, they cover most of what a knowledge
+          worker needs to do without sustained keyboard use.
+        </p>
+
+        <h2>Comparison: Voice Tools for Hands-Free Windows</h2>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tool</th>
+                <th>Text Entry</th>
+                <th>OS Navigation</th>
+                <th>Latency</th>
+                <th>Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="win">dictate.app</td>
+                <td class="win">Excellent (Whisper)</td>
+                <td class="cross">No</td>
+                <td class="win">~200ms</td>
+                <td>$9/month</td>
+              </tr>
+              <tr>
+                <td>Windows Voice Access</td>
+                <td>Moderate</td>
+                <td class="win">Yes (clicks, scrolls)</td>
+                <td>1–2 seconds</td>
+                <td class="win">Free</td>
+              </tr>
+              <tr>
+                <td>Dragon NaturallySpeaking</td>
+                <td class="win">Excellent (trained)</td>
+                <td class="win">Yes (full navigation)</td>
+                <td>1–3 seconds</td>
+                <td>$500+ upfront</td>
+              </tr>
+              <tr>
+                <td>Win+H Voice Typing</td>
+                <td>Good</td>
+                <td class="cross">No</td>
+                <td>1–2 seconds</td>
+                <td class="win">Free</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Setting Up dictate.app for Minimal Hand Use</h2>
+
+        <p>
+          The default hotkey in dictate.app is configurable. For users with
+          limited hand mobility, a few setup choices make a difference:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Choose a hotkey that doesn't require a chord.</strong> A
+            single function key (F9, F10, etc.) requires less hand movement than
+            a two-key combination like Ctrl+Space.
+          </li>
+          <li>
+            <strong>Use a foot pedal if available.</strong> dictate.app responds
+            to any keypress — if you have a programmable foot pedal that sends a
+            keystroke, you can trigger dictation entirely without using your
+            hands.
+          </li>
+          <li>
+            <strong>Dictate in longer segments.</strong> Speak a full paragraph
+            before releasing. Fewer activation events means fewer keypresses.
+          </li>
+        </ul>
+
+        <h2>The Honest Limitation</h2>
+
+        <p>
+          dictate.app reduces keyboard use for text generation but doesn't
+          eliminate keyboard use entirely. You still need keyboard or mouse for
+          navigation, application switching, and editing. For users who need
+          fully hands-free computing, dictate.app paired with Windows Voice
+          Access covers most needs — but Dragon NaturallySpeaking remains the
+          most comprehensive solution for users who need deep voice-controlled
+          navigation.
+        </p>
+
+        <p>
+          The cost difference is real. Dragon is $500+ upfront. dictate.app is
+          $9/month with a 30-day free trial. For users with RSI who primarily
+          need to reduce typing volume rather than eliminate all keyboard use,
+          dictate.app is the practical and affordable starting point.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try dictate.app Free for 30 Days</h2>
+          <p>
+            No account required. Configure a single hotkey, speak, and text
+            appears anywhere in Windows. 30-day free trial with no credit card.
+          </p>
+          <a href="https://dictate-app.pages.dev" class="cta-big"
+            >Start Free Trial →</a
+          >
+          <p class="cta-sub">
+            No credit card · Cancel anytime ·
+            <a href="/privacy">Privacy policy</a>
+          </p>
+        </div>
+
+        <p>
+          See the
+          <a href="/blog/windows-dictation-software-2026.html"
+            >full Windows dictation comparison</a
+          >
+          or reach out at support@dictate.app with questions about specific
+          accessibility use cases.
+        </p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>
