@@ -11,7 +11,7 @@ SITE_URL = "https://dictate-app.pages.dev"
 POSTS = [
     # 1
     {
-        "text": f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms.\n\nNo Dragon. No $500 license. No Mac required.\n\n7-day free trial → {SITE_URL}\n\n#productivity #Windows #buildinpublic",
+        "text": f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms.\n\nNo Dragon. No $500 license. No Mac required.\n\n30-day free trial → {SITE_URL}\n\n#productivity #Windows #buildinpublic",
         "thread": [
             f"Built a Windows dictation app. Ctrl+Space → speak → text appears at your cursor in ~200ms.\n\nFree trial → {SITE_URL}",
             "The gap:\n\n• Win+H — stops mid-sentence, no auto-paste\n• Dragon — $500+\n• Wispr Flow — Mac only\n• Local Whisper — 1-2s lag\n\nFast + Windows + auto-paste at cursor didn't exist. So I built it.",
@@ -102,7 +102,7 @@ So I built dictate.app:
 - Custom hotkey (default Ctrl+Space)
 - Bring your own Groq API key (free tier works)
 
-{SITE_URL} — 7-day free trial
+{SITE_URL} — 30-day free trial
 """,
     },
     # 4
@@ -152,7 +152,7 @@ The thing that changed it: a tool that actually works. Low latency (~200ms), aut
 
 If the tool is slow, you blame yourself. If the tool is fast, you blame nothing.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 6
@@ -161,7 +161,7 @@ Windows: {SITE_URL} — 7-day free trial.
         "thread": [
             "If you write more than 1,000 words a day, you should try dictation.",
             "Not because typing is slow.\n\nBecause speaking is faster.\n\n60 wpm vs 150 wpm. If you write 2,000 words/day that's 33 minutes typing vs 13 minutes speaking.\n\n20 minutes/day = 120 hours/year.",
-            f"The Windows tool that makes this actually work: dictate.app\n\nCtrl+Space → speak → text at cursor in ~200ms\n\n{SITE_URL} — 7-day free trial\n\n#productivity #indiedev",
+            f"The Windows tool that makes this actually work: dictate.app\n\nCtrl+Space → speak → text at cursor in ~200ms\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
         ],
         "title": "If you write 1,000+ words a day, you're leaving time on the table",
         "body": f"""60 wpm typing. 150 wpm speaking. That's not an opinion, it's an average.
@@ -175,7 +175,7 @@ Over a year, that's 120 hours.
 
 The bottleneck isn't tool quality anymore. It's habits and latency. If dictation feels slow, the tool is the problem — not you.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 7
@@ -184,7 +184,7 @@ Windows: {SITE_URL} — 7-day free trial.
         "thread": [
             "Sent 40 emails today. Typed maybe 150 words total.",
             "The rest was dictated.\n\nEach email: hold button, speak, release. Text appears where my cursor is.\n\nThe whole thing takes as long as thinking of what to say — not longer.",
-            f"Tool: dictate.app for Windows\nHotkey: Ctrl+Space (remappable)\nLatency: ~200ms via Groq Whisper\n\n{SITE_URL} — 7-day free trial\n\n#productivity #indiedev",
+            f"Tool: dictate.app for Windows\nHotkey: Ctrl+Space (remappable)\nLatency: ~200ms via Groq Whisper\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
         ],
         "title": "I sent 40 emails today and typed almost nothing",
         "body": f"""Dictated all of them. Each one: hold hotkey, speak, release. Text appears at cursor.
@@ -198,7 +198,7 @@ Email is the perfect starting point for dictation:
 
 After a week of email dictation, everything else follows.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 8
@@ -220,7 +220,7 @@ The fix: let the whole thought finish. Every time. Fix it after.
 
 In two weeks, the instinct changes. You stop editing in real-time. Words flow.
 
-Windows tool: {SITE_URL} — 7-day free trial.
+Windows tool: {SITE_URL} — 30-day free trial.
 """,
     },
     # 9
@@ -240,7 +240,7 @@ It sounds trivial. It's not. This one change is why dictation went from "interes
 
 dictate.app has fully remappable hotkeys. Set it once, forget it exists.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 10
@@ -249,7 +249,7 @@ Windows: {SITE_URL} — 7-day free trial.
         "thread": [
             "Built a Windows dictation app because I couldn't find one that did all three things I needed.",
             "The three requirements:\n\n1/ Fast — under 300ms or it breaks flow\n2/ Auto-paste at cursor — not clipboard, not a separate window\n3/ Windows — not Mac, not browser extension\n\nEvery tool I found missed at least one.",
-            f"So I built dictate.app.\n\nGroq Whisper = ~200ms\nAuto-paste at cursor = ✓\nWindows native = ✓\n\n{SITE_URL} — 7-day free trial\n\n#buildinpublic #indiedev",
+            f"So I built dictate.app.\n\nGroq Whisper = ~200ms\nAuto-paste at cursor = ✓\nWindows native = ✓\n\n{SITE_URL} — 30-day free trial\n\n#buildinpublic #indiedev",
         ],
         "title": "I built it because the tool I wanted didn't exist",
         "body": f"""Three requirements. Every existing tool missed at least one.
@@ -266,7 +266,7 @@ Dragon: Windows, auto-paste, $500. ✗
 
 So I built dictate.app.
 
-{SITE_URL} — 7-day free trial.
+{SITE_URL} — 30-day free trial.
 """,
     },
     # 11
@@ -288,7 +288,7 @@ So I built dictate.app.
 
 **The surprise:** My writing got worse before it got better. You think slower than you speak. But then it evens out.
 
-Tool: {SITE_URL} — 7-day free trial.
+Tool: {SITE_URL} — 30-day free trial.
 """,
     },
     # 12
@@ -297,7 +297,7 @@ Tool: {SITE_URL} — 7-day free trial.
         "thread": [
             "Dragon NaturallySpeaking costs $500. Here's the math on doing it for $3/month instead.",
             "Groq Whisper API pricing: $0.02 per hour of audio.\n\nIf you dictate 30 minutes per day × 30 days = 15 hours/month = $0.30/month.\n\nEven at 2 hours/day of heavy use: $1.20/month.",
-            f"I built a Windows app that uses Groq Whisper. You bring your own API key (free tier works for light use).\n\ndictate.app → {SITE_URL}\n\n7-day free trial, no credit card\n\n#buildinpublic #indiedev",
+            f"I built a Windows app that uses Groq Whisper. You bring your own API key (free tier works for light use).\n\ndictate.app → {SITE_URL}\n\n30-day free trial, no credit card\n\n#buildinpublic #indiedev",
         ],
         "title": "Dragon costs $500. Here's the math on doing it for $3/month.",
         "body": f"""Dragon NaturallySpeaking: $500 upfront.
@@ -312,7 +312,7 @@ Worst case, 4 hours/day: **$2.40/month**.
 
 You bring your own Groq API key (free tier works for light use — up to a certain quota). I built the Windows app that wraps it with hotkey + auto-paste.
 
-{SITE_URL} — 7-day free trial.
+{SITE_URL} — 30-day free trial.
 """,
     },
     # 13
@@ -332,7 +332,7 @@ Your brain is optimized for speech. Sentences flow naturally. Thoughts connect. 
 
 The friction is the tool, not the skill. Low-latency auto-paste dictation removes that friction.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 14
@@ -354,7 +354,7 @@ At 2 seconds, you're aware of the tool. At 200ms, you're not. That threshold is 
 
 Groq Whisper makes the 200ms number possible. Everything else is UX.
 
-7-day free trial: {SITE_URL}
+30-day free trial: {SITE_URL}
 """,
     },
     # 15
@@ -363,7 +363,7 @@ Groq Whisper makes the 200ms number possible. Everything else is UX.
         "thread": [
             "Ctrl+Space is now my most-used keyboard shortcut. More than Ctrl+C.",
             "Every time I need to write something: Ctrl+Space, speak, done.\n\nEmails, Slack, search bars, doc titles, commit messages, everything.\n\nThe hotkey is fully remappable but I haven't changed it. It's muscle memory now.",
-            f"dictate.app — Windows dictation that actually works.\n\nCtrl+Space → speak → 200ms → text at cursor.\n\n{SITE_URL} — 7-day free trial\n\n#productivity #buildinpublic",
+            f"dictate.app — Windows dictation that actually works.\n\nCtrl+Space → speak → 200ms → text at cursor.\n\n{SITE_URL} — 30-day free trial\n\n#productivity #buildinpublic",
         ],
         "title": "Ctrl+Space became my most-used shortcut",
         "body": f"""More than Ctrl+C. More than Ctrl+Z. More than Alt+Tab.
@@ -374,7 +374,7 @@ The process: Ctrl+Space, speak, text appears at cursor.
 
 That's the whole thing. No window switches. No clipboard paste. No mode changes. Just text where I need it.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 16
@@ -383,7 +383,7 @@ Windows: {SITE_URL} — 7-day free trial.
         "thread": [
             "Auto-paste at cursor is the feature that changes everything about dictation.",
             "Most dictation tools give you:\n1. A separate text box\n2. Or clipboard paste (Ctrl+V yourself)\n\nNeither is frictionless. You break your workflow to use the tool.",
-            f"dictate.app injects text directly at your cursor. Any app. Any text field.\n\nCtrl+Space → speak → text appears. Done.\n\n{SITE_URL} — 7-day free trial\n\n#productivity #indiedev",
+            f"dictate.app injects text directly at your cursor. Any app. Any text field.\n\nCtrl+Space → speak → text appears. Done.\n\n{SITE_URL} — 30-day free trial\n\n#productivity #indiedev",
         ],
         "title": "Why auto-paste at cursor changes everything about dictation",
         "body": f"""Most dictation tools give you one of two workflows:
@@ -397,7 +397,7 @@ dictate.app injects text directly at your cursor. Any app. Any text field. No wi
 
 The difference sounds small. In practice it's the whole product.
 
-Windows: {SITE_URL} — 7-day free trial.
+Windows: {SITE_URL} — 30-day free trial.
 """,
     },
     # 17
@@ -421,7 +421,7 @@ When you bring your own key:
 
 dictate.app uses this model. Bring your own Groq API key. Free tier covers light use.
 
-{SITE_URL} — 7-day free trial.
+{SITE_URL} — 30-day free trial.
 """,
     },
     # 18
@@ -447,7 +447,7 @@ dictate.app uses this model. Bring your own Groq API key. Free tier covers light
 
 Everything else: dictated. The division happened naturally over about 3 weeks.
 
-Tool: {SITE_URL} — 7-day free trial.
+Tool: {SITE_URL} — 30-day free trial.
 """,
     },
     # 19
@@ -471,7 +471,7 @@ Some apps block clipboard paste. Some block simulated keystrokes. Some do both. 
 
 **The easy part:** transcription. Groq Whisper just works.
 
-{SITE_URL} — 7-day free trial.
+{SITE_URL} — 30-day free trial.
 """,
     },
     # 20
@@ -493,36 +493,34 @@ Some apps block clipboard paste. Some block simulated keystrokes. Some do both. 
 
 That's the bar. Latency and friction are the whole product. Clear those and people keep using it.
 
-{SITE_URL} — 7-day free trial.
+{SITE_URL} — 30-day free trial.
 """,
     },
 ]
 
 # ── Bluesky helpers ────────────────────────────────────────────────────────────
 def build_facets(text):
+    """Build AT Protocol facets using regex match positions (handles duplicates correctly)."""
     facets = []
     text_bytes = text.encode("utf-8")
 
-    for url in re.findall(r'https?://[^\s\)]+', text):
-        url_bytes = url.encode("utf-8")
-        start = text_bytes.find(url_bytes)
-        if start == -1:
-            continue
+    def char_to_byte(char_pos):
+        return len(text[:char_pos].encode("utf-8"))
+
+    for m in re.finditer(r'https?://[^\s\)]+', text):
+        byte_start = char_to_byte(m.start())
+        byte_end = char_to_byte(m.end())
         facets.append({
-            "index": {"byteStart": start, "byteEnd": start + len(url_bytes)},
-            "features": [{"$type": "app.bsky.richtext.facet#link", "uri": url}]
+            "index": {"byteStart": byte_start, "byteEnd": byte_end},
+            "features": [{"$type": "app.bsky.richtext.facet#link", "uri": m.group(0)}]
         })
 
     for m in re.finditer(r'#(\w+)', text):
-        tag_full = m.group(0)
-        tag = m.group(1)
-        tag_bytes = tag_full.encode("utf-8")
-        start = text_bytes.find(tag_bytes)
-        if start == -1:
-            continue
+        byte_start = char_to_byte(m.start())
+        byte_end = char_to_byte(m.end())
         facets.append({
-            "index": {"byteStart": start, "byteEnd": start + len(tag_bytes)},
-            "features": [{"$type": "app.bsky.richtext.facet#tag", "tag": tag}]
+            "index": {"byteStart": byte_start, "byteEnd": byte_end},
+            "features": [{"$type": "app.bsky.richtext.facet#tag", "tag": m.group(1)}]
         })
 
     return facets

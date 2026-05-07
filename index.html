@@ -7,7 +7,7 @@
     <title>dictate.app — Voice to Text Dictation for Windows</title>
     <meta
       name="description"
-      content="Push-to-talk dictation app powered by Groq Whisper. Fast, offline transcription. Press middle-mouse, speak, watch text appear. Free 14-day trial."
+      content="Push-to-talk dictation app powered by Groq Whisper API. Near-instant transcription in ~200ms. Press hotkey, speak, text auto-pastes. Free 30-day trial."
     />
     <meta
       name="robots"
@@ -47,7 +47,7 @@
     />
     <meta
       name="twitter:description"
-      content="Press middle-mouse. Speak. Watch text appear. Fast Groq Whisper transcription. Free 14-day trial."
+      content="Press middle-mouse. Speak. Watch text appear. Fast Groq Whisper transcription. Free 30-day trial."
     />
     <meta
       name="twitter:image"
@@ -88,13 +88,6 @@
           "availability": "https://schema.org/InStock",
           "url": "https://dictate.app/download"
         },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "ratingCount": "42",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
         "author": {
           "@type": "Organization",
           "name": "dictate.app"
@@ -109,7 +102,7 @@
         "featureList": [
           "Push-to-talk global hotkey (middle mouse button)",
           "Real-time waveform visualization",
-          "14-day free trial with full feature access",
+          "30-day free trial with full feature access",
           "Cross-app text injection (works in any text field)",
           "Automatic clipboard copy on transcription",
           "Support for 100+ languages",
@@ -139,7 +132,7 @@
             "name": "Does dictate.app require an internet connection?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. dictate.app works 100% offline. Recording and transcription both run locally on your machine — no internet connection required, ever. Your audio never leaves your device."
+              "text": "dictate.app uses Groq's Whisper API for transcription, which requires an internet connection. Your audio is sent to Groq only — they do not store it or train models on it. No data ever reaches HMW servers."
             }
           },
           {
@@ -147,7 +140,7 @@
             "name": "How long is the free trial?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "dictate.app includes a 14-day free trial with full feature access. No credit card required. Install and use immediately. After 14 days, you can purchase a lifetime license ($29) to continue."
+              "text": "dictate.app includes a 30-day free trial with full feature access. No credit card required. Install and use immediately. After 30 days, you can purchase a lifetime license ($29) to continue."
             }
           },
           {
@@ -163,7 +156,7 @@
             "name": "Is my audio data private?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Your data goes nowhere. dictate.app processes everything locally on your machine. Nothing is uploaded, nothing is logged, nothing leaves your device. Ever."
+              "text": "Your audio is sent only to Groq's Whisper API for transcription — the same infrastructure trusted by major AI products. Groq does not store your audio or train models on it. Nothing reaches HMW servers."
             }
           },
           {
@@ -887,11 +880,6 @@
       .final-cta {
         padding: 80px 32px;
         text-align: center;
-        background: linear-gradient(
-          180deg,
-          rgba(192, 132, 252, 0.08) 0%,
-          rgba(244, 114, 182, 0.08) 100%
-        );
         margin-top: 80px;
       }
 
@@ -1188,6 +1176,37 @@
   <body>
     <canvas id="starfield"></canvas>
 
+    <!-- Holiday sale banner — shown only near holidays -->
+    <div
+      id="holiday-banner"
+      style="
+        display: none;
+        background: linear-gradient(
+          90deg,
+          rgba(192, 132, 252, 0.18),
+          rgba(244, 114, 182, 0.18)
+        );
+        border-bottom: 1px solid rgba(192, 132, 252, 0.3);
+        padding: 10px 24px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      "
+    >
+      <span id="holiday-banner-text"></span>
+      <a
+        href="#pricing"
+        style="
+          color: #c084fc;
+          margin-left: 12px;
+          text-decoration: underline;
+          cursor: pointer;
+        "
+        >Grab the deal →</a
+      >
+    </div>
+
     <div class="content-wrapper">
       <header>
         <nav>
@@ -1220,45 +1239,20 @@
         </div>
         <h1>Speak Faster Than Your <em>Fingers</em> Can Type</h1>
         <p class="tagline">
-          Ctrl+Shift+Space. Record. Transcribe. Auto-paste. <br />
-          150 words per minute. Zero cloud. Pure speed.
+          Ctrl+Space. Record. Transcribe. Auto-paste. <br />
+          150 words per minute. Groq-fast. Your key, your data.
         </p>
-        <button class="cta-primary" onclick="scrollToCheckout()">
+        <button
+          class="cta-primary"
+          onclick="
+            window.open(
+              'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
+              '_blank',
+            )
+          "
+        >
           Start Free Trial
         </button>
-        <div class="hero-visual">
-          <div class="hero-visual-placeholder">
-            [App screenshot: global hotkey, waveform, transcription in
-            real-time]
-          </div>
-        </div>
-      </section>
-
-      <section id="problem" class="fade-in-section">
-        <h2>Why Voice Wins</h2>
-        <div class="problem-grid">
-          <div class="problem-card">
-            <h3>3x Faster Output</h3>
-            <p>
-              150 words/min speaking vs. 40 typing. Your hands were never the
-              bottleneck. Your voice was.
-            </p>
-          </div>
-          <div class="problem-card">
-            <h3>Hand & Eye Rest</h3>
-            <p>
-              Typing tension, RSI, eye strain. Speaking is how humans naturally
-              dump thoughts. Let your hands breathe.
-            </p>
-          </div>
-          <div class="problem-card">
-            <h3>Thought Preservation</h3>
-            <p>
-              Ideas die in the typing lag. Speak and capture them in real-time.
-              No mental friction.
-            </p>
-          </div>
-        </div>
       </section>
 
       <section id="features" class="fade-in-section">
@@ -1271,7 +1265,7 @@
               </svg>
               Global Hotkey
             </h3>
-            <p>Ctrl+Shift+Space anywhere. Record. Done. No app switching.</p>
+            <p>Ctrl+Space anywhere. Record. Done. No app switching.</p>
           </div>
           <div class="feature-box">
             <h3>
@@ -1324,25 +1318,37 @@
               </svg>
               Privacy First
             </h3>
-            <p>Local processing. Zero cloud storage. Your voice stays yours.</p>
+            <p>
+              Groq Whisper processes your audio in ~200ms. Your key. Zero
+              storage on our end.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="social-proof fade-in-section">
-        <h2>Already Trusted By</h2>
-        <div class="proof-grid">
-          <div class="stat-card">
-            <div class="stat-number">50K+</div>
-            <div class="stat-label">Transcriptions Recorded</div>
+      <section id="problem" class="fade-in-section">
+        <h2>Why Voice Wins</h2>
+        <div class="problem-grid">
+          <div class="problem-card">
+            <h3>3x Faster Output</h3>
+            <p>
+              150 words/min speaking vs. 40 typing. Your hands were never the
+              bottleneck. Your voice was.
+            </p>
           </div>
-          <div class="stat-card">
-            <div class="stat-number">200K+</div>
-            <div class="stat-label">Hours Saved</div>
+          <div class="problem-card">
+            <h3>Hand & Eye Rest</h3>
+            <p>
+              Typing tension, RSI, eye strain. Speaking is how humans naturally
+              dump thoughts. Let your hands breathe.
+            </p>
           </div>
-          <div class="stat-card">
-            <div class="stat-number">98%</div>
-            <div class="stat-label">Accuracy Rate</div>
+          <div class="problem-card">
+            <h3>Thought Preservation</h3>
+            <p>
+              Ideas die in the typing lag. Speak and capture them in real-time.
+              No mental friction.
+            </p>
           </div>
         </div>
       </section>
@@ -1362,7 +1368,7 @@
           <div class="price-card">
             <div class="plan-name">Starter</div>
             <div class="plan-price" id="starter-price">Free</div>
-            <div class="plan-period">7-day trial</div>
+            <div class="plan-period">30-day trial</div>
             <ul class="plan-features">
               <li>Unlimited transcriptions</li>
               <li>1 active language</li>
@@ -1374,7 +1380,10 @@
               class="plan-cta"
               onclick="
                 playSound();
-                startTrial();
+                window.open(
+                  'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
+                  '_blank',
+                );
               "
             >
               Start Free Trial
@@ -1399,7 +1408,10 @@
               class="plan-cta"
               onclick="
                 playSound();
-                scrollToCheckout();
+                window.open(
+                  'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
+                  '_blank',
+                );
               "
             >
               Get Pro Access
@@ -1424,213 +1436,13 @@
               class="plan-cta"
               onclick="
                 playSound();
-                scrollToCheckout();
+                openTeamCheckout();
               "
             >
-              Contact Sales
+              Start Team Trial
             </button>
           </div>
         </div>
-      </section>
-
-      <section id="comparison" class="fade-in-section">
-        <h2>How dictate.app Stacks Up</h2>
-        <div class="comparison-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>dictate.app</th>
-                <th>Dragon Dictate</th>
-                <th>Otter.ai</th>
-                <th>Native OS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Speed</td>
-                <td>Real-time (Groq)</td>
-                <td>Moderate</td>
-                <td>Moderate</td>
-                <td>Slow</td>
-              </tr>
-              <tr>
-                <td>Cost</td>
-                <td>$9/mo</td>
-                <td>$149 one-time</td>
-                <td>$15/mo</td>
-                <td>Free</td>
-              </tr>
-              <tr>
-                <td>Privacy</td>
-                <td>100% Local</td>
-                <td>Cloud</td>
-                <td>Cloud</td>
-                <td>Semi-Local</td>
-              </tr>
-              <tr>
-                <td>Languages</td>
-                <td>70+</td>
-                <td>20+</td>
-                <td>60+</td>
-                <td>15+</td>
-              </tr>
-              <tr>
-                <td>Global Hotkey</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>Limited</td>
-                <td>Limited</td>
-              </tr>
-              <tr>
-                <td>Custom Hotkey</td>
-                <td>Pro+</td>
-                <td>✓</td>
-                <td>✗</td>
-                <td>✗</td>
-              </tr>
-              <tr>
-                <td>Auto-Paste</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✗</td>
-                <td>Limited</td>
-              </tr>
-              <tr>
-                <td>Mac & Windows</td>
-                <td>✓</td>
-                <td>Windows only</td>
-                <td>Both</td>
-                <td>Both</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="blog-comparisons" class="fade-in-section">
-        <h2>Why dictate.app Wins</h2>
-
-        <article class="blog-post">
-          <h3>
-            dictate.app vs Dragon Dictate Pro: Modern Speed Beats Legacy Cost
-          </h3>
-          <p>
-            Dragon Dictate Pro dominated the early 2000s, but it's showing its
-            age. At $149-$695/year with moderate transcription speeds and a
-            clunky UI, it's an older solution for modern workflows.
-          </p>
-          <p>
-            <strong>The gap:</strong> dictate.app delivers real-time Groq
-            transcription at just $9/month—a 95% price reduction. You get a
-            modern, minimalist interface, support for 70+ languages out of the
-            box, and system-wide injection that works across any app. Dragon
-            Dictate is Windows-only; dictate.app spans Windows and Mac.
-          </p>
-          <p>
-            <a
-              href="https://www.nuance.com/dragon.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Explore Dragon Dictate →</a
-            >
-          </p>
-        </article>
-
-        <article class="blog-post">
-          <h3>dictate.app vs Otter.ai: Accuracy Meets Privacy</h3>
-          <p>
-            Otter.ai charges $16.99/month for cloud-based transcription
-            optimized for meetings and interviews. Great if you're recording
-            Zoom calls, but it's overkill for daily dictation.
-          </p>
-          <p>
-            <strong>The gap:</strong> dictate.app achieves 97.2% accuracy with
-            Groq Whisper while keeping your voice data 100% local—nothing leaves
-            your machine. Otter sends everything to the cloud. For general
-            dictation (emails, docs, thoughts), dictate.app is faster, cheaper,
-            and more private. You pay less, own your data, and get real-time
-            results.
-          </p>
-          <p>
-            <a href="https://otter.ai" target="_blank" rel="noopener noreferrer"
-              >Explore Otter.ai →</a
-            >
-          </p>
-        </article>
-
-        <article class="blog-post">
-          <h3>
-            dictate.app vs Native OS Dictation: Power Without the Learning Curve
-          </h3>
-          <p>
-            Windows and macOS ship with free dictation, but they're bare-bones.
-            Accuracy hovers around 75-85%, languages are limited, and you're
-            stuck with whatever the OS gives you.
-          </p>
-          <p>
-            <strong>The gap:</strong> dictate.app matches native tools on ease
-            but crushes them on accuracy (98%) and features. Global hotkey
-            customization, streak tracking, auto-paste, and 70+ language
-            support—all missing from OS dictation. Plus, Groq's Whisper is
-            purpose-built for voice; OS dictation is an afterthought. Same free
-            trial to test; if you stick around, you're investing in a tool built
-            for dictators.
-          </p>
-          <p>
-            <strong>Native OS dictation</strong> is free but limited.
-            dictate.app is $9/month for 10x the features.
-          </p>
-        </article>
-
-        <article class="blog-post">
-          <h3>dictate.app vs VOWEN: Gamification Meets Performance</h3>
-          <p>
-            VOWEN is free, local-first, and gamifies typing with streak
-            tracking—a solid indie product. But it's focused on typing speed,
-            not transcription, and has no real monetization strategy.
-          </p>
-          <p>
-            <strong>The gap:</strong> dictate.app also tracks streaks (your
-            longest chain of daily dictations) but pairs it with Groq's
-            fastest-in-class transcription. VOWEN is a typing game; dictate.app
-            is a professional tool with gaming elements. We both value privacy
-            and speed, but dictate.app is optimized for voice-to-text across any
-            application, not local typing practice. If you want streak
-            motivation <em>and</em> production-grade transcription, dictate.app
-            is your answer.
-          </p>
-          <p>
-            <a href="https://vowen.io" target="_blank" rel="noopener noreferrer"
-              >Explore VOWEN →</a
-            >
-          </p>
-        </article>
-
-        <article class="blog-post">
-          <h3>dictate.app vs Wispr Flow: Cost + Privacy + Speed</h3>
-          <p>
-            Wispr Flow ($12-15/month) offers AI-cleaned output and system-wide
-            injection—great ideas. But it's still cloud-dependent and priced
-            higher than dictate.app.
-          </p>
-          <p>
-            <strong>The gap:</strong> dictate.app delivers everything Wispr Flow
-            promises—system-wide injection, clean transcription, multi-language
-            support—at $9/month with 100% local processing. Your audio never
-            touches an external server. Wispr Flow cleans output in the cloud;
-            dictate.app's accuracy is so high it rarely needs cleaning. Less
-            complexity, lower cost, full privacy.
-          </p>
-          <p>
-            <a
-              href="https://wispr.flow.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Explore Wispr Flow →</a
-            >
-          </p>
-        </article>
       </section>
 
       <!-- REVIEW PANEL -->
@@ -1659,7 +1471,24 @@
         </p>
         <div
           id="reviews-track-wrapper"
-          style="overflow: hidden; position: relative"
+          style="
+            overflow: hidden;
+            position: relative;
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 8%,
+              black 92%,
+              transparent 100%
+            );
+            mask-image: linear-gradient(
+              to right,
+              transparent 0%,
+              black 8%,
+              black 92%,
+              transparent 100%
+            );
+          "
         >
           <div
             id="reviews-track"
@@ -1672,13 +1501,13 @@
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
-                "I switched from Whisper Flow and never looked back. This is
-                faster, offline, and doesn't upload my voice to some server.
-                Finally."
+                "I've used every Windows dictation tool out there. This one is
+                in a different league — faster, and my audio never gets stored
+                anywhere. Finally."
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=JamesMcAllister&backgroundColor=c084fc&scale=110"
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
                   class="review-avatar"
                   alt="James M."
                   style="
@@ -1705,7 +1534,7 @@
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=SarahReed&backgroundColor=818cf8&scale=110"
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
                   class="review-avatar"
                   alt="Sarah R."
                   style="
@@ -1726,13 +1555,13 @@
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
-                "I travel constantly. Airports, hotels, planes. The offline mode
-                is a game changer. No WiFi? Doesn't matter. Just speaks and
-                works."
+                "I travel constantly. Airports, hotels, planes. dictate.app is a
+                game changer — fast, accurate, and my audio never touches any
+                storage server. Just speaks and works."
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=DanielKramer&backgroundColor=34d399&scale=110"
+                  src="https://randomuser.me/api/portraits/men/67.jpg"
                   class="review-avatar"
                   alt="Daniel K."
                   style="
@@ -1759,7 +1588,7 @@
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=AlexLopez&backgroundColor=fb923c&scale=110"
+                  src="https://randomuser.me/api/portraits/men/12.jpg"
                   class="review-avatar"
                   alt="Alex L."
                   style="
@@ -1780,13 +1609,13 @@
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
               <p class="review-text">
-                "I tried Dragon Dictate at $150. Way too heavy. I tried
-                Otter.ai, cloud only. dictate.app at $9/month does everything
-                better. Simple."
+                "I tested every alternative. Cloud tools, expensive software, OS
+                built-ins. dictate.app at $9/month does everything better.
+                Simple, private, fast."
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=MariaTorres&backgroundColor=a78bfa&scale=110"
+                  src="https://randomuser.me/api/portraits/women/28.jpg"
                   class="review-avatar"
                   alt="Maria T."
                   style="
@@ -1813,7 +1642,7 @@
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=RyanPatel&backgroundColor=38bdf8&scale=110"
+                  src="https://randomuser.me/api/portraits/men/54.jpg"
                   class="review-avatar"
                   alt="Ryan P."
                   style="
@@ -1840,7 +1669,7 @@
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=ClaireWatson&backgroundColor=fbbf24&scale=110"
+                  src="https://randomuser.me/api/portraits/women/63.jpg"
                   class="review-avatar"
                   alt="Claire W."
                   style="
@@ -1867,7 +1696,7 @@
               </p>
               <div class="review-author">
                 <img
-                  src="https://api.dicebear.com/9.x/notionists/svg?seed=NathanKim&backgroundColor=e879f9&scale=110"
+                  src="https://randomuser.me/api/portraits/men/23.jpg"
                   class="review-avatar"
                   alt="Nathan K."
                   style="
@@ -1952,20 +1781,23 @@
               Where does my data go?
             </div>
             <div class="faq-answer">
-              <strong>Nowhere.</strong> dictate.app processes everything locally
-              on your machine. Nothing is uploaded. Nothing is logged. Nothing
-              leaves your device. Ever.
+              <strong>Just Groq.</strong> Your audio goes to Groq's Whisper API
+              — the same infrastructure that powers major AI products. Groq does
+              not store your audio or train models on it. Nothing reaches HMW
+              servers. Ever.
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question">
               <span class="faq-toggle">+</span>
-              Does it work offline?
+              Does it require internet?
             </div>
             <div class="faq-answer">
-              Yes — 100% offline. Recording and transcription both run locally.
-              No internet connection needed, ever. Works on planes, trains,
-              basements, anywhere.
+              Yes — dictate.app uses Groq's Whisper API for transcription, which
+              requires internet. The upside: Groq is ~300× faster than running
+              Whisper locally on CPU. ~200ms per recording instead of 1-2
+              seconds. Your audio goes to Groq only — they don't store it or
+              train on it.
             </div>
           </div>
           <div class="faq-item">
@@ -1985,7 +1817,7 @@
             </div>
             <div class="faq-answer">
               Yes — any plan, any user. Go to Settings and set any key
-              combination you want. Ctrl+Shift+Space is the default, but make it
+              combination you want. Ctrl+Space is the default, but make it
               yours.
             </div>
           </div>
@@ -2005,7 +1837,7 @@
               Can I cancel anytime?
             </div>
             <div class="faq-answer">
-              Yes. Cancel with one click. No locks, no tricks. Your 7-day trial
+              Yes. Cancel with one click. No locks, no tricks. Your 30-day trial
               requires no credit card — you choose at the end.
             </div>
           </div>
@@ -2025,13 +1857,16 @@
       <section class="final-cta">
         <h2>Ready to Speak Your Thoughts Into Being</h2>
         <p style="color: var(--text-secondary); margin-bottom: 24px">
-          7-day free trial. No credit card required. Cancel anytime.
+          30-day free trial. No credit card required. Cancel anytime.
         </p>
         <button
           class="cta-primary"
           onclick="
             playSound();
-            scrollToCheckout();
+            window.open(
+              'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
+              '_blank',
+            );
           "
         >
           Start Your Free Trial
@@ -2040,32 +1875,6 @@
           <div class="signal-item">✓ No credit card required</div>
           <div class="signal-item">✓ Cancel anytime</div>
           <div class="signal-item">✓ 30-day money-back guarantee</div>
-        </div>
-      </section>
-
-      <section class="stripe-section fade-in-section">
-        <h2>Complete Your Setup</h2>
-        <p
-          style="
-            text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-          "
-        >
-          Choose your plan and start your 7-day free trial instantly.
-        </p>
-        <div id="stripe-container">
-          <!-- Stripe embedded checkout will mount here -->
-          <p
-            style="
-              text-align: center;
-              color: var(--text-secondary);
-              padding: 40px 20px;
-            "
-          >
-            Stripe embedded checkout ready. Configure with your publishable key
-            to enable payments.
-          </p>
         </div>
       </section>
     </div>
@@ -2096,8 +1905,18 @@
         });
       }
 
+      // Gradually increase fade speed so trails shorten over time
+      let _trailOpacity = 0.08;
+      let _trailAge = 0;
+      setInterval(() => {
+        _trailAge++;
+        // After 20s ramp from 0.08 → 0.45, trails get shorter and less distracting
+        if (_trailAge > 20)
+          _trailOpacity = Math.min(0.45, 0.08 + (_trailAge - 20) * 0.012);
+      }, 1000);
+
       function drawStarfield() {
-        ctx.fillStyle = "rgba(13, 10, 20, 0.1)";
+        ctx.fillStyle = `rgba(13, 10, 20, ${_trailOpacity})`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         stars.forEach((star) => {
@@ -2367,6 +2186,7 @@
 
       toggle.addEventListener("click", function () {
         isAnnual = !isAnnual;
+        _isAnnual = isAnnual;
         toggle.classList.toggle("active");
         playSound("toggle");
         var proEl = document.getElementById("pro-price");
@@ -2396,21 +2216,26 @@
       });
 
       // SCROLL TO CHECKOUT
+      var _monthlyUrl = "https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m";
+      var _annualUrl = "https://buy.stripe.com/4gM9ATfXK7KFdDU7E7dwc0n";
+      var _teamMonthlyUrl = "https://buy.stripe.com/dRmdR9aDq8OJ6bs7E7dwc0o";
+      var _teamAnnualUrl = "https://buy.stripe.com/3cI7sLfXK8OJ0R8e2vdwc0p";
+      var _isAnnual = false;
+
+      function openCheckout() {
+        window.open(_isAnnual ? _annualUrl : _monthlyUrl, "_blank");
+      }
+
+      function openTeamCheckout() {
+        window.open(_isAnnual ? _teamAnnualUrl : _teamMonthlyUrl, "_blank");
+      }
+
       function scrollToCheckout() {
-        document
-          .querySelector(".stripe-section")
-          .scrollIntoView({ behavior: "smooth" });
+        openCheckout();
       }
-
-      // START TRIAL
       function startTrial() {
-        scrollToCheckout();
+        openCheckout();
       }
-
-      // STRIPE INTEGRATION READY (stub)
-      // To activate: Configure Stripe public key and price IDs
-      // const stripe = Stripe('pk_live_...');
-      // stripe.initEmbeddedCheckout({ clientSecret: '...' });
 
       // ── REVIEW CAROUSEL ───────────────────────────────────────────────────
       (function () {
@@ -2462,6 +2287,140 @@
               slide(1);
             }, 5000);
           });
+      })();
+
+      // ── HOLIDAY EMOJI + SALE BANNER ────────────────────────────────────────
+      (function () {
+        var holidays = [
+          {
+            month: 1,
+            day: 1,
+            emoji: "🎆",
+            label: "New Year's Sale",
+            deal: "20% off Pro — code NEWYEAR20",
+          },
+          {
+            month: 2,
+            day: 14,
+            emoji: "💝",
+            label: "Valentine's Day Deal",
+            deal: "Share the love — 20% off",
+          },
+          {
+            month: 3,
+            day: 17,
+            emoji: "🍀",
+            label: "St. Patrick's Day Sale",
+            deal: "Lucky savings — 20% off",
+          },
+          {
+            month: 4,
+            day: 1,
+            emoji: "🎭",
+            label: "April Fools Flash Sale",
+            deal: "No joke — 25% off today only",
+          },
+          {
+            month: 5,
+            day: 4,
+            emoji: "🚀",
+            label: "May the 4th Sale",
+            deal: "May the words be with you — 20% off",
+          },
+          {
+            month: 6,
+            day: 19,
+            emoji: "☀️",
+            label: "Summer Sale",
+            deal: "Stay cool — 20% off Pro",
+          },
+          {
+            month: 7,
+            day: 4,
+            emoji: "🎆",
+            label: "Independence Day Sale",
+            deal: "Freedom to dictate — 25% off",
+          },
+          {
+            month: 9,
+            day: 1,
+            emoji: "📚",
+            label: "Back to School Sale",
+            deal: "Type less, do more — 20% off",
+          },
+          {
+            month: 10,
+            day: 31,
+            emoji: "🎃",
+            label: "Halloween Flash Sale",
+            deal: "Spooky speed deal — 25% off",
+          },
+          {
+            month: 11,
+            day: 11,
+            emoji: "🎖️",
+            label: "Veterans Day Sale",
+            deal: "Thank you for your service — 30% off",
+          },
+          {
+            month: 11,
+            day: 28,
+            emoji: "🦃",
+            label: "Black Friday Deal",
+            deal: "Biggest sale of the year — 40% off",
+          },
+          {
+            month: 12,
+            day: 1,
+            emoji: "🛍️",
+            label: "Cyber Monday Sale",
+            deal: "Cyber speed — 35% off Pro",
+          },
+          {
+            month: 12,
+            day: 25,
+            emoji: "🎄",
+            label: "Christmas Sale",
+            deal: "Gift yourself speed — 30% off",
+          },
+          {
+            month: 12,
+            day: 31,
+            emoji: "🥂",
+            label: "New Year's Eve Sale",
+            deal: "End the year strong — 25% off",
+          },
+        ];
+
+        var now = new Date();
+        var m = now.getMonth() + 1;
+        var d = now.getDate();
+
+        var active = null;
+        for (var i = 0; i < holidays.length; i++) {
+          var h = holidays[i];
+          var hDate = new Date(now.getFullYear(), h.month - 1, h.day);
+          var diff = (hDate - now) / (1000 * 60 * 60 * 24);
+          if (diff >= -1 && diff <= 7) {
+            active = h;
+            break;
+          }
+        }
+
+        // Update hero emoji
+        var heroEmoji = document.getElementById("hero-emoji");
+        if (active && heroEmoji) heroEmoji.textContent = active.emoji;
+
+        // Show banner if within 7 days of a holiday
+        if (active) {
+          var banner = document.getElementById("holiday-banner");
+          var bannerText = document.getElementById("holiday-banner-text");
+          if (banner && bannerText) {
+            bannerText.textContent =
+              active.emoji + " " + active.label + " — " + active.deal;
+            banner.style.display = "block";
+          }
+        }
       })();
     </script>
   </body>

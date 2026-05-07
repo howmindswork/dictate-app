@@ -31,21 +31,20 @@ BLOG_DIR = Path(__file__).parent.parent / "blog"
 QUEUE_FILE = BLOG_DIR / "topics-queue.txt"
 TODAY = date.today().strftime("%Y-%m-%d")
 
-SYSTEM_PROMPT = f"""You are an SEO content writer for dictate.app, a voice-to-text dictation app for Windows.
+SYSTEM_PROMPT = f"""You are an SEO content writer for TechTips, an independent tech advice blog covering AI tools, productivity apps, Windows tips, and software comparisons.
 
-Key facts about dictate.app:
-- Local/offline transcription using Groq Whisper — audio never leaves the device
-- Works in any text field on Windows (Electron app)
-- Custom hotkey (default Ctrl+Shift+Space), configurable to anything
-- $9/mo Pro plan, 7-day free trial, 30-day refund guarantee
-- 70+ languages, under 1-second transcription, ~150 WPM
+TechTips is NOT affiliated with any single product. It covers broad tech topics. When a topic is relevant to voice dictation, you may recommend dictate.app (offline, private, $9/mo, Groq Whisper) as one option among others — naturally, not forced.
+
+Key facts to use when relevant:
+- dictate.app: offline voice-to-text for Windows, Groq Whisper, $9/mo, 7-day free trial, 30-day refund, 70+ languages, ~150 WPM, custom hotkey, no cloud
 - Competitors: Wispr Flow (cloud, Mac-only), Dragon ($150+), Otter.ai (cloud), Windows built-in (limited)
-- CTA URL: {SITE_URL}
+- CTA URL for dictate.app: {SITE_URL}
 
 Writing tone rules:
 - Short sentences. Direct. No corporate fluff.
 - Use facts and numbers wherever possible.
-- Privacy and offline angle is always front and center.
+- Independent reviewer voice — not a company blog.
+- Privacy and offline angle matters for voice/data topics.
 - 2026 in all dates. Never 2025.
 - No green anywhere in design. Purple (#c084fc) and rose (#f472b6) only.
 
@@ -180,24 +179,25 @@ def wrap_in_shell(slug: str, title: str, description: str, keywords: str, body_h
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} | dictate.app Blog</title>
+  <title>{title} | TechTips</title>
   <meta name="description" content="{description}" />
   <meta name="keywords" content="{keywords}" />
-  <meta name="author" content="dictate.app" />
+  <meta name="author" content="TechTips" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="{SITE_URL}/blog/{slug}.html" />
   <meta property="og:title" content="{title}" />
   <meta property="og:description" content="{description}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{SITE_URL}/blog/{slug}.html" />
+  <meta property="og:site_name" content="TechTips" />
   <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "{title}",
     "description": "{description}",
-    "author": {{"@type": "Organization", "name": "dictate.app"}},
-    "publisher": {{"@type": "Organization", "name": "dictate.app"}},
+    "author": {{"@type": "Organization", "name": "TechTips"}},
+    "publisher": {{"@type": "Organization", "name": "TechTips"}},
     "datePublished": "{TODAY}",
     "dateModified": "{TODAY}",
     "url": "{SITE_URL}/blog/{slug}.html"
@@ -209,10 +209,10 @@ def wrap_in_shell(slug: str, title: str, description: str, keywords: str, body_h
   <div class="wrap">
     <header>
       <nav>
-        <a class="nav-home" href="{SITE_URL}">
-          <span class="logo-icon">🎙</span> ← dictate.app
+        <a class="nav-home" href="{SITE_URL}/blog/">
+          <span class="logo-icon">💡</span> TechTips
         </a>
-        <a class="cta-nav" href="{SITE_URL}">Start Free Trial</a>
+        <a class="cta-nav" href="{SITE_URL}">Try dictate.app →</a>
       </nav>
     </header>
     <article>
@@ -225,7 +225,7 @@ def wrap_in_shell(slug: str, title: str, description: str, keywords: str, body_h
       </div>
     </article>
     <footer>
-      <p>© 2026 dictate.app &nbsp;·&nbsp; <a href="{SITE_URL}">Home</a> &nbsp;·&nbsp; <a href="{SITE_URL}/blog/">Blog</a></p>
+      <p>© 2026 TechTips &nbsp;·&nbsp; Independent tech advice &nbsp;·&nbsp; <a href="{SITE_URL}/blog/">More articles</a></p>
     </footer>
   </div>
 {STARFIELD_JS}
@@ -249,7 +249,7 @@ Return a JSON object with these exact keys:
 For body_html, use only these HTML elements:
 - <span class="post-label">Category</span> at the very top
 - <h1>{{title}}</h1>
-- <p class="post-meta">dictate.app Blog &nbsp;·&nbsp; {TODAY[:7].replace('-', ' ')} 2026 &nbsp;·&nbsp; X min read</p>
+- <p class="post-meta">TechTips &nbsp;·&nbsp; {TODAY[:7].replace('-', ' ')} 2026 &nbsp;·&nbsp; X min read</p>
 - <h2>, <h3>, <p>, <ul>, <li>, <ol>, <strong>
 - <div class="table-wrap"><table><tr><th>/<td> with class="check", "cross", or "win" as needed
 - No inline styles. No other HTML elements.
@@ -317,8 +317,8 @@ def rebuild_index(posts: list[dict]):
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>dictate.app Blog — Voice Dictation Tips &amp; Guides</title>
-  <meta name="description" content="Voice dictation tips, software comparisons, and productivity guides from dictate.app." />
+  <title>TechTips — AI Tools, Software Picks &amp; Tech Advice</title>
+  <meta name="description" content="AI tools, software comparisons, Windows tips, and tech advice for getting more done. Independent reviews and guides." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="{SITE_URL}/blog/" />
   <style>
@@ -352,19 +352,19 @@ def rebuild_index(posts: list[dict]):
   <div class="wrap">
     <header>
       <nav>
-        <a class="nav-home" href="{SITE_URL}"><span class="logo-icon">🎙</span> ← dictate.app</a>
-        <a class="cta-nav" href="{SITE_URL}">Start Free Trial</a>
+        <a class="nav-home" href="{SITE_URL}/blog/"><span class="logo-icon">💡</span> TechTips</a>
+        <a class="cta-nav" href="{SITE_URL}">Try dictate.app →</a>
       </nav>
     </header>
     <div class="hero">
-      <h1>dictate.app Blog</h1>
-      <p>Voice dictation tips, software comparisons, and productivity guides.</p>
+      <h1>Tech Tips &amp; Guides</h1>
+      <p>AI tools, software picks, and tech advice for getting more done.</p>
     </div>
     <div class="grid">
 {card_html}
     </div>
     <footer>
-      <p>© 2026 dictate.app &nbsp;·&nbsp; <a href="{SITE_URL}">Home</a> &nbsp;·&nbsp; <a href="{SITE_URL}/blog/">Blog</a></p>
+      <p>© 2026 TechTips &nbsp;·&nbsp; Independent tech advice &nbsp;·&nbsp; <a href="{SITE_URL}/blog/">More articles</a></p>
     </footer>
   </div>
   <canvas id="starfield"></canvas>

@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Building a Whisper API Windows App: How dictate.app Uses Groq |
+      dictate.app
+    </title>
+    <meta
+      name="description"
+      content="How dictate.app achieves ~200ms voice transcription on Windows using Groq's Whisper API. Technical breakdown of the architecture, latency, and privacy model."
+    />
+    <meta
+      name="keywords"
+      content="whisper api windows app, groq whisper api, openai whisper windows, whisper transcription windows 2026"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
+    />
+    <meta
+      property="og:title"
+      content="Building a Whisper API Windows App: How dictate.app Uses Groq"
+    />
+    <meta
+      property="og:description"
+      content="Technical breakdown: how Groq's Whisper API enables ~200ms voice transcription on Windows. Architecture, latency, and privacy."
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Whisper API Windows App: How dictate.app Uses Groq"
+    />
+    <meta
+      name="twitter:description"
+      content="How Groq's Whisper API enables ~200ms transcription on Windows. Technical breakdown inside."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Building a Whisper API Windows App: How dictate.app Uses Groq",
+        "description": "Technical breakdown of how dictate.app achieves ~200ms voice transcription on Windows using Groq's Whisper API.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-06",
+        "dateModified": "2026-05-06",
+        "url": "https://dictate-app.pages.dev/blog/whisper-api-windows-app.html",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/whisper-api-windows-app.html"
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .nav-home:hover {
+        color: var(--accent);
+      }
+      .logo-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block;
+        padding: 10px 24px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5);
+      }
+
+      article {
+        max-width: 760px;
+        margin: 60px auto;
+        padding: 0 24px 80px;
+      }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 36px 0 14px;
+      }
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 24px 0 10px;
+      }
+      p {
+        margin-bottom: 18px;
+        color: var(--text-secondary);
+        font-size: 16px;
+      }
+      p strong {
+        color: var(--text-primary);
+      }
+      ul,
+      ol {
+        padding-left: 24px;
+        margin-bottom: 18px;
+      }
+      li {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      li strong {
+        color: var(--text-primary);
+      }
+      a {
+        color: var(--accent-rose);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3);
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #f5a3c7;
+        border-bottom-color: rgba(244, 114, 182, 0.6);
+      }
+
+      .code-block {
+        background: rgba(26, 22, 37, 0.9);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 18px 20px;
+        margin: 24px 0;
+        font-family: "Courier New", "Consolas", monospace;
+        font-size: 13px;
+        color: var(--text-primary);
+        overflow-x: auto;
+        line-height: 1.6;
+      }
+      .code-block .comment {
+        color: #7c6b8a;
+      }
+      .code-block .key {
+        color: var(--accent);
+      }
+      .code-block .val {
+        color: var(--accent-blue);
+      }
+      .code-block .str {
+        color: #a8d8a8;
+      }
+
+      .latency-bar {
+        margin: 24px 0;
+      }
+      .bar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .bar-label {
+        width: 160px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+      }
+      .bar-track {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 4px;
+        height: 10px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        border-radius: 4px;
+      }
+      .bar-fill.fast {
+        background: linear-gradient(90deg, #c084fc, #f472b6);
+        width: 10%;
+      }
+      .bar-fill.med {
+        background: rgba(192, 132, 252, 0.4);
+        width: 38%;
+      }
+      .bar-fill.slow {
+        background: rgba(192, 132, 252, 0.25);
+        width: 75%;
+      }
+      .bar-fill.very-slow {
+        background: rgba(192, 132, 252, 0.15);
+        width: 100%;
+      }
+      .bar-val {
+        font-size: 13px;
+        color: var(--text-primary);
+        width: 80px;
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      .highlight-box {
+        background: rgba(192, 132, 252, 0.07);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 20px 24px;
+        margin: 28px 0;
+      }
+      .highlight-box p {
+        margin: 0;
+      }
+
+      .cta-block {
+        background: linear-gradient(
+          135deg,
+          rgba(192, 132, 252, 0.1) 0%,
+          rgba(244, 114, 182, 0.08) 100%
+        );
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px;
+        padding: 36px 32px;
+        text-align: center;
+        margin: 48px 0;
+      }
+      .cta-block h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--text-primary);
+      }
+      .cta-block p {
+        margin: 0 0 24px;
+      }
+      .cta-big {
+        display: inline-block;
+        padding: 14px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--accent) 0%,
+          var(--accent-rose) 100%
+        );
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5);
+        border-bottom: none;
+      }
+      .cta-sub {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+      }
+
+      @media (max-width: 600px) {
+        article {
+          padding: 0 16px 60px;
+        }
+        .cta-block {
+          padding: 24px 20px;
+        }
+        header {
+          padding: 16px 20px;
+        }
+        .bar-label {
+          width: 120px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev" class="cta-nav"
+            >Try Free 30 Days</a
+          >
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Technical · May 2026</div>
+        <h1>Whisper API on Windows: How dictate.app Gets to 200ms</h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 9 min read &nbsp;·&nbsp; dictate.app
+          engineering
+        </div>
+
+        <p>
+          Most developers who build on Windows know OpenAI's Whisper model. It's
+          state-of-the-art for speech recognition. The standard question is
+          where you run it — local CPU, local GPU, or cloud API. Each path has a
+          radically different latency profile.
+        </p>
+
+        <p>
+          dictate.app is a <strong>Whisper API Windows app</strong> that uses
+          Groq's inference infrastructure instead of OpenAI's API or local
+          processing. This post explains why that matters, how the pipeline
+          works, and what the privacy model looks like for developers who care
+          about those details.
+        </p>
+
+        <h2>Three Ways to Run Whisper on Windows</h2>
+
+        <h3>Option 1: Local CPU (whisper.cpp, faster-whisper)</h3>
+
+        <p>
+          Running Whisper locally on CPU is free, fully private, and works
+          offline. It's also slow. On a modern mid-range laptop without a
+          dedicated GPU, a 10-second audio clip takes 8–15 seconds to transcribe
+          using the medium or large model. Even the tiny model — with noticeably
+          worse accuracy — takes 2–4 seconds.
+        </p>
+
+        <p>
+          For batch transcription of recordings, this is fine. For push-to-talk
+          dictation where you expect text to appear immediately after speaking,
+          it's unusable.
+        </p>
+
+        <h3>Option 2: Local GPU (CUDA-accelerated)</h3>
+
+        <p>
+          If you have an Nvidia GPU with CUDA support, local Whisper
+          transcription drops to 0.5–2 seconds depending on model size and VRAM.
+          The large-v3 model on a 3080 is roughly 0.8–1.2 seconds for a typical
+          dictation clip.
+        </p>
+
+        <p>
+          That's workable. But it requires GPU hardware most users don't have
+          for a secondary task, and setup involves CUDA drivers, Python
+          environments, and model downloads (1–3GB). Not something you hand to a
+          non-technical user.
+        </p>
+
+        <h3>Option 3: Groq Whisper API (what dictate.app uses)</h3>
+
+        <p>
+          Groq built custom silicon — LPUs (Language Processing Units) —
+          specifically optimized for transformer inference. Their Whisper Large
+          v3 Turbo implementation is the fastest publicly available Whisper
+          inference. dictate.app sends audio to Groq's API and receives the
+          transcript in roughly <strong>150–250ms</strong>, including network
+          round-trip.
+        </p>
+
+        <p>
+          That's faster than most GPU setups, with zero local hardware
+          requirement, and it works on any Windows machine with internet access.
+        </p>
+
+        <h2>Latency Comparison</h2>
+
+        <div class="latency-bar">
+          <div class="bar-item">
+            <span class="bar-label">Groq Whisper API</span>
+            <div class="bar-track"><div class="bar-fill fast"></div></div>
+            <span class="bar-val">~200ms</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-label">Local GPU (3080)</span>
+            <div class="bar-track"><div class="bar-fill med"></div></div>
+            <span class="bar-val">~800ms</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-label">OpenAI Whisper API</span>
+            <div class="bar-track"><div class="bar-fill med"></div></div>
+            <span class="bar-val">~900ms</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-label">Local CPU (medium)</span>
+            <div class="bar-track"><div class="bar-fill very-slow"></div></div>
+            <span class="bar-val">8–15 seconds</span>
+          </div>
+        </div>
+
+        <p>
+          <em
+            >Approximate values for a 5–10 second audio clip on typical consumer
+            hardware. Network conditions affect cloud results.</em
+          >
+        </p>
+
+        <h2>The dictate.app Pipeline</h2>
+
+        <p>The transcription flow is straightforward:</p>
+
+        <ol>
+          <li>
+            <strong>Hotkey press</strong> — Ctrl+Space triggers audio recording
+            from the default input device.
+          </li>
+          <li>
+            <strong>Audio capture</strong> — Recorded as PCM audio, converted to
+            the format Groq expects (16kHz mono, compressed for transmission).
+          </li>
+          <li>
+            <strong>API call</strong> — Audio chunk sent to Groq's
+            <code>whisper-large-v3-turbo</code> endpoint.
+          </li>
+          <li>
+            <strong>Response</strong> — JSON response with transcript text,
+            typically within 150–250ms.
+          </li>
+          <li>
+            <strong>Paste</strong> — Text injected at the current cursor
+            position via clipboard paste (Ctrl+V).
+          </li>
+        </ol>
+
+        <p>
+          The hotkey release triggers the API call. By the time you've moved
+          your hands back to the keyboard, the text is already there.
+        </p>
+
+        <h2>Why Not OpenAI's Whisper API?</h2>
+
+        <p>
+          OpenAI also exposes a Whisper API. The accuracy is comparable. The
+          latency is not. OpenAI's API typically returns in 700ms–1.5 seconds
+          for short clips — fast enough for batch work, but perceptibly slow for
+          push-to-talk dictation.
+        </p>
+
+        <p>
+          Groq's LPU architecture processes the same model in roughly 4–5x less
+          time. For a dictation tool where every millisecond shows up as a
+          feeling, that difference is the product.
+        </p>
+
+        <div class="highlight-box">
+          <p>
+            <strong>For developers building similar tools:</strong> The Groq API
+            is OpenAI-compatible. You can swap the base URL in your existing
+            OpenAI SDK code and point at Groq's endpoint. Model name is
+            <code>whisper-large-v3-turbo</code>.
+          </p>
+        </div>
+
+        <h2>Audio Quality Considerations</h2>
+
+        <p>
+          Whisper's accuracy is sensitive to audio quality. dictate.app shows a
+          real-time waveform during recording — partly for UX feedback, but also
+          to help users calibrate microphone placement. A few things that affect
+          accuracy:
+        </p>
+
+        <ul>
+          <li>
+            <strong>Sample rate:</strong> Whisper natively expects 16kHz.
+            Capturing at higher rates and downsampling doesn't improve accuracy.
+          </li>
+          <li>
+            <strong>Noise:</strong> Whisper handles background noise well but
+            degrades with loud, sustained interference.
+          </li>
+          <li>
+            <strong>Microphone distance:</strong> 6–12 inches from mouth is the
+            reliable range for most headsets and laptop mics.
+          </li>
+          <li>
+            <strong>Clip length:</strong> Very short clips (under 1 second) can
+            confuse the model. We apply a brief minimum duration before sending.
+          </li>
+        </ul>
+
+        <h2>Privacy Architecture</h2>
+
+        <p>
+          For developers and security-conscious users, the data path matters.
+          Here's exactly what happens to your audio:
+        </p>
+
+        <ul>
+          <li>
+            Audio is captured locally, compressed, and sent over HTTPS to
+            <code>api.groq.com</code>.
+          </li>
+          <li>
+            Groq processes the audio and returns the transcript.
+            <strong
+              >Groq's terms explicitly prohibit storing submitted audio or using
+              it to train models.</strong
+            >
+          </li>
+          <li>
+            The transcript is returned to dictate.app locally. Nothing is sent
+            to dictate.app's servers.
+          </li>
+          <li>
+            The transcript is pasted and stored in local history only — never
+            transmitted.
+          </li>
+        </ul>
+
+        <p>
+          The full data policy is in our <a href="/privacy">privacy policy</a>.
+          The short version: your voice goes to Groq and nowhere else, and Groq
+          doesn't keep it.
+        </p>
+
+        <h2>Language Detection</h2>
+
+        <p>
+          Whisper is a multilingual model. Groq's deployment supports the same
+          70+ languages as the original model, with automatic language
+          detection. dictate.app defaults to auto-detect and lets you pin a
+          specific language in settings if you want deterministic behavior in
+          multilingual environments.
+        </p>
+
+        <h2>Using dictate.app vs Building Your Own</h2>
+
+        <p>
+          If you're a developer evaluating whether to use dictate.app or build a
+          similar tool yourself, the honest answer is: building it is not that
+          complicated. The Groq API is well-documented, and the core
+          transcription loop is maybe 50–100 lines of code.
+        </p>
+
+        <p>
+          What dictate.app handles that takes more work: global hotkey
+          registration across Windows applications, reliable text injection into
+          all app types (some use non-standard input handling), the waveform
+          visualization, settings persistence, and the trial/licensing system.
+        </p>
+
+        <p>
+          If you want to experiment with the Groq Whisper API directly, their
+          documentation is solid. If you want a ready-to-use tool that's already
+          solved the Windows-specific integration problems, that's what
+          dictate.app is.
+        </p>
+
+        <div class="cta-block">
+          <h2>Try dictate.app Free for 30 Days</h2>
+          <p>
+            Groq Whisper. ~200ms. Any Windows app. No account required to start.
+          </p>
+          <a href="https://dictate-app.pages.dev" class="cta-big"
+            >Start Free Trial →</a
+          >
+          <p class="cta-sub">
+            No credit card · $9/month after trial ·
+            <a href="/privacy">Privacy policy</a>
+          </p>
+        </div>
+
+        <p>
+          See how dictate.app compares to other options on the
+          <a href="/">homepage</a>, or reach out at support@dictate.app with
+          technical questions.
+        </p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>

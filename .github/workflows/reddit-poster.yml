@@ -1,0 +1,21 @@
+name: Reddit Auto-Poster
+
+on:
+  schedule:
+    # Every Tuesday at 9am ET (2pm UTC)
+    - cron: "0 14 * * 2"
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Post to Reddit
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+        run: python3 reddit_poster.py
