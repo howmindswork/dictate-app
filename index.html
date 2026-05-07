@@ -7,7 +7,7 @@
     <title>dictate.app — Voice to Text Dictation for Windows</title>
     <meta
       name="description"
-      content="Push-to-talk dictation app powered by Groq Whisper API. Near-instant transcription in ~200ms. Press hotkey, speak, text auto-pastes. Free 30-day trial."
+      content="Push-to-talk dictation app powered by Groq Whisper API. Near-instant transcription in ~200ms. Press hotkey, speak, text auto-pastes. Free 7-day trial."
     />
     <meta
       name="robots"
@@ -47,7 +47,7 @@
     />
     <meta
       name="twitter:description"
-      content="Press middle-mouse. Speak. Watch text appear. Fast Groq Whisper transcription. Free 30-day trial."
+      content="Press middle-mouse. Speak. Watch text appear. Fast Groq Whisper transcription. Free 7-day trial."
     />
     <meta
       name="twitter:image"
@@ -102,7 +102,7 @@
         "featureList": [
           "Push-to-talk global hotkey (middle mouse button)",
           "Real-time waveform visualization",
-          "30-day free trial with full feature access",
+          "7-day free trial with full feature access",
           "Cross-app text injection (works in any text field)",
           "Automatic clipboard copy on transcription",
           "Support for 100+ languages",
@@ -140,7 +140,7 @@
             "name": "How long is the free trial?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "dictate.app includes a 30-day free trial with full feature access. No credit card required. Install and use immediately. After 30 days, you can purchase a lifetime license ($29) to continue."
+              "text": "dictate.app includes a 7-day free trial with full feature access. No credit card required. Install and use immediately. After 7 days, you can purchase a lifetime license ($29) to continue."
             }
           },
           {
@@ -1244,16 +1244,65 @@
         </p>
         <button
           class="cta-primary"
-          onclick="
-            window.open(
-              'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
-              '_blank',
-            )
+          onclick="window.location.href = '/download'"
+        >
+          Download for Windows — Free
+        </button>
+        <p
+          style="
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
           "
         >
-          Start Free Trial
-        </button>
+          No credit card required &nbsp;·&nbsp; Windows 10/11 &nbsp;·&nbsp;
+          7-day free trial
+        </p>
       </section>
+
+      <!-- Mobile banner — desktop app, bookmark to install on PC -->
+      <div
+        id="mobile-banner"
+        style="
+          display: none;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: #1a1025;
+          border-top: 1px solid rgba(192, 132, 252, 0.3);
+          padding: 14px 20px;
+          z-index: 9999;
+          text-align: center;
+          font-size: 14px;
+          color: #e2d9f3;
+        "
+      >
+        dictate.app is a Windows desktop app.
+        <strong style="color: #c084fc">Bookmark this page</strong> to install on
+        your PC.
+        <button
+          onclick="
+            document.getElementById('mobile-banner').style.display = 'none'
+          "
+          style="
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            margin-left: 12px;
+            font-size: 16px;
+          "
+        >
+          ✕
+        </button>
+      </div>
+      <script>
+        if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+          document.getElementById("mobile-banner").style.display = "block";
+        }
+      </script>
 
       <section id="features" class="fade-in-section">
         <h2>Built for Speed & Privacy</h2>
@@ -1368,7 +1417,7 @@
           <div class="price-card">
             <div class="plan-name">Starter</div>
             <div class="plan-price" id="starter-price">Free</div>
-            <div class="plan-period">30-day trial</div>
+            <div class="plan-period">7-day trial</div>
             <ul class="plan-features">
               <li>Unlimited transcriptions</li>
               <li>1 active language</li>
@@ -1380,14 +1429,21 @@
               class="plan-cta"
               onclick="
                 playSound();
-                window.open(
-                  'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
-                  '_blank',
-                );
+                window.location.href = '/download';
               "
             >
-              Start Free Trial
+              Download Free
             </button>
+            <p
+              style="
+                text-align: center;
+                font-size: 11px;
+                color: var(--text-secondary);
+                margin-top: 8px;
+              "
+            >
+              No credit card required
+            </p>
           </div>
           <div class="price-card featured">
             <div class="plan-name">Pro</div>
@@ -1409,13 +1465,23 @@
               onclick="
                 playSound();
                 window.open(
-                  'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
+                  'https://buy.stripe.com/8x24gz3aY5Cx6bs7E7dwc0M',
                   '_blank',
                 );
               "
             >
-              Get Pro Access
+              Start Free Trial
             </button>
+            <p
+              style="
+                text-align: center;
+                font-size: 11px;
+                color: var(--text-secondary);
+                margin-top: 8px;
+              "
+            >
+              Cancel anytime · 7-day guarantee
+            </p>
           </div>
           <div class="price-card">
             <div class="plan-name">Team</div>
@@ -1771,7 +1837,7 @@
               Is there a refund policy?
             </div>
             <div class="faq-answer">
-              30-day money-back guarantee. If dictate.app doesn't fit your
+              7-day money-back guarantee. If dictate.app doesn't fit your
               workflow, full refund—no questions asked.
             </div>
           </div>
@@ -1837,7 +1903,7 @@
               Can I cancel anytime?
             </div>
             <div class="faq-answer">
-              Yes. Cancel with one click. No locks, no tricks. Your 30-day trial
+              Yes. Cancel with one click. No locks, no tricks. Your 7-day trial
               requires no credit card — you choose at the end.
             </div>
           </div>
@@ -1857,16 +1923,13 @@
       <section class="final-cta">
         <h2>Ready to Speak Your Thoughts Into Being</h2>
         <p style="color: var(--text-secondary); margin-bottom: 24px">
-          30-day free trial. No credit card required. Cancel anytime.
+          7-day free trial. No credit card required. Cancel anytime.
         </p>
         <button
           class="cta-primary"
           onclick="
             playSound();
-            window.open(
-              'https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m',
-              '_blank',
-            );
+            window.location.href = '/download';
           "
         >
           Start Your Free Trial
@@ -1874,7 +1937,7 @@
         <div class="trust-signals">
           <div class="signal-item">✓ No credit card required</div>
           <div class="signal-item">✓ Cancel anytime</div>
-          <div class="signal-item">✓ 30-day money-back guarantee</div>
+          <div class="signal-item">✓ 7-day money-back guarantee</div>
         </div>
       </section>
     </div>
@@ -2216,7 +2279,7 @@
       });
 
       // SCROLL TO CHECKOUT
-      var _monthlyUrl = "https://buy.stripe.com/bJeeVdbHu8OJ57ocYrdwc0m";
+      var _monthlyUrl = "https://buy.stripe.com/8x24gz3aY5Cx6bs7E7dwc0M";
       var _annualUrl = "https://buy.stripe.com/4gM9ATfXK7KFdDU7E7dwc0n";
       var _teamMonthlyUrl = "https://buy.stripe.com/dRmdR9aDq8OJ6bs7E7dwc0o";
       var _teamAnnualUrl = "https://buy.stripe.com/3cI7sLfXK8OJ0R8e2vdwc0p";
