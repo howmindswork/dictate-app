@@ -21,6 +21,9 @@ const COMMISSION_RATE = 0.4;
 const COOKIE_DAYS = 30;
 const CORS_ORIGIN = "https://dictate.app";
 
+const TRIAL_WORKER_URL = "https://trial-worker.howmindswork.workers.dev";
+const INTERNAL_SECRET = "DICTATE_INTERNAL_2026";
+
 // ─────────────────────────────────────────
 //  ENTRY POINT
 // ─────────────────────────────────────────
@@ -50,7 +53,12 @@ export default {
 
       // POST /api/stripe-webhook
       if (method === "POST" && path === "/api/stripe-webhook") {
-        return await handleStripeWebhook(request, env);
+        return await handleStripeWebhook(request, env, ctx);
+      }
+
+      // POST /api/validate-license
+      if (method === "POST" && path === "/api/validate-license") {
+        return await handleValidateLicense(request, env);
       }
 
       // GET /api/affiliate-dashboard/:code
@@ -208,7 +216,7 @@ async function incrementClicks(env, code) {
 //  POST /api/stripe-webhook
 // ─────────────────────────────────────────
 
-async function handleStripeWebhook(request, env) {
+async function handleStripeWebhook(request, env, ctx) {
   const sig = request.headers.get("stripe-signature");
   const webhookSecret = env.STRIPE_WEBHOOK_SECRET;
 
@@ -240,6 +248,12 @@ async function handleStripeWebhook(request, env) {
 
   const session = event.data.object;
 
+  // Always deliver a license key to the paying customer regardless of affiliate
+  const customerEmail = session.customer_details?.email || null;
+  if (customerEmail) {
+    ctx.waitUntil(deliverLicenseKey(customerEmail, env));
+  }
+
   // client_reference_id holds the affiliate ref code
   const ref_code = session.client_reference_id;
   if (!ref_code) {
@@ -263,7 +277,7 @@ async function handleStripeWebhook(request, env) {
     id: event.id,
     type: event.type,
     stripe_session_id: session.id,
-    customer_email: session.customer_details?.email || null,
+    customer_email: customerEmail,
     amount_total_cents: amountTotal,
     commission_cents: commissionCents,
     commission_dollars: commissionDollars,
@@ -365,6 +379,178 @@ async function handleDashboard(request, env, code) {
         currency: c.currency,
       })),
   });
+}
+
+// ─────────────────────────────────────────
+//  POST /api/validate-license
+// ─────────────────────────────────────────
+
+async function handleValidateLicense(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ valid: false, error: "Invalid JSON" }, 400);
+  }
+
+  const { key } = body;
+  if (!key || typeof key !== "string") {
+    return jsonResponse({ valid: false, error: "Missing key" }, 400);
+  }
+
+  const record = await env.AFFILIATES.get(`license:${key}`);
+  if (!record) {
+    return jsonResponse({ valid: false });
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(record);
+  } catch {
+    return jsonResponse({ valid: false });
+  }
+
+  return jsonResponse({ valid: true, email: parsed.email });
+}
+
+// ─────────────────────────────────────────
+//  LICENSE KEY GENERATION + EMAIL DELIVERY
+// ─────────────────────────────────────────
+
+async function deliverLicenseKey(email, env) {
+  try {
+    // 1. Generate key via trial-worker
+    const genRes = await fetch(`${TRIAL_WORKER_URL}/api/generate-key`, {
+      method: "GET",
+      headers: {
+        "X-Internal-Secret": INTERNAL_SECRET,
+      },
+    });
+
+    if (!genRes.ok) {
+      console.error("generate-key failed:", await genRes.text());
+      return;
+    }
+
+    const { key } = await genRes.json();
+    if (!key) {
+      console.error("generate-key returned no key");
+      return;
+    }
+
+    // 2. Register license with email
+    const regRes = await fetch(`${TRIAL_WORKER_URL}/api/register-license`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Internal-Secret": INTERNAL_SECRET,
+      },
+      body: JSON.stringify({ email, key }),
+    });
+
+    if (!regRes.ok) {
+      console.error("register-license failed:", await regRes.text());
+      return;
+    }
+
+    // 3. Send email via Resend
+    await sendLicenseEmail(email, key, env);
+  } catch (e) {
+    console.error("deliverLicenseKey error:", e);
+  }
+}
+
+async function sendLicenseEmail(email, key, env) {
+  const resendKey = env.RESEND_API_KEY;
+  if (!resendKey) {
+    console.error("RESEND_API_KEY not set");
+    return;
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your dictate.app License Key</title>
+</head>
+<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 20px;">
+  <tr>
+    <td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#111;border-radius:12px;overflow:hidden;border:1px solid #222;">
+        <!-- Header -->
+        <tr>
+          <td style="padding:36px 40px 28px;border-bottom:1px solid #1e1e1e;">
+            <p style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.5px;">dictate.app</p>
+            <p style="margin:8px 0 0;font-size:14px;color:#666;">Your purchase is confirmed.</p>
+          </td>
+        </tr>
+        <!-- Body -->
+        <tr>
+          <td style="padding:36px 40px;">
+            <p style="margin:0 0 24px;font-size:15px;color:#bbb;line-height:1.6;">
+              Thanks for purchasing dictate.app. Your license key is below — copy it and paste it in <strong style="color:#fff;">Settings → License</strong>.
+            </p>
+            <!-- Key block -->
+            <div style="background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:20px 24px;margin:0 0 28px;text-align:center;">
+              <p style="margin:0 0 6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#555;">Your License Key</p>
+              <p style="margin:0;font-size:20px;font-weight:700;letter-spacing:3px;color:#e8e8e8;font-family:'Courier New',monospace;">${key}</p>
+            </div>
+            <!-- Steps -->
+            <p style="margin:0 0 12px;font-size:13px;font-weight:600;color:#888;letter-spacing:0.5px;text-transform:uppercase;">How to activate</p>
+            <ol style="margin:0 0 28px;padding:0 0 0 20px;color:#999;font-size:14px;line-height:2;">
+              <li>Open dictate.app on your Mac</li>
+              <li>Click the menu bar icon → <strong style="color:#ccc;">Settings</strong></li>
+              <li>Go to the <strong style="color:#ccc;">License</strong> tab</li>
+              <li>Paste the key above and click <strong style="color:#ccc;">Activate</strong></li>
+            </ol>
+            <!-- CTA -->
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="border-radius:8px;background:#fff;">
+                  <a href="https://dictate-app.pages.dev" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:600;color:#000;text-decoration:none;">Download dictate.app</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <!-- Footer -->
+        <tr>
+          <td style="padding:20px 40px;border-top:1px solid #1a1a1a;">
+            <p style="margin:0;font-size:12px;color:#444;line-height:1.6;">
+              Questions? Reply to this email or reach us at <a href="mailto:dictate@howmindswork.org" style="color:#666;">dictate@howmindswork.org</a>.<br>
+              Keep this email — your license key is tied to your purchase.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>`;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${resendKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "dictate.app <dictate@howmindswork.org>",
+      to: [email],
+      subject: "Your dictate.app license key",
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("Resend email failed:", err);
+  } else {
+    console.log("License email sent to:", email);
+  }
 }
 
 // ─────────────────────────────────────────
