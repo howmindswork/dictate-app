@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Groq Whisper vs OpenAI Whisper on Windows: Speed, Cost, Accuracy (2026) | dictate.app
+    </title>
+    <meta
+      name="description"
+      content="Groq Whisper vs OpenAI Whisper: latency benchmarks, cost per hour, accuracy comparison, and which one to use for Windows dictation in 2026."
+    />
+    <meta
+      name="keywords"
+      content="groq whisper vs openai whisper, groq whisper latency, openai whisper api cost, whisper dictation windows, groq inference speed"
+    />
+    <meta name="author" content="dictate.app" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html"
+    />
+    <meta
+      property="og:title"
+      content="Groq Whisper vs OpenAI Whisper on Windows: Speed, Cost, Accuracy (2026)"
+    />
+    <meta
+      property="og:description"
+      content="Latency numbers, cost breakdown, and accuracy comparison between Groq and OpenAI Whisper APIs. Which one powers better dictation on Windows?"
+    />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html"
+    />
+    <meta property="og:site_name" content="dictate.app" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Groq Whisper vs OpenAI Whisper: Latency, Cost, Accuracy"
+    />
+    <meta
+      name="twitter:description"
+      content="Groq is 10x faster than OpenAI's Whisper API. Here's the full technical breakdown for developers building voice apps on Windows."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Groq Whisper vs OpenAI Whisper on Windows: Speed, Cost, Accuracy (2026)",
+        "description": "Technical comparison of Groq and OpenAI Whisper APIs for Windows dictation. Covers latency benchmarks, cost per audio hour, accuracy, and which to use.",
+        "author": { "@type": "Organization", "name": "dictate.app" },
+        "publisher": { "@type": "Organization", "name": "dictate.app" },
+        "datePublished": "2026-05-07",
+        "dateModified": "2026-05-07",
+        "url": "https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html",
+        "mainEntityOfPage": "https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html"
+      }
+    </script>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      :root {
+        --bg: #0a0a0f;
+        --bg-accent: #1a1625;
+        --text-primary: #e8dff5;
+        --text-secondary: #c4b8d4;
+        --accent: #c084fc;
+        --accent-rose: #f472b6;
+        --accent-blue: #60a5fa;
+      }
+      body {
+        font-family: "Georgia", "Garamond", serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        line-height: 1.8;
+        overflow-x: hidden;
+      }
+      canvas#starfield {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1; pointer-events: none;
+      }
+      .wrap { position: relative; z-index: 1; }
+      header {
+        padding: 20px 32px;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+        position: sticky; top: 0; z-index: 100;
+        background: rgba(10, 10, 15, 0.85);
+      }
+      nav {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .nav-home {
+        color: var(--text-secondary); text-decoration: none; font-size: 14px;
+        transition: color 0.2s; display: flex; align-items: center; gap: 6px;
+      }
+      .nav-home:hover { color: var(--accent); }
+      .logo-icon {
+        width: 26px; height: 26px; border-radius: 6px;
+        background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 14px; margin-right: 4px;
+      }
+      .cta-nav {
+        display: inline-block; padding: 10px 24px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-rose) 100%);
+        color: white; text-decoration: none; border-radius: 6px;
+        font-size: 14px; font-weight: 600; transition: all 0.2s;
+        box-shadow: 0 4px 14px rgba(192, 132, 252, 0.3);
+      }
+      .cta-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(192, 132, 252, 0.5); }
+      article { max-width: 760px; margin: 60px auto; padding: 0 24px 80px; }
+      .post-label {
+        display: inline-block;
+        background: rgba(192, 132, 252, 0.15);
+        border: 1px solid rgba(192, 132, 252, 0.3);
+        color: var(--accent); font-size: 12px; font-weight: 600;
+        letter-spacing: 1px; text-transform: uppercase;
+        padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+      }
+      h1 {
+        font-family: "Georgia", serif;
+        font-size: clamp(28px, 5vw, 42px); font-weight: 700;
+        line-height: 1.2; margin-bottom: 16px; color: var(--text-primary);
+      }
+      .post-meta {
+        font-size: 13px; color: var(--text-secondary);
+        margin-bottom: 40px; padding-bottom: 24px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      h2 { font-size: 22px; font-weight: 700; color: var(--accent); margin: 36px 0 14px; }
+      h3 { font-size: 18px; font-weight: 600; color: var(--text-primary); margin: 24px 0 10px; }
+      p { margin-bottom: 18px; color: var(--text-secondary); font-size: 16px; }
+      p strong { color: var(--text-primary); }
+      ul, ol { padding-left: 24px; margin-bottom: 18px; }
+      li { color: var(--text-secondary); font-size: 16px; margin-bottom: 6px; }
+      li strong { color: var(--text-primary); }
+      a {
+        color: var(--accent-rose); text-decoration: none;
+        border-bottom: 1px solid rgba(244, 114, 182, 0.3); transition: color 0.2s;
+      }
+      a:hover { color: #f5a3c7; border-bottom-color: rgba(244, 114, 182, 0.6); }
+      .table-wrap { overflow-x: auto; margin: 28px 0; }
+      table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      th {
+        background: rgba(192, 132, 252, 0.15); color: var(--accent);
+        font-weight: 700; text-align: left; padding: 12px 16px;
+        border: 1px solid rgba(192, 132, 252, 0.2);
+      }
+      td {
+        padding: 10px 16px; border: 1px solid rgba(192, 132, 252, 0.1);
+        color: var(--text-secondary);
+      }
+      tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+      .check { color: var(--accent); font-weight: 700; }
+      .cross { color: var(--accent-rose); }
+      .win { color: var(--accent); font-weight: 700; }
+      .cta-block {
+        background: linear-gradient(135deg, rgba(192, 132, 252, 0.1) 0%, rgba(244, 114, 182, 0.08) 100%);
+        border: 1px solid rgba(192, 132, 252, 0.25);
+        border-radius: 12px; padding: 36px 32px; text-align: center; margin: 48px 0;
+      }
+      .cta-block h2 { margin: 0 0 10px; font-size: 22px; color: var(--text-primary); }
+      .cta-block p { margin: 0 0 24px; }
+      .cta-big {
+        display: inline-block; padding: 14px 36px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-rose) 100%);
+        color: white; text-decoration: none; border: none; border-radius: 8px;
+        font-size: 16px; font-weight: 700; transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(192, 132, 252, 0.35);
+      }
+      .cta-big:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(192, 132, 252, 0.5); border-bottom: none; }
+      .cta-sub { margin-top: 12px; font-size: 13px; color: var(--text-secondary); }
+      footer {
+        border-top: 1px solid rgba(192, 132, 252, 0.1);
+        padding: 32px; text-align: center; color: var(--text-secondary); font-size: 13px;
+      }
+      footer a { color: var(--accent); }
+      @media (max-width: 600px) {
+        article { padding: 0 16px 60px; }
+        .cta-block { padding: 24px 20px; }
+        header { padding: 16px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="starfield"></canvas>
+    <div class="wrap">
+      <header>
+        <nav>
+          <a href="/" class="nav-home">
+            <span class="logo-icon">🎤</span>
+            dictate.app
+          </a>
+          <a href="https://dictate-app.pages.dev/download" class="cta-nav">Try Free 7 Days</a>
+        </nav>
+      </header>
+
+      <article>
+        <div class="post-label">Technical · May 2026</div>
+        <h1>Groq Whisper vs OpenAI Whisper: Speed, Cost, and Accuracy for Windows Dictation</h1>
+        <div class="post-meta">
+          Published May 2026 &nbsp;·&nbsp; 7 min read &nbsp;·&nbsp; dictate.app editorial
+        </div>
+
+        <p>
+          Both Groq and OpenAI offer Whisper as an API service. Both run the same underlying model.
+          But they are not interchangeable — the performance difference between them is significant
+          enough to change whether a dictation app feels instant or feels like it's waiting.
+        </p>
+
+        <p>
+          This post compares the two APIs directly on the metrics that matter for real-time Windows
+          dictation: latency, throughput, cost, and accuracy. It's written for developers building
+          or evaluating dictation tools, and for technical users who want to understand what's
+          actually running under the hood.
+        </p>
+
+        <h2>Background: What Whisper Is and Why the Backend Matters</h2>
+
+        <p>
+          OpenAI's Whisper is an encoder-decoder transformer model for automatic speech recognition
+          (ASR). The large-v3 variant — used by both APIs — achieves approximately
+          <strong>2.7% Word Error Rate (WER)</strong> on English LibriSpeech benchmarks.
+          That's competitive with human transcription for standard speech.
+        </p>
+
+        <p>
+          The model architecture is fixed. What differs between providers is
+          <strong>inference hardware and infrastructure</strong>. OpenAI runs Whisper on standard
+          GPU clusters. Groq runs it on their custom Language Processing Units (LPUs) — silicon
+          designed specifically to accelerate transformer inference. The same model, very different
+          execution speed.
+        </p>
+
+        <h2>Latency: The Number That Changes Everything</h2>
+
+        <p>
+          For real-time dictation, end-to-end latency is the most important metric. This includes:
+          audio capture time + API round trip + inference time + response parsing.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Typical Latency (5s audio)</th>
+                <th>Typical Latency (10s audio)</th>
+                <th>Hardware</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenAI Whisper API</td>
+                <td>800ms–1.5s</td>
+                <td>1.2s–2.5s</td>
+                <td>GPU (A100/H100)</td>
+              </tr>
+              <tr>
+                <td class="win">Groq Whisper API</td>
+                <td class="win">150ms–280ms</td>
+                <td class="win">200ms–350ms</td>
+                <td class="win">Groq LPU</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Groq's latency is roughly <strong>5–8x faster</strong> than OpenAI's for typical
+          dictation-length audio clips (3–15 seconds). This isn't a marginal improvement — it's
+          the difference between a tool that feels like typing and one that feels like submitting
+          a form and waiting.
+        </p>
+
+        <p>
+          The latency gap is largest for shorter clips, which is exactly what push-to-talk
+          dictation generates. When someone holds a hotkey and speaks a sentence, the audio is
+          typically 2–8 seconds. Groq handles this in under 250ms; OpenAI takes 800ms–1.5s.
+        </p>
+
+        <h2>Throughput and Rate Limits</h2>
+
+        <p>
+          For a dictation app used by one person, rate limits aren't usually the constraint.
+          But for anyone building a service or using dictation heavily throughout the workday,
+          limits matter.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Free Tier</th>
+                <th>Paid Rate Limit (audio/min)</th>
+                <th>Concurrent Requests</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenAI Whisper</td>
+                <td>None (pay-as-you-go)</td>
+                <td>~50 req/min (Tier 1)</td>
+                <td>Scales with tier</td>
+              </tr>
+              <tr>
+                <td class="win">Groq Whisper</td>
+                <td class="win">7,200 seconds audio/day free</td>
+                <td class="win">~100 req/min (paid)</td>
+                <td class="win">Higher throughput</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Groq's free tier (7,200 seconds of audio per day) covers approximately 2 hours of
+          continuous dictation — more than enough for most users. OpenAI has no free tier for
+          Whisper; you pay from the first second.
+        </p>
+
+        <h2>Cost Comparison</h2>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Price per Audio Minute</th>
+                <th>Price per Audio Hour</th>
+                <th>Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenAI</td>
+                <td>$0.006</td>
+                <td>$0.36</td>
+                <td>whisper-1</td>
+              </tr>
+              <tr>
+                <td class="win">Groq</td>
+                <td class="win">$0.002</td>
+                <td class="win">$0.12</td>
+                <td class="win">whisper-large-v3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Groq is <strong>3x cheaper per audio minute</strong> than OpenAI, while also running
+          a newer and more capable model version. OpenAI's API uses whisper-1 (equivalent to
+          large-v2). Groq uses large-v3, which has better multilingual accuracy and lower
+          hallucination rates on short clips.
+        </p>
+
+        <p>
+          For a user dictating an hour of audio per day (a heavy user), that's $0.12/day on Groq
+          vs $0.36/day on OpenAI — but since Groq's free tier covers most of that at 7,200
+          seconds/day, the practical cost for dictate.app users is near zero at typical usage.
+        </p>
+
+        <h2>Accuracy: Same Model, Same Output?</h2>
+
+        <p>
+          Technically, both APIs run Whisper. But there are differences worth noting:
+        </p>
+
+        <ul>
+          <li>
+            <strong>OpenAI uses whisper-1</strong> — equivalent to large-v2. WER on standard
+            English is approximately 3.5–4%.
+          </li>
+          <li>
+            <strong>Groq uses whisper-large-v3</strong> — the improved successor. WER is
+            approximately 2.7–3.2%. Better on accents, better on short clips, lower hallucination
+            rate when audio ends abruptly.
+          </li>
+        </ul>
+
+        <p>
+          The accuracy difference is real but not dramatic for most standard English dictation.
+          Where it shows up more clearly is with:
+        </p>
+
+        <ul>
+          <li>Non-native speaker accents</li>
+          <li>Technical vocabulary and proper nouns</li>
+          <li>Short utterances where the model has less context to work with</li>
+          <li>Audio that ends mid-sentence (Groq's v3 hallucinates less)</li>
+        </ul>
+
+        <h2>Which Should You Use for Windows Dictation?</h2>
+
+        <p>
+          For real-time push-to-talk dictation, <strong>Groq is the clear choice</strong>:
+        </p>
+
+        <ul>
+          <li>5–8x lower latency — the difference between instant and noticeable lag</li>
+          <li>3x lower cost — significant at scale, irrelevant at personal use</li>
+          <li>Better model version (large-v3 vs large-v2)</li>
+          <li>Generous free tier for individual users</li>
+        </ul>
+
+        <p>
+          OpenAI's Whisper API makes more sense for:
+        </p>
+
+        <ul>
+          <li>Batch processing (transcribing audio files where latency doesn't matter)</li>
+          <li>Existing applications already integrated with the OpenAI SDK</li>
+          <li>Use cases requiring OpenAI's ecosystem (fine-tuning, specific features)</li>
+        </ul>
+
+        <h2>How dictate.app Uses Groq Whisper</h2>
+
+        <p>
+          dictate.app routes all audio to Groq's Whisper API. When you hold the hotkey and
+          speak, audio is captured locally, sent to Groq, and the transcription is returned
+          in ~150–250ms. The text is then pasted into whichever Windows app has focus using
+          clipboard injection — so it works in any application.
+        </p>
+
+        <p>
+          Audio goes to Groq and nowhere else. Groq's API does not store audio or use it for
+          model training. dictate.app's own servers are not in the audio path.
+        </p>
+
+        <div class="cta-block">
+          <h2>Groq Whisper, Built for Windows</h2>
+          <p>
+            dictate.app uses Groq's Whisper API — whisper-large-v3, ~200ms latency, system-wide
+            paste. $9/month with a 7-day free trial.
+          </p>
+          <a href="https://dictate-app.pages.dev/download" class="cta-big">Download dictate.app →</a>
+          <p class="cta-sub">
+            No credit card · No account required · <a href="/privacy">Privacy policy</a>
+          </p>
+        </div>
+
+        <p>
+          If you're evaluating which Whisper backend to use for a Windows dictation integration,
+          the numbers point clearly to Groq for real-time use cases. The latency alone makes it
+          the right choice — and the better model version and lower cost make it an easy one.
+        </p>
+
+        <p>
+          Questions? Reach out at support@dictate.app or check the
+          <a href="/">homepage</a> for the full feature breakdown.
+        </p>
+      </article>
+
+      <footer>
+        <p>
+          &copy; 2026 <a href="/">dictate.app</a> &nbsp;·&nbsp;
+          <a href="/privacy">Privacy</a> &nbsp;·&nbsp; support@dictate.app
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const canvas = document.getElementById("starfield");
+      const ctx = canvas.getContext("2d");
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      resize();
+      window.addEventListener("resize", resize);
+      const stars = Array.from({ length: 160 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        o: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: (Math.random() - 0.5) * 0.08,
+      }));
+      function draw() {
+        ctx.fillStyle = "rgba(10,10,15,0.25)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((s) => {
+          s.x += s.vx; s.y += s.vy;
+          if (s.x < 0) s.x = canvas.width;
+          if (s.x > canvas.width) s.x = 0;
+          if (s.y < 0) s.y = canvas.height;
+          if (s.y > canvas.height) s.y = 0;
+          ctx.fillStyle = `rgba(192,132,252,${s.o})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    </script>
+  </body>
+</html>
