@@ -14,7 +14,7 @@ jobs:
       - name: Post everywhere
         env:
           BLUESKY_HANDLE:    ${{ secrets.BLUESKY_HANDLE }}
-          BLUESKY_PASSWORD:  ${{ secrets.BLUESKY_PASSWORD }}
+          BLUESKY_PASSWORD:  ${{ secrets.BLUESKY_APP_PASSWORD }}
           DEVTO_API_KEY:     ${{ secrets.DEVTO_API_KEY }}
           MASTODON_TOKEN:    ${{ secrets.MASTODON_TOKEN }}
           MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
