@@ -1,0 +1,20 @@
+name: Auto-Poster
+
+on:
+  schedule:
+    - cron: "0 14 * * 2"   # Every Tuesday 9am ET
+  workflow_dispatch:         # Manual trigger anytime
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Post everywhere
+        env:
+          BLUESKY_HANDLE:    ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_PASSWORD:  ${{ secrets.BLUESKY_PASSWORD }}
+          DEVTO_API_KEY:     ${{ secrets.DEVTO_API_KEY }}
+          MASTODON_TOKEN:    ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
+        run: python3 autoposter.py
