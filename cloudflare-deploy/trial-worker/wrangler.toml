@@ -1,0 +1,7 @@
+name = "trial-worker"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "TRIAL_FINGERPRINTS"
+id = "d1a2da6f65d74b4197a4ded80d2c2d72"
