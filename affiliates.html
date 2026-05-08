@@ -2327,7 +2327,7 @@
 
     <footer>
       <div class="footer-links">
-        <a href="/">dictate.app</a>
+        <a href="/">dictate-app.pages.dev</a>
         <a href="/privacy">Privacy</a>
         <a href="mailto:hello@dictate.app">Contact</a>
       </div>
@@ -2457,9 +2457,9 @@
             if (json.ref_code) {
               const refLinkBox = document.getElementById("ref-link-box");
               const refLinkText = document.getElementById("ref-link-text");
-              refLinkText.textContent = `https://dictate.app/go/${json.ref_code}`;
+              refLinkText.textContent = `https://dictate-app.pages.dev/go/${json.ref_code}`;
               refLinkBox.style.display = "flex";
-              window._refLink = `https://dictate.app/go/${json.ref_code}`;
+              window._refLink = `https://dictate-app.pages.dev/go/${json.ref_code}`;
             }
           } else {
             const msg = json.error || "Something went wrong. Please try again.";

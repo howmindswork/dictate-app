@@ -1,4 +1,4 @@
-SKYFEED CUSTOM FEED SETUP — dictate.app
+SKYFEED CUSTOM FEED SETUP — dictate-app.pages.dev
 Keywords: "dictation", "voice typing", "groq whisper", "productivity windows"
 
 STEP-BY-STEP (no code, takes ~5 min):

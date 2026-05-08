@@ -22,7 +22,7 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://dictate.app/sitemap.xml
+Sitemap: https://dictate-app.pages.dev/sitemap.xml
 
 # Standard timeouts
 Request-rate: 1/1s
