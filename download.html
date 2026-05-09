@@ -256,6 +256,22 @@
         color: var(--text);
       }
 
+      .smartscreen-note {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-top: 20px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        text-align: left;
+        line-height: 1.6;
+      }
+
+      .smartscreen-note strong {
+        color: var(--text);
+      }
+
       .footer-note {
         font-size: 13px;
         color: rgba(241, 240, 245, 0.35);
@@ -296,8 +312,14 @@
         stroke-linejoin: round;
       }
     </style>
-  <script>fetch("https://dictate-analytics.howmindswork.workers.dev/track?page="+encodeURIComponent(location.pathname),{method:"GET",mode:"no-cors"}).catch(function(){})</script>
-</head>
+    <script>
+      fetch(
+        "https://dictate-analytics.howmindswork.workers.dev/track?page=" +
+          encodeURIComponent(location.pathname),
+        { method: "GET", mode: "no-cors" },
+      ).catch(function () {});
+    </script>
+  </head>
   <body>
     <canvas id="starfield"></canvas>
 
@@ -367,6 +389,13 @@
               <strong>Internet:</strong> Required for transcription (Groq API)
             </li>
           </ul>
+        </div>
+
+        <div class="smartscreen-note">
+          <strong>⚠️ Windows security warning is normal.</strong> Click
+          <strong>More info</strong> → <strong>Run anyway</strong> to install.
+          Windows flags new apps that haven't built up download history yet —
+          this is expected for indie software.
         </div>
       </div>
 
