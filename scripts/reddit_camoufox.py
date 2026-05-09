@@ -8,23 +8,21 @@ SETUP: Add to ~/.claude_secrets:
   export REDDIT_PASSWORD="your_reddit_password"
 """
 
-import os, json, random, time, sys
+import os, json, random, time, sys, base64
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# ── Accounts (persistent browser profiles, no passwords needed) ───────────────
-ACCOUNTS = [
-    {
-        "username": "Mr1v4",
-        "profile_dir": os.path.expanduser("~/.reddit_profiles/Mr1v4"),
-        "proxy": None,  # home residential IP — no proxy needed
-    },
-]
+# ── Session mode: local profile (WSL2) or cookie injection (GitHub Actions) ───
+COOKIES_B64 = os.environ.get("REDDIT_COOKIES_MR1V4", "")
+PROFILE_DIR = os.path.expanduser("~/.reddit_profiles/Mr1v4")
 
-active_accounts = [a for a in ACCOUNTS if os.path.exists(a["profile_dir"])]
-if not active_accounts:
-    print("ERROR: No Reddit sessions found. Run first-time setup:")
-    print("  python3 scripts/reddit_login_setup.py")
+USE_COOKIE_INJECTION = bool(COOKIES_B64)
+USE_LOCAL_PROFILE = not USE_COOKIE_INJECTION and os.path.exists(PROFILE_DIR)
+
+if not USE_COOKIE_INJECTION and not USE_LOCAL_PROFILE:
+    print("ERROR: No Reddit session available.")
+    print("  Local: run python3 scripts/reddit_login_setup.py")
+    print("  Cloud: set REDDIT_COOKIES_MR1V4 secret in GitHub Actions")
     sys.exit(1)
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -167,20 +165,30 @@ def run():
     log = load_log()
     subreddit = pick_subreddit(log)
     post = random.choice(POSTS)
-    account = random.choice(active_accounts)
 
-    print(f"[{datetime.utcnow().isoformat()}] u/{account['username']} → r/{subreddit}: {post['title'][:50]}...")
+    print(f"[{datetime.utcnow().isoformat()}] u/Mr1v4 → r/{subreddit}: {post['title'][:50]}...")
+    mode = "cookie-inject" if USE_COOKIE_INJECTION else "local-profile"
+    print(f"  Auth mode: {mode}")
 
-    proxy = account["proxy"]
-    with Camoufox(headless=True, user_data_dir=account["profile_dir"], proxy=proxy) as browser:
-        page = browser.new_page()
+    kwargs = {"headless": True}
+    if USE_LOCAL_PROFILE:
+        kwargs["user_data_dir"] = PROFILE_DIR
 
-        # Warm up — visit Reddit home (session already logged in via saved profile)
+    with Camoufox(**kwargs) as browser:
+        if USE_COOKIE_INJECTION:
+            cookies = json.loads(base64.b64decode(COOKIES_B64))
+            ctx = browser.new_context()
+            ctx.add_cookies(cookies)
+            page = ctx.new_page()
+        else:
+            page = browser.new_page()
+
+        # Warm up — visit Reddit home (session already logged in)
         page.goto("https://www.reddit.com", timeout=30000)
         human_delay(3, 7)
 
         if "login" in page.url or page.locator('[data-testid="login-button"]').count() > 0:
-            print(f"ERROR: Session expired for u/{account['username']}. Re-run login setup.")
+            print("ERROR: Session expired. Re-run login setup and re-export cookies.")
             return False
 
         # Navigate to subreddit submit page
@@ -217,7 +225,23 @@ def run():
 
         log[subreddit] = datetime.utcnow().isoformat()
         save_log(log)
+        _telegram(f"Reddit posted ✅\nr/{subreddit}\n{post['title'][:60]}\n{post_url}")
         return True
+
+
+def _telegram(msg):
+    token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+    chat = os.environ.get("TELEGRAM_CHAT_ID", "")
+    if not token or not chat:
+        return
+    try:
+        import urllib.request
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        data = json.dumps({"chat_id": chat, "text": msg}).encode()
+        req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req, timeout=10)
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

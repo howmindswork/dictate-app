@@ -2,22 +2,36 @@ name: Reddit Auto-Poster
 
 on:
   schedule:
-    - cron: "0 18 * * 1"   # Monday 2 PM ET (18:00 UTC)
-    - cron: "0 18 * * 4"   # Thursday 2 PM ET (18:00 UTC)
+    - cron: "0 19 * * 1"   # Monday 7 PM UTC
+    - cron: "0 19 * * 4"   # Thursday 7 PM UTC
   workflow_dispatch:
 
 jobs:
   post:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache Camoufox Firefox binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/camoufox
+          key: camoufox-${{ runner.os }}-v1
+
+      - name: Install Camoufox
+        run: |
+          pip install "camoufox[geoip]" -q
+          python3 -m camoufox fetch --quiet 2>/dev/null || python3 -m camoufox fetch
+
       - name: Post to Reddit
         env:
-          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
-          REDDIT_USERNAME:   ${{ secrets.REDDIT_USERNAME }}
-          REDDIT_PASSWORD:   ${{ secrets.REDDIT_PASSWORD }}
-        run: |
-          pip install praw -q
-          python3 scripts/reddit_auto_poster.py
+          REDDIT_COOKIES_MR1V4: ${{ secrets.REDDIT_COOKIES_MR1V4 }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 scripts/reddit_camoufox.py
