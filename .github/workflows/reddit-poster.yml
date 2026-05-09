@@ -2,9 +2,9 @@ name: Reddit Auto-Poster
 
 on:
   schedule:
-    # Every Tuesday at 9am ET (2pm UTC)
-    - cron: "0 14 * * 2"
-  workflow_dispatch: # allow manual trigger
+    - cron: "0 18 * * 1"   # Monday 2 PM ET (18:00 UTC)
+    - cron: "0 18 * * 4"   # Thursday 2 PM ET (18:00 UTC)
+  workflow_dispatch:
 
 jobs:
   post:
@@ -14,8 +14,10 @@ jobs:
 
       - name: Post to Reddit
         env:
-          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
-          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
-          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
-        run: python3 reddit_poster.py
+          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
+          REDDIT_USERNAME:   ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD:   ${{ secrets.REDDIT_PASSWORD }}
+        run: |
+          pip install praw -q
+          python3 scripts/reddit_auto_poster.py
