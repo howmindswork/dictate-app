@@ -189,8 +189,12 @@ def run():
 
         # Submit (button text varies: "Post" or "Request to Post" on restricted subs)
         page.locator('button:has-text("Post"), button:has-text("Request to Post")').last.click()
-        page.wait_for_load_state("networkidle", timeout=15000)
-        human_delay(2, 3)
+        try:
+            # Wait for URL to change to a post/comments page
+            page.wait_for_url("**/comments/**", timeout=30000)
+        except Exception:
+            # Some subs redirect differently; just wait a moment
+            human_delay(4, 6)
 
         post_url = page.url
         print(f"Posted: {post_url}")
