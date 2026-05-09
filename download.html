@@ -395,7 +395,58 @@
           <strong>⚠️ Windows security warning is normal.</strong> Click
           <strong>More info</strong> → <strong>Run anyway</strong> to install.
           Windows flags new apps that haven't built up download history yet —
-          this is expected for indie software.
+          this is expected for indie software.<br /><br />
+          <strong>Smart App Control blocking it entirely?</strong> Go to Windows
+          Security → App &amp; Browser Control → Smart App Control → Off. (No
+          reinstall needed on Windows 11.)
+        </div>
+
+        <div
+          style="
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          "
+        >
+          <p
+            style="
+              margin: 0 0 8px;
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.5);
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+            "
+          >
+            Developer install (no SmartScreen)
+          </p>
+          <code
+            style="
+              display: block;
+              background: rgba(0, 0, 0, 0.4);
+              padding: 10px 14px;
+              border-radius: 6px;
+              font-size: 13px;
+              color: #e2e8f0;
+            "
+            >scoop bucket add dictate
+            https://github.com/howmindswork/scoop-dictate<br />scoop install
+            dictate</code
+          >
+          <p
+            style="
+              margin: 8px 0 0;
+              font-size: 12px;
+              color: rgba(255, 255, 255, 0.35);
+            "
+          >
+            Requires
+            <a href="https://scoop.sh" style="color: rgba(255, 255, 255, 0.5)"
+              >Scoop</a
+            >
+            package manager
+          </p>
         </div>
       </div>
 
