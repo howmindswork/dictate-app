@@ -650,7 +650,7 @@ ARTICLES = [
         "body_markdown": ARTICLE_1_BODY.strip(),
         "published": True,
         "tags": ["javascript", "webdev", "ai", "productivity"],
-        "canonical_url": "https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html",
+        "canonical_url": None,
         "series": "Windows Voice Dictation"
     },
     {

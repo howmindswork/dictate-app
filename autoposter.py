@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 dictate.app auto-poster — Bluesky + dev.to + Mastodon
-2x/day (10 AM ET + 7 PM ET). Dev.to Tuesdays only.
+2x/day (10 AM ET + 7 PM ET). Dev.to Tue + Thu mornings.
 """
 import os, json, urllib.request, urllib.parse, datetime, re
 
@@ -537,7 +537,8 @@ def post_devto(api_key, title, body):
             "title": title,
             "body_markdown": body,
             "published": True,
-            "tags": ["productivity", "windows", "buildinpublic", "indiedev"]
+            "tags": ["productivity", "windows", "ai", "devtools"],
+            "canonical_url": None
         }
     }).encode()
     req = urllib.request.Request(
@@ -584,16 +585,16 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"✗ Bluesky: {e}")
 
-    # dev.to: Tuesdays only (weekday 1), morning slot only
+    # dev.to: Tue + Thu mornings (weekdays 1 and 3), morning slot only
     devto_key = os.getenv("DEVTO_API_KEY")
-    if devto_key and now_utc.weekday() == 1 and slot == 0:
+    if devto_key and now_utc.weekday() in (1, 3) and slot == 0:
         try:
             results["devto"] = post_devto(devto_key, post["title"], post["body"])
             print("✓ dev.to posted")
         except Exception as e:
             print(f"✗ dev.to: {e}")
     elif devto_key:
-        print("· dev.to skipped (only posts Tuesday mornings)")
+        print(f"· dev.to skipped (posts Tue/Thu mornings, today={now_utc.strftime('%A')})")
 
     masto_token    = os.getenv("MASTODON_TOKEN")
     masto_instance = os.getenv("MASTODON_INSTANCE", "mastodon.social")
