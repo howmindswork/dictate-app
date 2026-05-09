@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 """
 One-time Reddit login setup for Mr1v4.
-Run this ONCE from Windows PowerShell:
-  python scripts/reddit_login_setup.py
+Run this ONCE:
+  python3 scripts/reddit_login_setup.py
 
-Camoufox opens a visible Firefox window.
-Log in with Google. Close the browser when done.
-Cookies are saved forever — bot runs headless after this.
+A Firefox window opens. Log in with Google. Close the browser when done.
+Cookies are saved to ~/.reddit_profiles/Mr1v4/cookies.json
 """
-import os
+import os, json, base64
+from pathlib import Path
 from camoufox.sync_api import Camoufox
 
-PROFILE_DIR = os.path.expanduser("~/.reddit_profiles/Mr1v4")
-os.makedirs(PROFILE_DIR, exist_ok=True)
+COOKIES_FILE = Path(os.path.expanduser("~/.reddit_profiles/Mr1v4/cookies.json"))
+COOKIES_FILE.parent.mkdir(parents=True, exist_ok=True)
 
-print("Opening Reddit login window...")
-print("Log in with Google, then close the browser.")
-print(f"Profile will be saved to: {PROFILE_DIR}")
+print("Opening Reddit login window (Firefox via WSLg)...")
+print("Log in with Google. Close the browser when done.")
 
-with Camoufox(headless=False, user_data_dir=PROFILE_DIR) as browser:
+with Camoufox(headless=False) as browser:
     page = browser.new_page()
     page.goto("https://www.reddit.com/login")
     print("Browser open — log in now. Close the window when done.")
@@ -27,5 +26,19 @@ with Camoufox(headless=False, user_data_dir=PROFILE_DIR) as browser:
     except Exception:
         pass
 
-print("Login saved. Bot will now run headless automatically.")
-print("Test with: python3 scripts/reddit_camoufox.py --dry-run")
+    try:
+        cookies = page.context.cookies()
+    except Exception:
+        cookies = []
+
+COOKIES_FILE.write_text(json.dumps(cookies, indent=2))
+print(f"\nSaved {len(cookies)} cookies to {COOKIES_FILE}")
+
+# Print base64 for GitHub secret
+encoded = base64.b64encode(json.dumps(cookies).encode()).decode()
+print("\n" + "=" * 60)
+print("GitHub secret → REDDIT_COOKIES_MR1V4:")
+print("=" * 60)
+print(encoded)
+print("=" * 60)
+print("\nDone. Test with: python3 scripts/reddit_camoufox.py --dry-run")

@@ -12,17 +12,17 @@ import os, json, random, time, sys, base64
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# ── Session mode: local profile (WSL2) or cookie injection (GitHub Actions) ───
+# ── Session: local cookie file (WSL2) or env var (GitHub Actions) ────────────
 COOKIES_B64 = os.environ.get("REDDIT_COOKIES_MR1V4", "")
-PROFILE_DIR = os.path.expanduser("~/.reddit_profiles/Mr1v4")
+COOKIES_FILE = Path(os.path.expanduser("~/.reddit_profiles/Mr1v4/cookies.json"))
 
-USE_COOKIE_INJECTION = bool(COOKIES_B64)
-USE_LOCAL_PROFILE = not USE_COOKIE_INJECTION and os.path.exists(PROFILE_DIR)
-
-if not USE_COOKIE_INJECTION and not USE_LOCAL_PROFILE:
+if COOKIES_B64:
+    COOKIES = json.loads(base64.b64decode(COOKIES_B64))
+elif COOKIES_FILE.exists():
+    COOKIES = json.loads(COOKIES_FILE.read_text())
+else:
     print("ERROR: No Reddit session available.")
-    print("  Local: run python3 scripts/reddit_login_setup.py")
-    print("  Cloud: set REDDIT_COOKIES_MR1V4 secret in GitHub Actions")
+    print("  Run: python3 scripts/reddit_login_setup.py")
     sys.exit(1)
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -167,21 +167,11 @@ def run():
     post = random.choice(POSTS)
 
     print(f"[{datetime.utcnow().isoformat()}] u/Mr1v4 → r/{subreddit}: {post['title'][:50]}...")
-    mode = "cookie-inject" if USE_COOKIE_INJECTION else "local-profile"
-    print(f"  Auth mode: {mode}")
 
-    kwargs = {"headless": True}
-    if USE_LOCAL_PROFILE:
-        kwargs["user_data_dir"] = PROFILE_DIR
-
-    with Camoufox(**kwargs) as browser:
-        if USE_COOKIE_INJECTION:
-            cookies = json.loads(base64.b64decode(COOKIES_B64))
-            ctx = browser.new_context()
-            ctx.add_cookies(cookies)
-            page = ctx.new_page()
-        else:
-            page = browser.new_page()
+    with Camoufox(headless=True) as browser:
+        ctx = browser.new_context()
+        ctx.add_cookies(COOKIES)
+        page = ctx.new_page()
 
         # Warm up — visit Reddit home (session already logged in)
         page.goto("https://www.reddit.com", timeout=30000)
@@ -245,5 +235,13 @@ def _telegram(msg):
 
 
 if __name__ == "__main__":
+    if "--dry-run" in sys.argv:
+        log = load_log()
+        sub = pick_subreddit(log)
+        post = random.choice(POSTS)
+        print(f"DRY RUN — would post to r/{sub}:")
+        print(f"  Title: {post['title']}")
+        print(f"  Cookies loaded: {len(COOKIES)}")
+        sys.exit(0)
     success = run()
     sys.exit(0 if success else 1)
