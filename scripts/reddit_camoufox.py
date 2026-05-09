@@ -183,8 +183,19 @@ def run():
 
         body_area = page.locator('div[name="body"][role="textbox"]').first
         body_area.click()
-        human_delay(0.3, 0.8)
-        body_area.type(post["body"], delay=random.randint(20, 60))
+        human_delay(0.5, 1.0)
+        # Inject body text via JS into contenteditable (faster and more reliable than type())
+        page.evaluate(
+            """(text) => {
+                const el = document.querySelector('div[name="body"][role="textbox"]');
+                if (el) {
+                    el.focus();
+                    document.execCommand('insertText', false, text);
+                }
+            }""",
+            post["body"]
+        )
+        human_delay(0.5, 1.0)
         human_delay(1, 3)
 
         # Submit (button text varies: "Post" or "Request to Post" on restricted subs)
