@@ -12,14 +12,19 @@ import os, json, random, time, sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# ── Credentials ──────────────────────────────────────────────────────────────
-REDDIT_USERNAME = os.environ.get("REDDIT_USERNAME", "")
-REDDIT_PASSWORD = os.environ.get("REDDIT_PASSWORD", "")
+# ── Accounts (persistent browser profiles, no passwords needed) ───────────────
+ACCOUNTS = [
+    {
+        "username": "Mr1v4",
+        "profile_dir": os.path.expanduser("~/.reddit_profiles/Mr1v4"),
+        "proxy": None,  # home residential IP — no proxy needed
+    },
+]
 
-if not REDDIT_USERNAME or not REDDIT_PASSWORD:
-    print("ERROR: Set REDDIT_USERNAME and REDDIT_PASSWORD in ~/.claude_secrets")
-    print("  export REDDIT_USERNAME='your_username'")
-    print("  export REDDIT_PASSWORD='your_password'")
+active_accounts = [a for a in ACCOUNTS if os.path.exists(a["profile_dir"])]
+if not active_accounts:
+    print("ERROR: No Reddit sessions found. Run first-time setup:")
+    print("  python3 scripts/reddit_login_setup.py")
     sys.exit(1)
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -162,29 +167,20 @@ def run():
     log = load_log()
     subreddit = pick_subreddit(log)
     post = random.choice(POSTS)
+    account = random.choice(active_accounts)
 
-    print(f"[{datetime.utcnow().isoformat()}] Posting to r/{subreddit}: {post['title'][:50]}...")
+    print(f"[{datetime.utcnow().isoformat()}] u/{account['username']} → r/{subreddit}: {post['title'][:50]}...")
 
-    with Camoufox(headless=True) as browser:
+    proxy = account["proxy"]
+    with Camoufox(headless=True, user_data_dir=account["profile_dir"], proxy=proxy) as browser:
         page = browser.new_page()
 
-        # Warm up — visit Reddit home
+        # Warm up — visit Reddit home (session already logged in via saved profile)
         page.goto("https://www.reddit.com", timeout=30000)
         human_delay(3, 7)
 
-        # Login
-        page.goto("https://www.reddit.com/login", timeout=30000)
-        human_delay(2, 4)
-        page.fill('input[name="username"]', REDDIT_USERNAME)
-        human_delay(0.5, 1.5)
-        page.fill('input[name="password"]', REDDIT_PASSWORD)
-        human_delay(0.8, 2.0)
-        page.click('button[type="submit"]')
-        page.wait_for_load_state("networkidle", timeout=15000)
-        human_delay(2, 4)
-
-        if "login" in page.url:
-            print("ERROR: Login failed — check credentials")
+        if "login" in page.url or page.locator('[data-testid="login-button"]').count() > 0:
+            print(f"ERROR: Session expired for u/{account['username']}. Re-run login setup.")
             return False
 
         # Navigate to subreddit submit page
