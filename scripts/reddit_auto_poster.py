@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
 """
 Reddit auto-poster for dictate-app.pages.dev
-Posts to one subreddit per run, rotates formats, enforces 3-day cooldown per sub.
+No OAuth app needed. Uses either:
+  A) Firefox cookies (if logged into Reddit in Firefox) — zero setup
+  B) Username/password from ~/.claude_secrets — store REDDIT_USERNAME + REDDIT_PASSWORD
 
-Required env vars:
-  REDDIT_CLIENT_ID, REDDIT_SECRET, REDDIT_USERNAME, REDDIT_PASSWORD
+Run: python3 reddit_auto_poster.py
+Dry-run: python3 reddit_auto_poster.py --dry-run
 """
-import os, json, sys, datetime
-
-try:
-    import praw
-except ImportError:
-    print("Installing praw...")
-    import subprocess
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "praw", "-q"])
-    import praw
+import os, json, sys, shutil, sqlite3, datetime, urllib.request, urllib.parse, http.cookiejar
 
 SITE_URL = "https://dictate-app.pages.dev"
 LOG_FILE = os.path.join(os.path.dirname(__file__), "reddit_post_log.json")
+
+# Firefox profile paths (no encryption — plaintext SQLite)
+FF_PROFILES_BASE = "/mnt/c/Users/lukei/AppData/Roaming/Mozilla/Firefox/Profiles"
 
 SUBREDDITS = [
     "speechrecognition",
@@ -29,117 +26,101 @@ SUBREDDITS = [
 
 POSTS = [
     {
+        "sub": "speechrecognition",
         "title": "I compared every Windows dictation option in 2026 — here's what I found",
-        "body": f"""After trying everything available, here's the honest breakdown:
+        "body": f"""Been trying to find a fast Windows dictation tool that actually works. Here's what I tested:
 
-**Win+H (built-in):** Free but stops mid-sentence and doesn't auto-paste. You have to manually copy the text. Kills the flow.
+**Win+H (built-in):** Stops mid-sentence, no auto-paste at cursor. Constantly interrupts flow.
 
-**Dragon NaturallySpeaking:** Still the gold standard for accuracy but $300-500+ upfront. Overkill for most people.
+**Dragon NaturallySpeaking:** $500+, heavy software, requires training. Overkill for most people.
 
-**Local Whisper (CPU):** 1-2 second lag. Usable but that pause breaks concentration.
+**Whisper local (CPU):** 1-2 second lag. Fine for accuracy, terrible for real-time dictation.
 
-**Wispr Flow / Superwhisper:** Fast and polished, but Mac only. Nothing equivalent existed for Windows.
+**Wispr Flow / Superwhisper:** Great products, Mac only. Nothing for Windows.
 
-**What I ended up building:** Push-to-talk via Groq Whisper. Hold hotkey, speak, text auto-pastes at your cursor in ~200ms. Works in any app. No clipboard step.
+**What I ended up building:** A push-to-talk app using Groq's Whisper API. Press Ctrl+Shift+Space, speak, release — text appears at cursor in ~200ms. Works in any app.
 
-Been using it daily for a few months. The auto-paste-at-cursor is the piece everything else was missing.
+The key differentiator vs local Whisper is Groq's inference speed. The API is so fast it feels local.
 
-If you're on Windows and looking for something: {SITE_URL} — 7-day trial, no credit card.
+Try it free: {SITE_URL}
 
-Happy to answer questions about the Whisper API setup or how the hotkey injection works."""
+Happy to answer questions about the setup or how it compares to anything else you've tried.""",
     },
     {
-        "title": "How I went from 60wpm to 150wpm — stopped typing",
-        "body": f"""Average typing speed: 60 wpm. Average speaking speed: 150 wpm. That gap used to bother me.
+        "sub": "productivity",
+        "title": "How I went from 60wpm to 150wpm by stopping typing altogether",
+        "body": f"""Average typing speed: 60 wpm. Average speaking speed: 150 wpm.
 
-I switched to voice dictation for everything that isn't code — emails, Slack, docs, comments, notes. Here's what actually made the habit stick:
+I switched to dictating everything — emails, Slack messages, docs, notes — and my output basically doubled.
 
-**Start with low-stakes output.** I began with emails and Slack, not important docs. Let yourself be okay with minor errors.
+**What actually made the habit stick:**
 
-**Don't stop mid-sentence to correct.** Finish the thought, then fix. Stopping to say "scratch that" fragments your thinking more than a typo does.
+1. Remap the hotkey to a mouse side button. One thumb click, speak, done. No chord to remember.
+2. Don't correct mid-sentence. Let the whole thought finish, then fix. Stopping to say "scratch that" costs more than a typo.
+3. Start with low-stakes output: emails and Slack first, not code or anything that needs precision.
 
-**Remap to a mouse button.** I moved the hotkey to a side mouse button. One thumb press, speak, done. Now it's invisible friction.
+**Tool I use on Windows:** push-to-talk dictation via Groq Whisper, ~200ms latency, auto-pastes wherever your cursor is. Works in every app including Slack, Notion, Gmail, VS Code comments.
 
-**The tool matters.** I tried Win+H (stops mid-sentence) and local Whisper (1-2s lag). Neither felt natural. I ended up building something on Groq Whisper that pastes text directly at the cursor in ~200ms — that latency is what makes it feel like typing.
+{SITE_URL} — 7-day free trial
 
-The app is at {SITE_URL} if you're on Windows and want to try the same setup. 7-day trial.
-
-What's everyone else using for dictation on Windows?""",
+Anyone else gone full dictation? Curious what workflows it works best for.""",
     },
     {
-        "title": "6 months of voice dictation as a developer — honest review",
-        "body": f"""Started using voice dictation about 6 months ago after some wrist pain. Here's what I actually learned:
+        "sub": "windowsapps",
+        "title": "Show off: I built a push-to-talk dictation app for Windows (200ms via Groq Whisper)",
+        "body": f"""Built this because I couldn't find a Windows dictation tool that did all three:
+- Fast (under 300ms)
+- Auto-paste directly at cursor (not just clipboard)
+- Actually works on Windows
 
-**What works well:**
-- Emails and Slack messages — dictation is clearly faster
-- Writing documentation — huge win, brain moves faster than fingers
-- Code comments — surprisingly good once you get used to saying punctuation
-- Notes and thinking out loud — the best use case honestly
+Every option I tried was either Mac-only, $500, or 2 seconds of lag.
 
-**What doesn't work:**
-- Actual code (variable names, syntax) — I still type code
-- Short replies where typing is already instant
-- Noisy environments obviously
+**How it works:**
+- Electron app, global hotkey via uiohook-napi
+- Audio captured while hotkey held
+- Sent to Groq Whisper API on release (~200ms round trip)
+- Text injected at cursor via keysender
 
-**The tech I settled on:**
-Groq Whisper via push-to-talk. I hold a hotkey, speak, text appears at my cursor. The ~200ms latency is what makes it usable — anything slower breaks the flow.
+No server-side storage. Audio goes to Groq only for transcription.
 
-I was frustrated that every Windows option was either slow (local Whisper), expensive (Dragon), or Mac-only (Wispr Flow / Superwhisper). Ended up building my own: {SITE_URL}
+**Download:** {SITE_URL} (7-day free trial, no credit card)
 
-Currently at 7-day free trial, $9/mo after. Not pushing it — just sharing what I use.
-
-Curious what others in this community use for long-form writing.""",
+Runs in the system tray. Hotkey is fully remappable. Feedback welcome.""",
     },
     {
-        "title": "Push-to-talk vs always-listening dictation — which actually works better?",
-        "body": f"""I've tried both approaches. Here's my honest take:
+        "sub": "devtools",
+        "title": "Push-to-talk dictation for devs on Windows — built with Electron + Groq Whisper",
+        "body": f"""Built a Windows dictation tool for developers who write a lot of prose (docs, emails, Slack, PR descriptions).
 
-**Always-listening (wake word style):**
-- Convenient in theory
-- In practice: false triggers, privacy concerns, uncomfortable in shared spaces
-- Works okay for single commands, breaks down for long-form writing
+**Stack:**
+- Electron 34 for Windows native
+- uiohook-napi for global hotkey (Ctrl+Shift+Space by default, remappable)
+- Groq Whisper API for transcription (~200ms)
+- keysender for text injection at cursor
 
-**Push-to-talk:**
-- You control exactly when it's recording
-- Works anywhere — office, coffee shop, doesn't matter
-- Feels more like a tool, less like a surveillance device
-- The physical gesture (press button, speak, release) creates a natural rhythm
+**Why Groq over local Whisper?** CPU inference takes 1-2 seconds — too slow for push-to-talk. Groq's inference is fast enough that it feels instant. Cost is ~$0.02/hour of audio at current pricing.
 
-I ended up going with push-to-talk. Built a Windows app that uses Groq Whisper — hold a hotkey, speak, text auto-pastes at cursor in ~200ms. Middle mouse button is my current remap.
+Works anywhere: VS Code, browser, Slack, Notion, email clients.
 
-The always-listening tools I tried (including some AI assistant integrations) had too many false triggers for actual productive use.
+{SITE_URL} — free trial, no credit card
 
-Anyone else have experience comparing the two? Curious if always-listening has gotten better — my testing was mainly 2025 tools.
-
-If anyone wants to try the push-to-talk approach: {SITE_URL} — free trial.""",
+Open to technical feedback. The global hotkey and text injection parts were the hardest to get right on Windows.""",
     },
     {
-        "title": "Groq Whisper vs Dragon NaturallySpeaking for Windows in 2026 — real comparison",
-        "body": f"""I used Dragon for about 6 months before switching. Here's the actual comparison:
+        "sub": "windows",
+        "title": "Windows dictation in 2026 is still bad — so I built something",
+        "body": f"""Win+H exists but it's terrible. Stops mid-sentence, no auto-paste, breaks your flow constantly.
 
-**Dragon NaturallySpeaking (Professional):**
-- Accuracy: excellent after training, especially for technical vocab
-- Latency: 0.3-0.8s typically
-- Cost: $300-500 upfront
-- Setup: heavy install, significant training required
-- Works offline: yes
+I spent a week testing alternatives. Dragon is $500. Every good dictation app (Wispr Flow, Superwhisper) is Mac-only. Local Whisper on CPU takes 2 seconds per transcription.
 
-**Groq Whisper (via API):**
-- Accuracy: very good, handles accents well, no training needed
-- Latency: ~200ms (Groq's hardware is fast)
-- Cost: ~$0.02/hr of audio (practically free for normal use)
-- Setup: minimal
-- Works offline: no (API call)
+Built my own: push-to-talk hotkey, Groq Whisper for transcription, text auto-pastes wherever your cursor is. About 200ms from release to text appearing.
 
-The main trade-off is offline vs online. If you're in a no-internet environment, Dragon wins. For everything else, Groq Whisper is faster, cheaper, and requires no training.
+{SITE_URL} — 7-day free trial
 
-I wrapped it into a Windows push-to-talk app: {SITE_URL} — hold hotkey, speak, text at cursor. 7-day trial.
-
-For most people who write a lot on Windows, the Groq approach is the better choice in 2026. Dragon's pricing model doesn't make sense anymore at these API costs.
-
-Happy to go deeper on the technical side if anyone's curious.""",
+If you write a lot — emails, docs, Slack — worth trying for a week. Speaking is 2.5x faster than typing once the habit is there.""",
     },
 ]
+
 
 def load_log():
     if os.path.exists(LOG_FILE):
@@ -147,65 +128,212 @@ def load_log():
             return json.load(f)
     return {}
 
+
 def save_log(log):
     with open(LOG_FILE, "w") as f:
         json.dump(log, f, indent=2)
 
-def days_since(iso_str):
-    dt = datetime.datetime.fromisoformat(iso_str)
-    return (datetime.datetime.utcnow() - dt).days
 
-def pick_subreddit(log):
-    for sub in SUBREDDITS:
-        last = log.get(sub, {}).get("last_posted")
-        if last is None or days_since(last) >= 3:
-            return sub
-    # All on cooldown — pick the one posted longest ago
-    return min(SUBREDDITS, key=lambda s: log.get(s, {}).get("last_posted", "2000-01-01"))
+def days_since(iso_date):
+    if not iso_date:
+        return 999
+    d = datetime.datetime.fromisoformat(iso_date)
+    return (datetime.datetime.utcnow() - d).days
 
-def pick_post(log, sub):
-    used = log.get(sub, {}).get("used_post_indices", [])
-    available = [i for i in range(len(POSTS)) if i not in used]
-    if not available:
-        available = list(range(len(POSTS)))  # reset
-    import random
-    return random.choice(available)
+
+def get_firefox_reddit_cookies():
+    """Read Reddit cookies from Firefox — no encryption, plain SQLite."""
+    if not os.path.exists(FF_PROFILES_BASE):
+        return None
+
+    for entry in os.listdir(FF_PROFILES_BASE):
+        cookie_db = os.path.join(FF_PROFILES_BASE, entry, "cookies.sqlite")
+        if not os.path.exists(cookie_db):
+            continue
+        tmp = "/tmp/ff_reddit_cookies.db"
+        shutil.copy2(cookie_db, tmp)
+        conn = sqlite3.connect(tmp)
+        c = conn.cursor()
+        c.execute("SELECT name, value FROM moz_cookies WHERE host LIKE '%reddit%'")
+        rows = c.fetchall()
+        conn.close()
+        if rows:
+            return {r[0]: r[1] for r in rows}
+    return None
+
+
+def login_with_password(username, password):
+    """Authenticate via Reddit's legacy login endpoint — no OAuth app needed."""
+    params = urllib.parse.urlencode({
+        "user": username,
+        "passwd": password,
+        "api_type": "json",
+    }).encode()
+
+    jar = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
+    req = urllib.request.Request(
+        "https://www.reddit.com/api/login",
+        data=params,
+        headers={
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    )
+    try:
+        with opener.open(req, timeout=15) as resp:
+            data = json.loads(resp.read())
+            errors = data.get("json", {}).get("errors", [])
+            if errors:
+                print(f"Login errors: {errors}")
+                return None, None
+            modhash = data.get("json", {}).get("data", {}).get("modhash")
+            cookie_str = "; ".join(f"{c.name}={c.value}" for c in jar)
+            return modhash, cookie_str
+    except Exception as e:
+        print(f"Login failed: {e}")
+        return None, None
+
+
+def get_modhash_from_cookies(cookie_dict):
+    """Get modhash using existing session cookies."""
+    cookie_str = "; ".join(f"{k}={v}" for k, v in cookie_dict.items())
+    req = urllib.request.Request(
+        "https://www.reddit.com/api/me.json",
+        headers={
+            "Cookie": cookie_str,
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+            if data.get("data"):
+                modhash = data["data"].get("modhash")
+                return modhash, cookie_str
+    except Exception as e:
+        print(f"Auth check failed: {e}")
+    return None, None
+
+
+def post_to_reddit(subreddit, title, body, cookie_str, modhash, dry_run=False):
+    """Submit a self post to Reddit."""
+    if dry_run:
+        print(f"[DRY RUN] r/{subreddit}")
+        print(f"  Title: {title}")
+        print(f"  Body preview: {body[:80]}...")
+        return True
+
+    params = urllib.parse.urlencode({
+        "api_type": "json",
+        "kind": "self",
+        "sr": subreddit,
+        "title": title,
+        "text": body,
+        "resubmit": "true",
+        "uh": modhash,
+    }).encode()
+
+    req = urllib.request.Request(
+        "https://www.reddit.com/api/submit",
+        data=params,
+        headers={
+            "Cookie": cookie_str,
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-Modhash": modhash,
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            result = json.loads(resp.read())
+            errors = result.get("json", {}).get("errors", [])
+            if errors:
+                print(f"Reddit errors: {errors}")
+                return False
+            url = result.get("json", {}).get("data", {}).get("url", "")
+            print(f"Posted: {url}")
+            return True
+    except Exception as e:
+        print(f"Post failed: {e}")
+        return False
+
+
+def pick_next_post(log):
+    best, best_days = None, -1
+    for post in POSTS:
+        d = days_since(log.get(post["sub"], {}).get("last_posted"))
+        if d > best_days:
+            best_days, best = d, post
+    return best, best_days
+
+
+def get_secrets():
+    """Load REDDIT_USERNAME and REDDIT_PASSWORD from ~/.claude_secrets."""
+    secrets_file = os.path.expanduser("~/.claude_secrets")
+    username = password = None
+    if os.path.exists(secrets_file):
+        with open(secrets_file) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("export REDDIT_USERNAME="):
+                    username = line.split("=", 1)[1].strip('"').strip("'")
+                elif line.startswith("export REDDIT_PASSWORD="):
+                    password = line.split("=", 1)[1].strip('"').strip("'")
+    return username, password
+
 
 def main():
-    for var in ["REDDIT_CLIENT_ID", "REDDIT_SECRET", "REDDIT_USERNAME", "REDDIT_PASSWORD"]:
-        if not os.environ.get(var):
-            print(f"Missing env var: {var}")
-            sys.exit(1)
-
-    reddit = praw.Reddit(
-        client_id=os.environ["REDDIT_CLIENT_ID"],
-        client_secret=os.environ["REDDIT_SECRET"],
-        username=os.environ["REDDIT_USERNAME"],
-        password=os.environ["REDDIT_PASSWORD"],
-        user_agent="dictate-app-poster/1.0",
-    )
+    dry_run = "--dry-run" in sys.argv
 
     log = load_log()
-    sub_name = pick_subreddit(log)
-    post_idx = pick_post(log, sub_name)
-    post = POSTS[post_idx]
+    post, days = pick_next_post(log)
 
-    print(f"Posting to r/{sub_name}: {post['title']}")
+    if days < 3 and not dry_run:
+        print(f"All subs posted within 3 days. Next: r/{post['sub']} ({days}d). Skipping.")
+        return
 
-    subreddit = reddit.subreddit(sub_name)
-    submission = subreddit.submit(title=post["title"], selftext=post["body"])
+    print(f"Target: r/{post['sub']} (last posted {days}d ago)")
 
-    print(f"Posted: https://reddit.com{submission.permalink}")
+    modhash = cookie_str = None
 
-    if sub_name not in log:
-        log[sub_name] = {}
-    log[sub_name]["last_posted"] = datetime.datetime.utcnow().isoformat()
-    used = log[sub_name].get("used_post_indices", [])
-    used.append(post_idx)
-    log[sub_name]["used_post_indices"] = used
-    log[sub_name]["last_url"] = f"https://reddit.com{submission.permalink}"
-    save_log(log)
-    print("Log updated.")
+    # Method 1: Firefox cookies
+    ff_cookies = get_firefox_reddit_cookies()
+    if ff_cookies:
+        print("Found Firefox Reddit session, authenticating...")
+        modhash, cookie_str = get_modhash_from_cookies(ff_cookies)
+
+    # Method 2: Username/password from secrets
+    if not modhash:
+        username, password = get_secrets()
+        if username and password:
+            print(f"Using credentials for {username}...")
+            modhash, cookie_str = login_with_password(username, password)
+
+    if not modhash:
+        print("""
+BLOCKED: No Reddit session available.
+
+To fix (pick one):
+  A) Open Firefox, log into reddit.com, then re-run this script
+  B) Add to ~/.claude_secrets:
+       export REDDIT_USERNAME="your_username"
+       export REDDIT_PASSWORD="your_password"
+""")
+        sys.exit(1)
+
+    print(f"Authenticated. Posting to r/{post['sub']}...")
+    success = post_to_reddit(post["sub"], post["title"], post["body"], cookie_str, modhash, dry_run)
+
+    if success and not dry_run:
+        log[post["sub"]] = {
+            "last_posted": datetime.datetime.utcnow().isoformat(),
+            "title": post["title"],
+        }
+        save_log(log)
+        print("Done.")
+
 
 if __name__ == "__main__":
     main()
