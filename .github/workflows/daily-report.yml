@@ -1,0 +1,73 @@
+name: Daily Traffic Report
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 9 AM ET daily
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send daily report
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          python3 << 'EOF'
+          import urllib.request, urllib.parse, json, os
+
+          bot = os.environ["TELEGRAM_BOT_TOKEN"]
+          chat = os.environ["TELEGRAM_CHAT_ID"]
+          gh_token = os.environ.get("GH_TOKEN", "")
+
+          # --- Analytics stats ---
+          try:
+              with urllib.request.urlopen("https://dictate-analytics.howmindswork.workers.dev/stats", timeout=10) as r:
+                  stats = json.load(r)
+              today_views = stats.get("today", 0)
+              total_views = stats.get("total", 0)
+          except Exception as e:
+              today_views = "?"
+              total_views = f"error: {e}"
+
+          # --- GitHub release downloads ---
+          try:
+              req = urllib.request.Request(
+                  "https://api.github.com/repos/howmindswork/dictate-electron/releases/latest",
+                  headers={"Authorization": f"token {gh_token}", "User-Agent": "dictate-report"}
+              )
+              with urllib.request.urlopen(req, timeout=10) as r:
+                  release = json.load(r)
+              total_downloads = sum(a.get("download_count", 0) for a in release.get("assets", []) if a["name"].endswith(".exe"))
+              version = release.get("tag_name", "?")
+          except Exception as e:
+              total_downloads = "?"
+              version = f"error: {e}"
+
+          msg = (
+              "📊 *Dictate App — Daily Report*\n\n"
+              f"🌐 *Site Traffic*\n"
+              f"  Today: {today_views} views\n"
+              f"  All time: {total_views} views\n\n"
+              f"💾 *Downloads*\n"
+              f"  Total .exe downloads: {total_downloads}\n"
+              f"  Version: {version}\n\n"
+              f"🔗 [Site](https://dictate-app.pages.dev) | [GitHub](https://github.com/howmindswork/dictate-electron/releases)"
+          )
+
+          data = urllib.parse.urlencode({
+              "chat_id": chat,
+              "text": msg,
+              "parse_mode": "Markdown",
+          }).encode()
+          req = urllib.request.Request(
+              f"https://api.telegram.org/bot{bot}/sendMessage",
+              data=data,
+              method="POST"
+          )
+          with urllib.request.urlopen(req) as r:
+              resp = json.load(r)
+          print("Sent:", resp.get("ok"))
+          EOF
