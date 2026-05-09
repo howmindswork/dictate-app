@@ -186,7 +186,7 @@ def run():
         human_delay(2, 4)
 
         # Fill title
-        title_input = page.locator('textarea[placeholder*="Title"]').first
+        title_input = page.locator('textarea[name="title"]').first
         title_input.click()
         human_delay(0.3, 0.8)
         title_input.fill(post["title"])
@@ -199,7 +199,7 @@ def run():
         except Exception:
             pass
 
-        body_area = page.locator('.public-DraftEditor-content, [data-testid="post-body"]').first
+        body_area = page.locator('div[name="body"][role="textbox"]').first
         body_area.click()
         human_delay(0.3, 0.8)
         body_area.type(post["body"], delay=random.randint(20, 60))
