@@ -22,28 +22,36 @@ with Camoufox(headless=False) as browser:
     page = ctx.new_page()
     page.goto("https://www.reddit.com", timeout=30000)
 
-    logged_in = False
-    for _ in range(60):  # poll up to 5 minutes
+    print("Browser is open. Log in via Google OAuth as Mr1v4.")
+    print("Waiting for login button to appear...")
+
+    # Step 1: wait for login button to become visible (page loaded)
+    try:
+        page.locator('[data-testid="login-button"]').wait_for(timeout=30000)
+        print("Login button detected. Please click it and log in as Mr1v4.")
+    except Exception:
+        print("(Login button not found — already logged in?)")
+
+    # Step 2: wait for login button to disappear (login complete)
+    print("Waiting for you to complete login...")
+    for i in range(120):  # up to 10 minutes
         time.sleep(5)
         try:
-            # Logged in = user avatar/menu visible, no login button
-            has_login_btn = page.locator('[data-testid="login-button"], button:has-text("Log In")').count()
-            has_user_menu = page.locator('[data-testid="user-drawer-content"], #USER_DROPDOWN_ID, [aria-label="user actions"]').count()
-            url = page.url
-
-            if has_login_btn == 0 and "login" not in url:
-                logged_in = True
-                print("Login detected! Saving cookies...")
-                break
-            print(f"  Waiting for login... ({_*5}s)")
+            btn_count = page.locator('[data-testid="login-button"]').count()
+            current_url = page.url
+            if btn_count == 0 and "login" not in current_url and "reddit.com" in current_url:
+                # Extra confirm: check for logged-in indicator
+                time.sleep(3)
+                if page.locator('[data-testid="login-button"]').count() == 0:
+                    print("Login confirmed!")
+                    break
         except Exception:
             pass
+        if i % 6 == 5:
+            print(f"  Still waiting... ({(i+1)*5}s)")
 
+    time.sleep(2)
     cookies = ctx.cookies()
-
-if not logged_in:
-    print("Timed out waiting for login. Try again.")
-    raise SystemExit(1)
 
 reddit_cookies = [c for c in cookies if "reddit" in c.get("domain", "")]
 if len(reddit_cookies) < 3:
