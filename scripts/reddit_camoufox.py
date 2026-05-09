@@ -31,104 +31,86 @@ SITE_URL = "https://dictate-app.pages.dev"
 COOLDOWN_DAYS = 3
 
 SUBREDDITS = [
-    "speechrecognition",
-    "windowsapps",
     "productivity",
     "windows",
     "indiedev",
+    "windowsapps",
+    "sideproject",
 ]
 
 POSTS = [
     {
-        "title": "I compared every Windows dictation option in 2026 — here's what actually works",
-        "body": f"""After trying everything, here's the honest breakdown:
+        "title": "compared every Windows dictation tool I could find, here's where I landed",
+        "body": f"""spent way too long on this but figured I'd share
 
-| Tool | Speed | Auto-paste | Price | Platform |
-|------|-------|-----------|-------|---------|
-| Win+H | 2-3s | ❌ | Free | Windows |
-| Dragon | OK | ✅ | $500+ | Windows |
-| Local Whisper | 1-2s | ❌ | Free | Windows |
-| Wispr Flow | Fast | ✅ | $10/mo | Mac only |
+Win+H - built in, free, but you have to paste manually and it takes 2-3 seconds. annoying.
 
-The gap nobody filled: **fast + Windows + auto-paste at cursor**.
+Dragon - actually works great but $500+ is insane for most people
 
-I ended up using [dictate.app]({SITE_URL}) — it uses Groq's Whisper API so transcription is ~200ms, and it injects text directly at your cursor in any app. 7-day trial if you want to test it.
+local Whisper - surprisingly good if you have a decent GPU. CPU is too slow for daily use imo. still have to paste manually though.
 
-Happy to answer questions about any of these tools."""
+Wispr Flow - probably the best UX I've tried but it's Mac only which is a dealbreaker
+
+what I'm using now: [dictate.app]({SITE_URL}) - it's basically Whisper via Groq (so like 200ms latency) and it types directly at your cursor instead of clipboard. makes a bigger difference than you'd think.
+
+has a free trial if anyone wants to test it before paying. lmk if you have questions"""
     },
     {
-        "title": "How I went from 60wpm to 150wpm — stopped typing, started talking",
-        "body": f"""Average typing speed: 60 wpm. Average speaking speed: 150 wpm.
+        "title": "voice dictation finally clicked for me after I stopped trying to correct myself mid-sentence",
+        "body": f"""been meaning to post this for a while
 
-That 2.5x gap is just sitting there, unused.
+I tried dictation like 3 times over the years and gave up every time. kept stopping to say "no scratch that" or trying to edit while talking. made me slower than just typing.
 
-I switched to voice dictation for emails, Slack, and docs about 6 months ago. A few things that actually made the habit stick:
+what actually worked: just let the whole sentence out, then go back. sounds obvious but it took me a while to actually do it consistently.
 
-**1. Use a mouse side button, not a keyboard chord**
-One thumb click to start recording. It becomes invisible.
+also moved it to a side mouse button instead of a keyboard shortcut. way less disruptive.
 
-**2. Don't correct mid-sentence**
-Finish the thought, then fix. Stopping to say "scratch that" costs more than a typo.
+using [dictate.app]({SITE_URL}) on Windows right now, it's Groq Whisper under the hood so the latency is fast enough that it doesn't break flow. tried a few others first but the cursor injection vs clipboard thing matters a lot in practice.
 
-**3. Start with emails, not code**
-Low stakes, fast feedback. Code comes later when you're comfortable.
-
-Tool I use on Windows: [dictate.app]({SITE_URL}) — push-to-talk via Ctrl+Shift+Space, text appears at cursor in ~200ms via Groq Whisper. Free trial if you want to experiment.
-
-What's your current setup?"""
+anyway. if you've tried dictation before and quit, might be worth another shot with the right setup"""
     },
     {
-        "title": "6 months of voice dictation on Windows — honest review",
-        "body": f"""I've been dictating everything on Windows for 6 months. Here's what nobody tells you:
+        "title": "voice dictation on Windows - what's actually working in 2026",
+        "body": f"""been doing this for about 6 months so figured I'd do a writeup
 
-**The learning curve isn't accuracy. It's learning to think out loud.**
+the accuracy problem is basically solved at this point. Whisper gets 95%+ most of the time. that's not why people quit.
 
-Whisper-based tools are 95%+ accurate. The hard part is stopping yourself from editing mid-sentence. You have to let the whole thought out before you fix anything.
+what trips people up is the mental shift. typing is editing as you go. dictation works better if you just say the whole thing and clean it up after. took me a couple weeks to stop fighting that.
 
-Took me about 2 weeks to stop self-interrupting.
+setup I'm on: [dictate.app]({SITE_URL}) - it's an Electron app, uses Groq Whisper API, round trip is around 200ms. the main thing that makes it work for me vs other tools is that it types at the cursor directly - other stuff pastes from clipboard which means you have to ctrl+v every time.
 
-**What I use:** [dictate.app]({SITE_URL}) — Electron app, Groq Whisper backend, ~200ms round trip. Works in any Windows app because it simulates keypresses rather than using clipboard.
+the BYOK model (bring your own Groq key) is a nice touch too, audio goes from your machine to Groq, no middleman
 
-The auto-paste-at-cursor is what makes it usable. Other tools dump to clipboard and you have to manually paste. This one just types wherever your cursor is.
-
-Anyone else doing voice dictation on Windows? Curious what setups people are running."""
+anyone else on Windows doing this? curious what people are running"""
     },
     {
-        "title": "Push-to-talk vs always-on dictation — which actually works for daily use?",
-        "body": f"""Been thinking about this a lot after 6 months of voice dictation.
+        "title": "push to talk is way better than always-on for actual daily use",
+        "body": f"""tried both, push to talk wins for me
 
-**Always-on** (wake word style):
-- Feels more natural in theory
-- Background noise is a constant problem
-- You have to remember to "stop" recording
+always-on sounds appealing in theory but background noise is a constant issue. also you end up doing this weird thing where you're thinking mid-sentence and it's transcribing your ums and pauses.
 
-**Push-to-talk**:
-- You control exactly when it listens
-- Works in noisy environments
-- Faster to start/stop than you'd expect once it's on a mouse button
+push to talk: you hold the button when you're ready to talk, let go when done. takes a day to get used to and then you stop thinking about it.
 
-I ended up on push-to-talk and don't think I'd go back. The control feels better for writing, where you often want to think silently for a few seconds between sentences.
+I have it mapped to a mouse side button now. works in any app, no context switching.
 
-Using [dictate.app]({SITE_URL}) on Windows — Groq Whisper backend so it's actually fast (~200ms). The hotkey is remappable; I have it on a side mouse button.
+using [dictate.app]({SITE_URL}) for this on Windows, it's remappable so you can put it wherever. Groq Whisper backend so it's fast.
 
-What do you prefer? Curious if others have tried both."""
+curious if others have tried both - I could see always-on working better for certain use cases but I haven't figured out when"""
     },
     {
-        "title": "Groq Whisper for Windows voice dictation — real-world latency numbers",
-        "body": f"""Tested this properly with timestamps. Results:
+        "title": "ran actual latency tests on different Whisper options, Groq is faster than I expected",
+        "body": f"""did this because I couldn't find any recent benchmarks, so ran my own
 
-- **Local Whisper (CPU, i7-12700):** 800ms–1.4s
-- **Local Whisper (GPU, RTX 3070):** 200ms–400ms
-- **OpenAI Whisper API:** 400ms–900ms (network dependent)
-- **Groq Whisper API:** 150ms–250ms
+CPU Whisper (i7-12700): 800ms to 1.4s depending on length
+GPU Whisper (RTX 3070): 200-400ms, usable but not instant
+OpenAI API: 400-900ms, varies a lot with network
+Groq API: 150-250ms consistently
 
-Groq is genuinely fast. The latency is low enough that it feels like real-time.
+Groq was the surprise. didn't expect the cloud option to beat local GPU but here we are
 
-I'm using it via [dictate.app]({SITE_URL}) on Windows — it handles the hotkey capture, mic input, and auto-paste at cursor. You bring your own Groq API key (free tier works for light use).
+I'm using this via [dictate.app]({SITE_URL}) - it handles the mic capture, hotkey, and pastes at cursor. you bring your own Groq key which is free for light use and means your audio goes direct to Groq, not through some middleman server
 
-The BYOK model means your audio goes directly from your machine to Groq — no middleman server logging your dictation.
-
-Anyone running local GPU Whisper getting better numbers? Interested in the comparison."""
+if anyone has GPU Whisper numbers from a 4090 or something I'd be curious how much faster it gets"""
     },
 ]
 
@@ -205,8 +187,8 @@ def run():
         body_area.type(post["body"], delay=random.randint(20, 60))
         human_delay(1, 3)
 
-        # Submit
-        page.locator('button:has-text("Post")').last.click()
+        # Submit (button text varies: "Post" or "Request to Post" on restricted subs)
+        page.locator('button:has-text("Post"), button:has-text("Request to Post")').last.click()
         page.wait_for_load_state("networkidle", timeout=15000)
         human_delay(2, 3)
 
