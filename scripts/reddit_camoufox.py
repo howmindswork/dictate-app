@@ -165,46 +165,31 @@ def run():
 
         # Navigate to subreddit submit page
         page.goto(f"https://www.reddit.com/r/{subreddit}/submit", timeout=30000)
-        human_delay(2, 4)
+        page.wait_for_load_state("domcontentloaded", timeout=20000)
+        human_delay(3, 5)
 
         # Fill title
         title_input = page.locator('textarea[name="title"]').first
+        title_input.wait_for(timeout=10000)
         title_input.click()
         human_delay(0.3, 0.8)
         title_input.fill(post["title"])
         human_delay(1, 2)
 
-        # Switch to text post and fill body
-        try:
-            page.locator('button:has-text("Text")').first.click()
-            human_delay(1, 2)
-        except Exception:
-            pass
-
+        # Body — keyboard.type works reliably for Reddit's Slate editor
         body_area = page.locator('div[name="body"][role="textbox"]').first
+        body_area.wait_for(timeout=10000)
         body_area.click()
         human_delay(0.5, 1.0)
-        # Inject body text via JS into contenteditable (faster and more reliable than type())
-        page.evaluate(
-            """(text) => {
-                const el = document.querySelector('div[name="body"][role="textbox"]');
-                if (el) {
-                    el.focus();
-                    document.execCommand('insertText', false, text);
-                }
-            }""",
-            post["body"]
-        )
-        human_delay(0.5, 1.0)
-        human_delay(1, 3)
+        page.keyboard.type(post["body"], delay=10)
+        human_delay(1, 2)
 
         # Submit (button text varies: "Post" or "Request to Post" on restricted subs)
         page.locator('button:has-text("Post"), button:has-text("Request to Post")').last.click()
         try:
-            # Wait for URL to change to a post/comments page
-            page.wait_for_url("**/comments/**", timeout=30000)
+            # Reddit redirects to ?created=<post_id> or /comments/ after submit
+            page.wait_for_url("**created=**", timeout=20000)
         except Exception:
-            # Some subs redirect differently; just wait a moment
             human_delay(4, 6)
 
         post_url = page.url
