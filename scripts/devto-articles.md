@@ -24,7 +24,7 @@ Then I got tendinitis in my right wrist and had to rethink that assumption.
 
 I committed to using voice dictation for everything non-code for 30 days. Emails, Slack messages, documentation, meeting notes, this post.
 
-The tool I landed on was [dictate.app](https://dictate.app). It runs on Windows, uses Groq's Whisper model under the hood, and works in every app via push-to-talk. Hold a key, speak, release. The text appears wherever your cursor is.
+The tool I landed on was [dictate.app](https://dictate-app.pages.dev). It runs on Windows, uses Groq's Whisper model under the hood, and works in every app via push-to-talk. Hold a key, speak, release. The text appears wherever your cursor is.
 
 No cloud subscription lock-in. No browser tab required. $8.99 a month.
 
@@ -86,7 +86,7 @@ Yes. I kept using it. I'm still using it.
 
 Not for code. Not for the terminal. But for everything else, speaking is faster and less physically demanding than typing.
 
-If you're curious, [dictate.app](https://dictate.app) has a 7-day free trial. Try it for a week and pay attention to how much non-code writing you actually do. You might be surprised.
+If you're curious, [dictate.app](https://dictate-app.pages.dev) has a 7-day free trial. Try it for a week and pay attention to how much non-code writing you actually do. You might be surprised.
 
 ---
 ARTICLE_SEPARATOR
@@ -134,7 +134,7 @@ The best dictation apps use push-to-talk mode. Hold a key, speak, release. Text 
 
 This is important because it solves the pacing problem. You can pause and think without capturing silence or filler words. You can stop speaking, move your cursor, and start again.
 
-[dictate.app](https://dictate.app) does this well on Windows. It works in any app because it types the text using simulated keystrokes. No browser tab required. No switching windows.
+[dictate.app](https://dictate-app.pages.dev) does this well on Windows. It works in any app because it types the text using simulated keystrokes. No browser tab required. No switching windows.
 
 ## Tips for dictating technical content
 
@@ -152,7 +152,7 @@ Pick a week where you have a lot of email and documentation work. Try dictating 
 
 The first two days will feel awkward. That's normal. By day five you'll have a clear picture of whether it fits your workflow.
 
-[dictate.app](https://dictate.app) has a 7-day free trial if you want to experiment on Windows without committing.
+[dictate.app](https://dictate-app.pages.dev) has a 7-day free trial if you want to experiment on Windows without committing.
 
 ---
 ARTICLE_SEPARATOR
@@ -208,7 +208,7 @@ Reducing keystroke volume helps most. Less typing means less cumulative strain.
 
 Voice dictation doesn't replace typing. It reduces it.
 
-I started using [dictate.app](https://dictate.app) after my wrist pain became hard to ignore. It's a Windows app with push-to-talk voice dictation. Hold a key, speak, the text appears. Works in any app.
+I started using [dictate.app](https://dictate-app.pages.dev) after my wrist pain became hard to ignore. It's a Windows app with push-to-talk voice dictation. Hold a key, speak, the text appears. Works in any app.
 
 I kept typing code. That still requires precision that dictation can't match reliably.
 
@@ -226,4 +226,4 @@ But if you're a developer who types a lot and hasn't thought seriously about RSI
 
 The best time to reduce your typing volume was five years ago. The second best time is this week.
 
-[dictate.app](https://dictate.app) has a 7-day free trial. Experiment with it for a week on your prose writing and see if it changes how your hands feel by Friday.
+[dictate.app](https://dictate-app.pages.dev) has a 7-day free trial. Experiment with it for a week on your prose writing and see if it changes how your hands feel by Friday.

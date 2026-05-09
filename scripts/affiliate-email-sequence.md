@@ -15,7 +15,7 @@ Welcome to the dictate.app affiliate program.
 You're earning 40% recurring commission on every customer you refer. Forever. Not 12 months. Forever.
 
 Your unique affiliate link:
-https://dictate.app/go/[REF_CODE]
+https://dictate-app.pages.dev/go/[REF_CODE]
 
 Track your earnings anytime:
 https://affiliate-worker.howmindswork.workers.dev/api/affiliate-dashboard/[REF_CODE]
@@ -49,7 +49,7 @@ Three things that convert best:
 2. Mention the free trial. Zero friction for your audience.
 3. Drop your link in the first comment or description. Not mid-post.
 
-Your link: https://dictate.app/go/[REF_CODE]
+Your link: https://dictate-app.pages.dev/go/[REF_CODE]
 
 Questions? Reply here.
 
@@ -83,7 +83,7 @@ You get paid every month they stay subscribed.
 
 One solid YouTube mention or blog post can drive 10 customers.
 
-Your link: https://dictate.app/go/[REF_CODE]
+Your link: https://dictate-app.pages.dev/go/[REF_CODE]
 Dashboard: https://affiliate-worker.howmindswork.workers.dev/api/affiliate-dashboard/[REF_CODE]
 
 -- dictate.app
@@ -112,7 +112,7 @@ Here's what converts best for affiliates:
 
 The free trial does the selling. Your job is to get people to start it.
 
-Your link: https://dictate.app/go/[REF_CODE]
+Your link: https://dictate-app.pages.dev/go/[REF_CODE]
 
 -- dictate.app
 
@@ -138,7 +138,7 @@ Keep going. Every customer you have right now pays you forever. Adding 5 more th
 - Mention dictate.app in a YouTube video you're already planning
 - Pin a tweet with your workflow
 
-Your link: https://dictate.app/go/[REF_CODE]
+Your link: https://dictate-app.pages.dev/go/[REF_CODE]
 
 Thank you for being part of this.
 
@@ -151,13 +151,13 @@ Thank you for being part of this.
 ### Tweet/X Posts (under 280 chars)
 
 **Tweet 1 — Speed angle:**
-I went from 40 wpm typing to 150+ wpm dictating. Windows push-to-talk, powered by Groq Whisper. Fastest transcription I've used. 7-day free trial: https://dictate.app/go/[REF_CODE]
+I went from 40 wpm typing to 150+ wpm dictating. Windows push-to-talk, powered by Groq Whisper. Fastest transcription I've used. 7-day free trial: https://dictate-app.pages.dev/go/[REF_CODE]
 
 **Tweet 2 — Affiliate math angle:**
-Voice dictation affiliate programs: Dragon = 8% one-time (program's dead). Wispr Flow = 25% for 12 months. dictate.app = 40% recurring forever. Easy math. https://dictate.app/go/[REF_CODE]
+Voice dictation affiliate programs: Dragon = 8% one-time (program's dead). Wispr Flow = 25% for 12 months. dictate.app = 40% recurring forever. Easy math. https://dictate-app.pages.dev/go/[REF_CODE]
 
 **Tweet 3 — Pain point:**
-Typing is the bottleneck. Not thinking. dictate.app lets you talk at full speed and get clean text instantly. Push-to-talk, no wake word. Try it free: https://dictate.app/go/[REF_CODE]
+Typing is the bottleneck. Not thinking. dictate.app lets you talk at full speed and get clean text instantly. Push-to-talk, no wake word. Try it free: https://dictate-app.pages.dev/go/[REF_CODE]
 
 ---
 
@@ -172,7 +172,7 @@ dictate.app runs on Windows, uses push-to-talk so it never transcribes accidenta
 
 I finish charts faster. I get home earlier.
 
-If you're still typing your notes, try the free trial: https://dictate.app/go/[REF_CODE]
+If you're still typing your notes, try the free trial: https://dictate-app.pages.dev/go/[REF_CODE]
 
 #MedicalDocumentation #Productivity #Dictation
 
@@ -187,7 +187,7 @@ Two hours became 45 minutes.
 
 That's 5+ weeks of time back every year.
 
-Free trial here: https://dictate.app/go/[REF_CODE]
+Free trial here: https://dictate-app.pages.dev/go/[REF_CODE]
 
 ---
 
@@ -195,7 +195,7 @@ Free trial here: https://dictate.app/go/[REF_CODE]
 
 Tools I use to create faster:
 
-dictate.app — Windows voice dictation that actually works. Push-to-talk, powered by Groq Whisper, insanely fast transcription. I use it for scripts, emails, and notes. Try it free for 7 days: https://dictate.app/go/[REF_CODE]
+dictate.app — Windows voice dictation that actually works. Push-to-talk, powered by Groq Whisper, insanely fast transcription. I use it for scripts, emails, and notes. Try it free for 7 days: https://dictate-app.pages.dev/go/[REF_CODE]
 
 (Affiliate link — I earn a commission if you subscribe. I only recommend tools I actually use.)
 

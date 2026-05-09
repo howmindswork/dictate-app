@@ -117,7 +117,7 @@ def transcribe_groq(api_key, audio_bytes, filename="audio.wav"):
         return json.loads(r.read())["text"]
 ```
 
-This raw HTTP approach is what [dictate.app](https://dictate.app) uses internally — no SDK dependency, just stdlib.
+This raw HTTP approach is what [dictate.app](https://dictate-app.pages.dev) uses internally — no SDK dependency, just stdlib.
 
 ## Cost Comparison
 
@@ -154,7 +154,7 @@ If you want streaming transcription (words appearing as you speak), you'd need t
 2. Use a specialized service like Deepgram or AssemblyAI
 3. Implement sliding window with Groq (send 1-2s chunks, stitch results)
 
-[dictate.app](https://dictate.app) uses approach 3 — it buffers audio while the hotkey is held, sends it to Groq when released, and gets results back in ~200ms. The UX is: hold key → speak → release → text appears instantly. No streaming needed when the full round-trip is under 300ms.
+[dictate.app](https://dictate-app.pages.dev) uses approach 3 — it buffers audio while the hotkey is held, sends it to Groq when released, and gets results back in ~200ms. The UX is: hold key → speak → release → text appears instantly. No streaming needed when the full round-trip is under 300ms.
 
 ## The Decision
 
@@ -171,7 +171,7 @@ Use **OpenAI** if:
 
 ## What dictate.app Does
 
-[dictate.app](https://dictate.app) uses Groq Whisper with a bring-your-own-key model. Users bring their Groq API key (free tier works for light use), and audio goes directly from their machine to Groq — nothing routes through a middleman server. The ~200ms round-trip is what makes push-to-talk dictation feel instant on Windows.
+[dictate.app](https://dictate-app.pages.dev) uses Groq Whisper with a bring-your-own-key model. Users bring their Groq API key (free tier works for light use), and audio goes directly from their machine to Groq — nothing routes through a middleman server. The ~200ms round-trip is what makes push-to-talk dictation feel instant on Windows.
 
 If you're building something similar, start with Groq. The speed difference isn't marginal — it's the difference between a tool people use daily and one they forget about.
 """
@@ -527,7 +527,7 @@ This tutorial gets you to a working prototype. Getting to a production-quality a
 - **Accessibility**: keyboard shortcut conflicts with other apps
 - **Elevated process injection**: VS Code, admin terminals, game windows
 
-If you want a polished version of this that already handles all of these, [dictate.app](https://dictate.app) is a finished Windows app built on this exact architecture. 7-day free trial, bring your own Groq API key.
+If you want a polished version of this that already handles all of these, [dictate.app](https://dictate-app.pages.dev) is a finished Windows app built on this exact architecture. 7-day free trial, bring your own Groq API key.
 
 The open-source path is totally viable — this tutorial gives you the skeleton. Production-quality UX is where the hours go.
 """
@@ -610,7 +610,7 @@ Swapping in Groq was a one-line change. The latency drop was immediate and drama
 
 ## Then I Found dictate.app
 
-Around the same time I got my prototype working, I discovered [dictate.app](https://dictate.app) — a finished Windows app that does exactly what I built, but better.
+Around the same time I got my prototype working, I discovered [dictate.app](https://dictate-app.pages.dev) — a finished Windows app that does exactly what I built, but better.
 
 It already handled:
 - The audio format conversion I hacked around
@@ -633,7 +633,7 @@ I still have my prototype as a learning exercise. But dictate.app is what I actu
 
 4. **The hard part isn't transcription, it's injection.** Getting text into every Windows app reliably takes significantly more work than calling the Whisper API.
 
-5. **Consider using a finished app.** The 20 hours I spent building my prototype were educational but not necessary. [dictate.app](https://dictate.app) is the shortcut.
+5. **Consider using a finished app.** The 20 hours I spent building my prototype were educational but not necessary. [dictate.app](https://dictate-app.pages.dev) is the shortcut.
 
 My wrists are better. My writing speed (in words per minute of spoken words) is up. The tool got out of the way.
 
@@ -650,7 +650,7 @@ ARTICLES = [
         "body_markdown": ARTICLE_1_BODY.strip(),
         "published": True,
         "tags": ["javascript", "webdev", "ai", "productivity"],
-        "canonical_url": "https://dictate.app/blog/groq-whisper-vs-openai-whisper-windows.html",
+        "canonical_url": "https://dictate-app.pages.dev/blog/groq-whisper-vs-openai-whisper-windows.html",
         "series": "Windows Voice Dictation"
     },
     {

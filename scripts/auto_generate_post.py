@@ -268,9 +268,10 @@ Return ONLY valid JSON, no markdown fences."""
 
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=4096,
+        max_tokens=2048,
         system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role": "user", "content": [{"type": "text", "text": prompt, "cache_control": {"type": "ephemeral"}}]}],
+        extra_headers={"anthropic-beta": "prompt-caching-2024-07-31"},
     )
 
     raw = message.content[0].text.strip()

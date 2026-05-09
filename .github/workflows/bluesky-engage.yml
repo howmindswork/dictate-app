@@ -1,0 +1,34 @@
+name: Bluesky Engage
+
+on:
+  schedule:
+    - cron: "30 14 * * *"   # 10:30 AM ET
+    - cron: "30 22 * * *"   # 6:30 PM ET
+  workflow_dispatch:
+
+jobs:
+  engage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install deps
+        run: pip install atproto openai -q
+
+      - name: Run engagement bot
+        env:
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python3 scripts/bluesky_engage.py
+
+      - name: Commit replied log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/engage-replied.json || true
+          git diff --staged --quiet || git commit -m "chore: update engage replied log"
+          git push
