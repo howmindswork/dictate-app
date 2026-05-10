@@ -2,35 +2,99 @@ name: Reddit Auto-Poster
 
 on:
   schedule:
-    - cron: "0 19 * * 1"   # Monday 7 PM UTC
-    - cron: "0 19 * * 4"   # Thursday 7 PM UTC
+    - cron: "0 19 * * 1"   # Monday 7 PM UTC    → dictate
+    - cron: "0 19 * * 3"   # Wednesday 7 PM UTC → HMW
+    - cron: "0 19 * * 4"   # Thursday 7 PM UTC  → dictate
+    - cron: "0 19 * * 5"   # Friday 7 PM UTC    → TRJC
   workflow_dispatch:
+    inputs:
+      blog:
+        description: "Which blog to post for"
+        required: false
+        default: "dictate"
+        type: choice
+        options: [dictate, hmw, trjc]
 
 jobs:
-  post:
+  post-dictate:
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'dictate') ||
+      (github.event_name == 'schedule' && (github.event.schedule == '0 19 * * 1' || github.event.schedule == '0 19 * * 4'))
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Cache Camoufox Firefox binary
         uses: actions/cache@v4
         with:
           path: ~/.local/share/camoufox
           key: camoufox-${{ runner.os }}-v1
-
       - name: Install Camoufox
         run: |
           pip install "camoufox[geoip]" -q
           python3 -m camoufox fetch --quiet 2>/dev/null || python3 -m camoufox fetch
-
-      - name: Post to Reddit
+      - name: Post to Reddit (Dictate)
         env:
+          REDDIT_BLOG: dictate
+          REDDIT_COOKIES_MR1V4: ${{ secrets.REDDIT_COOKIES_MR1V4 }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 scripts/reddit_camoufox.py
+
+  post-hmw:
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'hmw') ||
+      (github.event_name == 'schedule' && github.event.schedule == '0 19 * * 3')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache Camoufox Firefox binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/camoufox
+          key: camoufox-${{ runner.os }}-v1
+      - name: Install Camoufox
+        run: |
+          pip install "camoufox[geoip]" -q
+          python3 -m camoufox fetch --quiet 2>/dev/null || python3 -m camoufox fetch
+      - name: Post to Reddit (HMW)
+        env:
+          REDDIT_BLOG: hmw
+          REDDIT_COOKIES_MR1V4: ${{ secrets.REDDIT_COOKIES_MR1V4 }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 scripts/reddit_camoufox.py
+
+  post-trjc:
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'trjc') ||
+      (github.event_name == 'schedule' && github.event.schedule == '0 19 * * 5')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache Camoufox Firefox binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/camoufox
+          key: camoufox-${{ runner.os }}-v1
+      - name: Install Camoufox
+        run: |
+          pip install "camoufox[geoip]" -q
+          python3 -m camoufox fetch --quiet 2>/dev/null || python3 -m camoufox fetch
+      - name: Post to Reddit (TRJC)
+        env:
+          REDDIT_BLOG: trjc
           REDDIT_COOKIES_MR1V4: ${{ secrets.REDDIT_COOKIES_MR1V4 }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

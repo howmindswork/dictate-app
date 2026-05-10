@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-Reddit auto-poster for dictate-app using Camoufox.
+Reddit auto-poster for all 3 blogs using Camoufox.
+Set REDDIT_BLOG=dictate|hmw|trjc to choose which blog to post for.
 Runs headless, rotates subreddits with 3-day cooldown.
-
-SETUP: Add to ~/.claude_secrets:
-  export REDDIT_USERNAME="your_reddit_username"
-  export REDDIT_PASSWORD="your_reddit_password"
 """
 
 import os, json, random, time, sys, base64
 from datetime import datetime, timedelta
 from pathlib import Path
+
+BLOG = os.environ.get("REDDIT_BLOG", "dictate").lower()
 
 # ── Session: local cookie file (WSL2) or env var (GitHub Actions) ────────────
 COOKIES_B64 = os.environ.get("REDDIT_COOKIES_MR1V4", "")
@@ -26,19 +25,25 @@ else:
     sys.exit(1)
 
 # ── Config ────────────────────────────────────────────────────────────────────
-LOG_FILE = Path(__file__).parent / "reddit_post_log.json"
-SITE_URL = "https://dictate-app.pages.dev"
+LOG_FILE = Path(__file__).parent / f"reddit_post_log_{BLOG}.json"
 COOLDOWN_DAYS = 3
 
-SUBREDDITS = [
-    "productivity",
-    "windows",
-    "indiedev",
-    "windowsapps",
-    "sideproject",
-]
+if BLOG == "hmw":
+    from reddit_hmw_posts import SUBREDDITS, POSTS
+elif BLOG == "trjc":
+    from reddit_trjc_posts import SUBREDDITS, POSTS
+else:
+    # dictate (default)
+    SITE_URL = "https://dictate-app.pages.dev"
+    SUBREDDITS = [
+        "productivity",
+        "windows",
+        "indiedev",
+        "windowsapps",
+        "sideproject",
+    ]
 
-POSTS = [
+    POSTS = [
     {
         "title": "compared every Windows dictation tool I could find, here's where I landed",
         "body": f"""spent way too long on this but figured I'd share
@@ -112,7 +117,7 @@ I'm using this via [dictate.app]({SITE_URL}) - it handles the mic capture, hotke
 
 if anyone has GPU Whisper numbers from a 4090 or something I'd be curious how much faster it gets"""
     },
-]
+]  # end dictate POSTS
 
 
 def load_log():
@@ -148,7 +153,7 @@ def run():
     subreddit = pick_subreddit(log)
     post = random.choice(POSTS)
 
-    print(f"[{datetime.utcnow().isoformat()}] u/Mr1v4 → r/{subreddit}: {post['title'][:50]}...")
+    print(f"[{datetime.utcnow().isoformat()}] [{BLOG}] u/Mr1v4 → r/{subreddit}: {post['title'][:50]}...")
 
     with Camoufox(headless=True) as browser:
         ctx = browser.new_context()
