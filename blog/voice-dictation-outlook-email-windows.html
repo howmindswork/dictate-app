@@ -196,5 +196,6 @@
       init(); draw();
       window.addEventListener('resize', init);
     </script>
-  </body>
+  <script>fetch("https://dictate-analytics.howmindswork.workers.dev/track?page="+encodeURIComponent(location.pathname),{method:"GET",mode:"no-cors"}).catch(function(){})</script>
+</body>
 </html>
