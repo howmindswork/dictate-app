@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BYOK Voice Dictation for Windows: Your Audio, Your Control</title>
+    <meta
+      name="description"
+      content="What is BYOK dictation? Why it matters for privacy. How dictate.app's BYOK model keeps your audio off third-party servers."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #0a0a14 0%, #1a0a2e 100%);
+        color: #e8dff5;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        z-index: -1;
+        background-image:
+          radial-gradient(2px 2px at 20px 30px, #eee, rgba(255, 255, 255, 0.2)),
+          radial-gradient(2px 2px at 60px 70px, #fff, rgba(255, 255, 255, 0.3)),
+          radial-gradient(1px 1px at 50px 50px, #fff, rgba(255, 255, 255, 0.2)),
+          radial-gradient(1px 1px at 130px 80px, #fff, rgba(255, 255, 255, 0.2));
+        background-size: 200px 200px;
+        animation: twinkle 5s infinite;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #c084fc 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      h2 {
+        font-size: 1.8em;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        color: #c084fc;
+      }
+      .subtitle {
+        font-size: 1.1em;
+        color: #b8a8d8;
+        margin-bottom: 30px;
+      }
+      p {
+        line-height: 1.8;
+        margin-bottom: 15px;
+        color: #d4c5e2;
+      }
+      strong {
+        color: #f0e7ff;
+      }
+      .callout {
+        background: rgba(192, 132, 252, 0.08);
+        border-left: 4px solid rgba(192, 132, 252, 0.5);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      .diagram {
+        background: rgba(192, 132, 252, 0.05);
+        border: 1px solid rgba(192, 132, 252, 0.2);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        color: #c084fc;
+        overflow-x: auto;
+      }
+      .section-divider {
+        border-top: 1px solid rgba(192, 132, 252, 0.2);
+        margin: 40px 0;
+      }
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.8em;
+        }
+        h2 {
+          font-size: 1.3em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>BYOK Voice Dictation for Windows</h1>
+      <p class="subtitle">
+        What it is, why it matters, and how to get true privacy in dictation
+      </p>
+
+      <h2>What is BYOK?</h2>
+      <p>
+        <strong>BYOK = Bring Your Own Key.</strong> Instead of a dictation app
+        controlling access to the transcription engine, you provide your own API
+        key.
+      </p>
+      <p>
+        With dictate.app's BYOK model, you bring a Groq API key. Your audio goes
+        straight from your PC to Groq's servers. The dictate.app desktop client
+        is just a keyboard shortcut manager—it records audio, sends it directly
+        to Groq, and types the result at your cursor.
+      </p>
+
+      <div class="diagram">
+        BYOK Flow (dictate.app):<br />
+        Your PC → [Record WAV] → Groq API (your key) → Transcription → Your
+        cursor<br />
+        <br />
+        Non-BYOK Flow (typical):<br />
+        Your PC → [Record audio] → DictaApp servers → Groq/OpenAI → DictaApp →
+        Your cursor
+      </div>
+
+      <h2>Why BYOK Matters for Privacy</h2>
+      <p>
+        In traditional dictation apps, your audio bounces through a middle
+        server. That middle server is:
+      </p>
+      <ul>
+        <li>
+          <strong>A data collection point.</strong> Servers log audio, metadata,
+          timestamps, IP addresses. Even if encrypted in transit, it sits in
+          someone's data center.
+        </li>
+        <li>
+          <strong>A compliance liability.</strong> Healthcare professionals,
+          lawyers, and government workers face HIPAA, attorney-client privilege,
+          and classified information rules. Server routing adds complexity.
+        </li>
+        <li>
+          <strong>A single point of failure.</strong> If the dictation company
+          gets hacked, your audio is exposed. If they go out of business, your
+          data handling is uncertain.
+        </li>
+      </ul>
+
+      <p>
+        <strong>With BYOK, you eliminate the middle server.</strong> Your audio
+        goes directly to the transcription provider (Groq, in dictate.app's
+        case). You control the API key. You own the relationship with Groq.
+      </p>
+
+      <div class="callout">
+        <strong>dictate.app never touches your audio.</strong> We don't see it,
+        store it, or have access to it. We see only metadata: that transcription
+        happened, how many tokens were used (for your Groq billing), and nothing
+        else.
+      </div>
+
+      <h2>Groq Whisper API: The Engine</h2>
+      <p>
+        dictate.app uses Groq Whisper as its transcription engine. Groq is a
+        specialized AI inference company—their hardware is optimized for speed.
+        Whisper is OpenAI's speech-to-text model running on Groq's
+        infrastructure.
+      </p>
+      <p>
+        Result: <strong>~200ms latency</strong> from audio end to transcript.
+      </p>
+      <p>
+        Compare that to OpenAI Whisper API directly (~15–30 seconds) or Google
+        Speech-to-Text (~5–10 seconds). Groq's speed comes from hardware
+        optimization, not software magic.
+      </p>
+
+      <h2>Cost & Control with BYOK</h2>
+      <p>
+        With dictate.app, you pay Groq directly for transcription. You manage
+        your API key. You see your usage. You control your costs.
+      </p>
+      <ul>
+        <li>
+          <strong>Typical dictation cost:</strong> $0.005 per minute of audio
+          (Groq pricing, subject to their rates)
+        </li>
+        <li>
+          <strong>dictate.app subscription:</strong> $8.99/month (one-time cost,
+          flat rate)
+        </li>
+        <li>
+          <strong>Total for heavy use:</strong> $8.99 + ~$5–$10/month for Groq =
+          ~$14–$19/month, unlimited words
+        </li>
+      </ul>
+      <p>
+        <strong>No surprises. No word caps. No hidden billing.</strong> You see
+        exactly what Groq charges on their invoice.
+      </p>
+
+      <div class="section-divider"></div>
+
+      <h2>How to Set Up BYOK Dictation on Windows</h2>
+      <ol>
+        <li>
+          <strong>Get a Groq API key.</strong> Visit groq.com, sign up, grab
+          your free API key (or use a paid tier for production).
+        </li>
+        <li>
+          <strong>Install dictate.app.</strong> Download from dictate.app,
+          install, launch.
+        </li>
+        <li>
+          <strong>Paste your Groq key.</strong> dictate.app prompts for your API
+          key on first launch.
+        </li>
+        <li>
+          <strong>Press Ctrl+Shift+Space.</strong> Hold. Speak. Release. Text
+          appears at your cursor.
+        </li>
+      </ol>
+
+      <h2>Who Needs BYOK?</h2>
+      <p>
+        <strong>Healthcare professionals:</strong> HIPAA compliance requires
+        careful data handling. BYOK eliminates the risk of protected health
+        information passing through a third-party server.
+      </p>
+      <p>
+        <strong>Lawyers:</strong> Attorney-client privilege requires audio to
+        stay under your control. BYOK ensures your confidential discussions
+        never land on someone else's infrastructure.
+      </p>
+      <p>
+        <strong>Researchers & consultants:</strong> Confidential client data,
+        research notes, sensitive discussions—BYOK keeps them off the internet.
+      </p>
+      <p>
+        <strong>Privacy advocates:</strong> If you believe your speech is yours
+        and should never be sold, analyzed, or monetized by third parties, BYOK
+        is the only true solution.
+      </p>
+
+      <h2>Common Questions</h2>
+      <p>
+        <strong>Q: What if I lose my Groq API key?</strong> You can regenerate
+        it in the Groq console. Just update dictate.app's settings.
+      </p>
+      <p>
+        <strong>Q: Does Groq sell my audio data?</strong> No. Groq's terms don't
+        allow them to retain or train on your transcriptions. Your audio is
+        processed and discarded.
+      </p>
+      <p>
+        <strong>Q: Is BYOK more expensive than regular dictation?</strong> Not
+        if you dictate a lot. Regular apps cap words and charge flat rates. BYOK
+        costs what you use—no more.
+      </p>
+      <p>
+        <strong
+          >Q: Can I use dictate.app with OpenAI Whisper API instead?</strong
+        >
+        Currently, dictate.app is built for Groq. A future update may support
+        other providers.
+      </p>
+
+      <div class="section-divider"></div>
+
+      <h2>Start Free Today</h2>
+      <p>
+        Try dictate.app free for 7 days with your own Groq key. No credit card
+        required. Install, set up your key, and experience true privacy
+        dictation.
+      </p>
+    </div>
+  </body>
+</html>

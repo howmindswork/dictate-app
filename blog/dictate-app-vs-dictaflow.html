@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dictate.app vs DictaFlow: Privacy, Speed & Unlimited Words</title>
+    <meta
+      name="description"
+      content="Compare dictate.app vs DictaFlow. BYOK privacy, ~200ms latency, unlimited words. DictaFlow caps at 100k/month and routes audio through their servers."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #0a0a14 0%, #1a0a2e 100%);
+        color: #e8dff5;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        z-index: -1;
+        background-image:
+          radial-gradient(2px 2px at 20px 30px, #eee, rgba(255, 255, 255, 0.2)),
+          radial-gradient(2px 2px at 60px 70px, #fff, rgba(255, 255, 255, 0.3)),
+          radial-gradient(1px 1px at 50px 50px, #fff, rgba(255, 255, 255, 0.2)),
+          radial-gradient(1px 1px at 130px 80px, #fff, rgba(255, 255, 255, 0.2));
+        background-size: 200px 200px;
+        animation: twinkle 5s infinite;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #c084fc 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      h2 {
+        font-size: 1.8em;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        color: #c084fc;
+      }
+      .subtitle {
+        font-size: 1.1em;
+        color: #b8a8d8;
+        margin-bottom: 30px;
+      }
+      p {
+        line-height: 1.8;
+        margin-bottom: 15px;
+        color: #d4c5e2;
+      }
+      strong {
+        color: #f0e7ff;
+      }
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px 0;
+        background: rgba(192, 132, 252, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .comparison-table th {
+        background: rgba(192, 132, 252, 0.15);
+        padding: 15px;
+        text-align: left;
+        border-bottom: 2px solid rgba(192, 132, 252, 0.2);
+        color: #c084fc;
+        font-weight: 600;
+      }
+      .comparison-table td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(192, 132, 252, 0.1);
+      }
+      .comparison-table tr:hover {
+        background: rgba(192, 132, 252, 0.08);
+      }
+      .highlight-better {
+        color: #10b981;
+        font-weight: 600;
+      }
+      .highlight-worse {
+        color: #ef4444;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      .section-divider {
+        border-top: 1px solid rgba(192, 132, 252, 0.2);
+        margin: 40px 0;
+      }
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.8em;
+        }
+        h2 {
+          font-size: 1.3em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>dictate.app vs DictaFlow</h1>
+      <p class="subtitle">
+        Side-by-side comparison: Privacy, transcription speed, and word limits
+      </p>
+
+      <h2>Quick Comparison</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>dictate.app</th>
+            <th>DictaFlow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Monthly Price</strong></td>
+            <td class="highlight-better">$8.99/mo</td>
+            <td>$7/mo</td>
+          </tr>
+          <tr>
+            <td><strong>Word Cap</strong></td>
+            <td class="highlight-better">Unlimited</td>
+            <td class="highlight-worse">100,000/month</td>
+          </tr>
+          <tr>
+            <td><strong>Transcription Speed</strong></td>
+            <td class="highlight-better">~200ms (Groq)</td>
+            <td>~400ms</td>
+          </tr>
+          <tr>
+            <td><strong>Privacy (BYOK)</strong></td>
+            <td class="highlight-better">Audio → Groq directly</td>
+            <td class="highlight-worse">Routes through servers</td>
+          </tr>
+          <tr>
+            <td><strong>Free Trial</strong></td>
+            <td class="highlight-better">7 days, no credit card</td>
+            <td>2,000 words</td>
+          </tr>
+          <tr>
+            <td><strong>Works Everywhere</strong></td>
+            <td class="highlight-better">Every Windows app</td>
+            <td>Every Windows app</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>The Word Cap Issue</h2>
+      <p>
+        <strong>DictaFlow's 100,000 word/month limit is a hard ceiling.</strong>
+        That's roughly 2,000 words/day if you dictate every day. For
+        professionals who dictate email, documentation, Slack, and reports, this
+        constraint hits faster than you'd expect.
+      </p>
+      <p>
+        At dictate.app, there's no cap. Dictate as much as you want. Your
+        transcription cost is determined by Groq's API pricing (which you
+        control via your own API key), not by our pricing.
+      </p>
+
+      <h2>Privacy & Architecture</h2>
+      <p>
+        dictate.app uses a <strong>BYOK (Bring Your Own Key) model</strong>. You
+        provide your Groq API key. Your audio goes directly from your PC to
+        Groq's servers. We never see your audio, never store it, never process
+        it.
+      </p>
+      <p>
+        DictaFlow routes your audio through their servers. Even if they use Groq
+        on the backend, the intermediate routing adds:
+      </p>
+      <ul>
+        <li>Extra latency (audio → DictaFlow → Groq → DictaFlow → you)</li>
+        <li>Privacy exposure (your audio on DictaFlow's infrastructure)</li>
+        <li>Dependency risk (DictaFlow's uptime becomes your uptime)</li>
+      </ul>
+
+      <h2>Speed Matters More Than You Think</h2>
+      <p>
+        <strong
+          >~200ms latency (dictate.app) vs ~400ms latency (DictaFlow)</strong
+        >
+        doesn't sound like much until you live with it.
+      </p>
+      <p>
+        At 200ms, dictation feels natural—like speaking into a search engine.
+        You finish your sentence, and the text appears at your cursor almost
+        instantly.
+      </p>
+      <p>
+        At 400ms, there's a perceptible pause. You're done speaking. You wait.
+        Then the text appears. Over a day of dictating emails, that
+        psychological friction adds up.
+      </p>
+
+      <h2>Total Cost of Ownership</h2>
+      <p>
+        <strong>dictate.app:</strong> $8.99/month flat + Groq API costs
+        (typically $0–$5/month for normal use)
+      </p>
+      <p>
+        <strong>DictaFlow:</strong> $7/month + hidden cost: when you hit 100k
+        words, you either upgrade, wait, or switch tools.
+      </p>
+      <p>
+        If you dictate more than ~3,000 words/day on average, DictaFlow forces
+        you to manage a hard limit. dictate.app lets you scale.
+      </p>
+
+      <div class="section-divider"></div>
+
+      <h2>Who Should Choose dictate.app?</h2>
+      <ul>
+        <li>
+          <strong>Privacy-conscious professionals</strong> who want audio off
+          third-party servers
+        </li>
+        <li>
+          <strong>High-volume dictators</strong> (lawyers, doctors, writers) who
+          exceed 100k words/month
+        </li>
+        <li>
+          <strong>Speed advocates</strong> who notice the difference between
+          200ms and 400ms
+        </li>
+        <li>
+          <strong>Cost-optimizers</strong> who want transparent, per-minute API
+          pricing instead of flat caps
+        </li>
+      </ul>
+
+      <h2>Start Free</h2>
+      <p>
+        Try dictate.app free for 7 days. No credit card required. Install it,
+        press Ctrl+Shift+Space, and feel the speed difference.
+      </p>
+      <p>
+        If DictaFlow's word cap hasn't frustrated you yet, it might never will.
+        But if you're dictating thousands of words weekly, dictate.app gives you
+        the ceiling-free alternative with the privacy you expect.
+      </p>
+    </div>
+  </body>
+</html>
