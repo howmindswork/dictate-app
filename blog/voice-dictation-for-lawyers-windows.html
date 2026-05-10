@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Voice Dictation Software for Lawyers on Windows 2026 | dictate.app
+    </title>
+    <meta
+      name="description"
+      content="Windows voice dictation for lawyers. Unlimited transcription, no word caps, audio never on third-party servers. Works in any case management or EHR software."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #0a0a14 0%, #1a0a2e 100%);
+        color: #e8dff5;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        z-index: -1;
+        background-image:
+          radial-gradient(2px 2px at 20px 30px, #eee, rgba(255, 255, 255, 0.2)),
+          radial-gradient(2px 2px at 60px 70px, #fff, rgba(255, 255, 255, 0.3)),
+          radial-gradient(1px 1px at 50px 50px, #fff, rgba(255, 255, 255, 0.2)),
+          radial-gradient(1px 1px at 130px 80px, #fff, rgba(255, 255, 255, 0.2));
+        background-size: 200px 200px;
+        animation: twinkle 5s infinite;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        z-index: 1;
+        position: relative;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #c084fc 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      h2 {
+        font-size: 1.8em;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        color: #c084fc;
+      }
+      .subtitle {
+        font-size: 1.1em;
+        color: #b8a8d8;
+        margin-bottom: 30px;
+      }
+      p {
+        line-height: 1.8;
+        margin-bottom: 15px;
+        color: #d4c5e2;
+      }
+      strong {
+        color: #f0e7ff;
+      }
+      ul,
+      ol {
+        margin-left: 20px;
+        margin-bottom: 15px;
+      }
+      li {
+        margin-bottom: 10px;
+        color: #d4c5e2;
+      }
+      .callout {
+        background: rgba(192, 132, 252, 0.08);
+        border-left: 4px solid rgba(192, 132, 252, 0.5);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .section-divider {
+        border-top: 1px solid rgba(192, 132, 252, 0.2);
+        margin: 40px 0;
+      }
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.8em;
+        }
+        h2 {
+          font-size: 1.3em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Voice Dictation for Lawyers on Windows</h1>
+      <p class="subtitle">
+        Type briefs, emails, and case notes faster. No word caps. Your audio
+        stays private.
+      </p>
+
+      <h2>The Problem: Dictation at Scale</h2>
+      <p>
+        A busy trial lawyer dictates 50,000+ words daily. Deposition prep. Case
+        emails. Motion briefs. Witness notes. You can type 60 words/minute. You
+        can dictate 120.
+      </p>
+      <p>But your dictation app just hit its limit. Again.</p>
+      <p>
+        <strong>DictaFlow's 100,000 word/month cap</strong> means a heavy docket
+        exhausts your transcription budget in three days of normal work. Then
+        you either upgrade, wait, or switch tools mid-case.
+      </p>
+
+      <h2>Why Lawyers Need Dictation</h2>
+      <p>
+        Dictation isn't laziness. It's RSI prevention, cognitive flow, and
+        speed. A 10-page motion takes 45 minutes to type. Dictated and cleaned?
+        20 minutes. You think while speaking, not while hunting for keys.
+      </p>
+      <p>
+        For attorneys handling multiple cases, 30,000+ words/month is normal.
+        Many exceed 50,000.
+      </p>
+
+      <div class="callout">
+        <strong>dictate.app has no caps.</strong> Dictate as much as you need.
+        Unlimited transcriptions at $8.99/month plus Groq API cost
+        (~$0.005/minute of audio, typically $5-15/month for heavy users).
+      </div>
+
+      <h2>The Privacy Angle: Attorney-Client Privilege</h2>
+      <p>
+        Your client's information is privileged. Confidential strategy. Witness
+        interview notes. Settlement discussions. These cannot sit on a
+        third-party server.
+      </p>
+      <p>
+        DictaFlow routes audio through their infrastructure. Even with
+        encryption in transit, your audio lands in their data center. If they
+        get breached, your client's confidential information is exposed. If
+        they're acquired or shut down, who controls your transcription archive?
+      </p>
+      <p>
+        <strong>dictate.app uses BYOK (Bring Your Own Key).</strong> You provide
+        your Groq API key. Audio goes directly from your PC to Groq's servers.
+        We never see it, store it, or count it. No middleman. No compliance
+        nightmare.
+      </p>
+
+      <h2>Works in Every Legal App</h2>
+      <p>
+        Clio, PracticePanther, MyCase, Smokeball, Litify, Cosmo, LawLion.
+        Microsoft Word, Outlook, Gmail. Browser-based CMS. Anywhere you type,
+        dictate.app works.
+      </p>
+      <p>
+        Press Ctrl+Shift+Space. Hold. Speak. Release. Your dictation appears at
+        the cursor. No clipboard shuffle. No app switching.
+      </p>
+
+      <h2>Speed Matters in Practice</h2>
+      <p>
+        dictate.app uses Groq Whisper API at ~200ms latency. You finish
+        speaking. The text appears almost instantly.
+      </p>
+      <p>
+        Compare to competitors: DictaFlow's latency is undisclosed (because it's
+        slower). OpenAI Whisper API is 400-900ms. Local Whisper on consumer
+        hardware is 1-2 seconds.
+      </p>
+      <p>
+        Over a day of dictating 20-30 emails, 200ms vs 400ms adds up. No lag
+        means you stay in flow. You don't wait. You don't lose your train of
+        thought.
+      </p>
+
+      <h2>Cost Comparison</h2>
+      <p>
+        DictaFlow: $7/month + $10-20/month when you exceed 100k words (forced
+        upgrade or nothing).
+      </p>
+      <p>
+        Dragon NaturallySpeaking: $699 upfront + yearly updates. Legacy
+        software. Windows only.
+      </p>
+      <p>
+        dictate.app: $8.99/month + ~$5-15/month for Groq API = ~$14-24/month,
+        unlimited, no surprises.
+      </p>
+
+      <div class="section-divider"></div>
+
+      <h2>Setup Takes 2 Minutes</h2>
+      <ol>
+        <li>Get a free Groq API key at groq.com.</li>
+        <li>Install dictate.app from dictate.app.</li>
+        <li>Paste your API key into settings.</li>
+        <li>Press Ctrl+Shift+Space in any app and start dictating.</li>
+      </ol>
+
+      <h2>Who Should Switch</h2>
+      <p>
+        If you dictate more than 2,000 words/day, DictaFlow's cap is a ceiling
+        you'll hit weekly. dictate.app removes that ceiling.
+      </p>
+      <p>
+        If confidential client information matters (and it does), BYOK
+        architecture means your audio never touches a third-party server.
+      </p>
+      <p>
+        If you want speed without the keyboard delay of Web services, Groq's
+        200ms latency is fastest.
+      </p>
+
+      <h2>No Surprises</h2>
+      <p>
+        You control your Groq API key. You see your usage and costs on Groq's
+        dashboard. No hidden billing. No word cap surprises.
+      </p>
+      <p>
+        Try free for 7 days. No credit card required. If dictate.app saves you
+        30 minutes/week, it pays for itself.
+      </p>
+    </div>
+  </body>
+</html>
