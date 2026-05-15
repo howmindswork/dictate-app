@@ -1,175 +1,260 @@
-# Bluesky Post Queue — dictate.app (@hmwofficial.bsky.social)
-# Generated: 2026-05-07
-# Format: Category | Character count | Post text
-# Half the posts include the link. 300 char max.
+# Bluesky Post Queue — HMW (@hmwbsky.bsky.social)
+# Updated: 2026-05-15
+# How Minds Work — psychology, grief, emotional healing, moon rituals
+# 300 char max. Mix of with/without links. CTA: "ritual in bio 🌙"
 
 ---
 
-## Category 1: Did You Know / Stats (6 posts)
+Your nervous system doesn't know the difference between a memory and what's happening right now.
 
-### Post 1
-**Did you know?** The average person types 40 WPM but speaks at 130 WPM. That's a 3x productivity gap. dictate.app closes it. Hold a key, say it, done. Every app. Every text field. https://dictate-app.pages.dev/download
+That's why grief hits at random moments. A song. A smell. A Tuesday afternoon.
 
----
+The body stores what the mind tries to move past.
 
-### Post 2
-Knowledge workers spend about 28% of their workday on email alone. That's 11 hours a week just typing. Voice dictation at 130 WPM cuts that to under 4 hours. The math is brutal.
+Stone Release Ritual in bio 🌙
 
 ---
 
-### Post 3
-Groq's Whisper transcription runs in ~200ms. That's not a typo. You finish speaking and the text is already there. dictate.app runs it locally on Windows with no cloud roundtrip. https://dictate-app.pages.dev/download
+Most people never finish grieving. Not because they don't try. Because nobody taught them how.
+
+Grief isn't a phase. It's unfinished emotional business. And unfinished business stays in the body until you complete it.
 
 ---
 
-### Post 4
-Most people dictate 3x faster than they type but never try it because setup is annoying. dictate.app is literally: download, set a hotkey, hold it, speak. Under 2 minutes to first dictation.
+The ancient Egyptians believed the heart was weighed after death. Not the brain.
+
+They understood something we forgot: emotions aren't a weakness. They're the whole point.
+
+howmindswork.org 🌙
 
 ---
 
-### Post 5
-The average professional writes 40 emails a day. At 40 WPM that's 2+ hours. At 130 WPM speaking it's 35 minutes. dictate.app pays for itself in the first afternoon. $8.99/month, 7-day trial.
+Box breathing isn't just a calming trick. It activates the vagus nerve, which directly regulates your emotional state.
+
+Inhale 4. Hold 4. Exhale 4. Hold 4.
+
+Four rounds. That's it. Your whole nervous system shifts.
 
 ---
 
-### Post 6
-In 2026, Groq is the fastest Whisper inference on the planet. We built dictate.app on top of it. The result: voice to text in under 200ms. Faster than most people notice the gap.
+Psychology fact: suppressing an emotion doesn't make it smaller. It makes it louder.
+
+Every feeling you push down eventually finds a way out. Usually at the worst possible time.
+
+The only way through is through.
 
 ---
 
-## Category 2: Build in Public (6 posts)
+There's a specific kind of grief that doesn't get talked about.
 
-### Post 7
-Build in public update: dictate.app just crossed its first 100 active installs. No ads. No launch post. Just word of mouth from people who stopped typing and never went back.
+Grieving something that never happened. The relationship that didn't work. The version of yourself you had to leave behind. The future you planned that won't exist.
 
----
-
-### Post 8
-Most common feedback we get: "I didn't expect it to work in [X]." Discord, Slack, Google Docs, browser address bar, VS Code terminal. It works everywhere because it hooks at the OS level.
+That loss is real. It counts.
 
 ---
 
-### Post 9
-Working on a feature: per-app hotkey profiles. So your coding shortcut differs from your writing one. It's the most-requested thing in the first 90 days. Shipping soon.
+Your body keeps the score. That's not a metaphor.
+
+Unprocessed emotions live in muscle tension, sleep disruption, chronic fatigue. The body holds what the mind can't yet face.
+
+Somatic release isn't spiritual bypassing. It's science.
+
+Stone Release Ritual in bio 🌙
 
 ---
 
-### Post 10
-Honest build-in-public moment: our first week had a bug where it would fire twice on fast releases. Fixed in v1.0.3. No complaints since. Lesson: release fast, watch closely, patch faster.
+The 4-7-8 breathing technique was used in yogic traditions for centuries before Western medicine validated it.
+
+Breathe in for 4. Hold for 7. Out for 8.
+
+One round drops cortisol. Four rounds resets your baseline.
 
 ---
 
-### Post 11
-dictate.app is a solo-built Windows app powered by Groq Whisper. $8.99/month. 7-day free trial. Building in public. If you use it and have feedback, reply here. We actually read it. https://dictate-app.pages.dev/download
+Crying is the body's fastest emotional processing mechanism.
+
+It releases prolactin and ACTH. It lowers cortisol. It signals to your nervous system that the threat has passed.
+
+Letting yourself cry isn't weakness. It's biochemistry.
+
+howmindswork.org 🌙
 
 ---
 
-### Post 12
-Feature shipped: custom silence detection. You can now set how long a pause ends your dictation. Default is 0.8s. Power users drop it to 0.4s. Writers bump it to 2s for thinking pauses.
+Most emotional pain isn't from what happened. It's from the story you're still telling about it.
+
+The event ended. The meaning you gave it didn't.
+
+That's the work.
 
 ---
 
-## Category 3: Use Case Spotlights (6 posts)
+Dream catchers weren't just decoration. They were built on the idea that the night holds things the day cannot.
 
-### Post 13
-Writers: stop losing ideas because typing is too slow. dictate.app lets you speak a rough draft at 130 WPM. Edit later. The blank page is less scary when you can just talk at it.
+The subconscious processes what the conscious mind avoids.
 
----
-
-### Post 14
-Developers: you write code, not prose. But your commit messages, Slack replies, PR comments, and docs still take forever to type. dictate.app handles all of it while your hands stay on the keyboard.
+What are you dreaming about lately?
 
 ---
 
-### Post 15
-Doctors and therapists: clinical notes eat 2 hours a day. dictate.app works in any EHR text field, no integration required. Hold key, speak, release. Your words appear instantly. https://dictate-app.pages.dev/download
+The moon has governed human sleep cycles for 200,000 years. We added artificial light 150 years ago.
+
+Your body still follows the old clock. You feel it every full moon whether you believe in that stuff or not.
 
 ---
 
-### Post 16
-Law students: case briefs, reading responses, outlines. dictate.app lets you think out loud and capture it. You can speak a 500-word argument in under 4 minutes. Typing it takes 12.
+Emotional completion means finishing what got interrupted.
+
+Grief that was rushed. Anger that was swallowed. Sadness that had nowhere to go.
+
+The Emotional Completion Protocol was built for exactly this. In bio 🌙
 
 ---
 
-### Post 17
-Remote workers: async communication means writing a lot. Every Slack message, every Loom script, every email. dictate.app turns all of it into voice. Your async game gets 3x faster overnight.
+A Harvard study found that people who had a ritual for processing negative emotions recovered from setbacks 40% faster than those who didn't.
+
+Ritual isn't superstition. It's structure. And structure is what the nervous system needs when everything feels formless.
+
+Stone Release Ritual in bio 🌙
 
 ---
 
-### Post 18
-Students with ADHD or dyslexia: typing breaks the flow. Speaking doesn't. dictate.app works anywhere on Windows. No special mode, no plugin, no setup per app. Just hold and talk. https://dictate-app.pages.dev/download
+You weren't taught how to feel your feelings. You were taught how to manage them, suppress them, or perform them.
+
+That's not your fault. But it is your work to undo.
 
 ---
 
-## Category 4: Product Demo (6 posts)
+The word "emotion" comes from the Latin emovere. To move out.
 
-### Post 19
-Here's what using dictate.app actually feels like. You're in Gmail. You hold your hotkey. You say "Hey Sarah, just following up on the proposal from Monday, let me know if you need anything from me." You release. It's already there. Done.
+Emotions are meant to move through you, not live in you.
 
----
+When they stop moving, that's when the body starts keeping score.
 
-### Post 20
-You're in VS Code. You hold the key. You say "function get user by ID, takes an integer, returns user or null." You release. The comment or variable name is in the editor. Then you write the actual code. Faster.
+howmindswork.org 🌙
 
 ---
 
-### Post 21
-Open Slack. Hold your hotkey. Speak your whole message. Release. 200ms later the text appears. Hit send. The whole thing takes 8 seconds instead of 45. Do that 60 times a day. The math adds up.
+Somatic work isn't woo. It's just understanding that the body and mind aren't separate systems.
+
+What you think affects what you feel in your chest. What you feel in your chest affects what you think next.
+
+The loop runs both ways. And you can enter it from either end.
 
 ---
 
-### Post 22
-You're mid-thought. You don't want to type it. You hold the key, say it out loud, and release. It lands in whatever field your cursor is in. Notes app, browser URL bar, Discord, Notion. Any field. Always works.
+The amygdala processes threat before the prefrontal cortex even knows what's happening.
+
+Your feelings are always faster than your thoughts. That's not a design flaw. That's the system working exactly as built.
 
 ---
 
-### Post 23
-dictate.app has no microphone indicator, no floating widget, no UI chrome. Just a hotkey. When you hold it, you're recording. When you release, the text appears. That's the whole product. Simple on purpose. https://dictate-app.pages.dev/download
+Ambiguous loss is the hardest kind.
+
+No body to bury. No clear moment it ended. No permission to grieve because nothing officially died.
+
+A relationship that faded. A parent who's still alive but gone. A version of your life that quietly became impossible.
+
+That loss is valid.
 
 ---
 
-### Post 24
-I just dictated this entire Bluesky post using dictate.app. Took about 12 seconds to speak. Appeared in 200ms. Total time: 13 seconds. Writing it by hand would have taken over a minute.
+Breathwork triggers the body's own chemistry. No substance required.
+
+Sustained conscious breathing releases DMT precursors from the pineal gland. Ancient cultures built entire spiritual practices around this.
+
+You don't need to believe in any of it for it to work.
 
 ---
 
-## Category 5: Competitor Comparison (6 posts)
+The most underrated healing tool is a ritual that marks the end of something.
 
-### Post 25
-Windows Speech Recognition has been around since 2007. It requires training, uses an older model, and has ~85% accuracy on average speech. dictate.app uses Groq Whisper in 2026. Accuracy is not the same contest.
+Your brain needs a signal. A ceremony. A moment where it registers: this chapter is closed.
 
----
+Without it, the nervous system keeps preparing for something that already happened.
 
-### Post 26
-Dragon NaturallySpeaking costs $150-$500 upfront plus annual support fees. It's powerful. It's also heavy, slow to start, and designed for an era before Whisper existed. dictate.app is $8.99/month. https://dictate-app.pages.dev/download
+Stone Release Ritual in bio 🌙
 
 ---
 
-### Post 27
-Wispr Flow is good. It's also Mac-only and sends your audio to their cloud. dictate.app is Windows-native and processes with Groq Whisper. If you're on Windows or care about where your words go, the choice is easy.
+Most people are living in emotional residue from something that ended years ago.
+
+Not because they chose to. Because no one gave them a way to finish it.
+
+Completion is a skill. And it can be learned.
+
+Emotional Completion Protocol in bio 🌙
 
 ---
 
-### Post 28
-Typing speed: 40 WPM average. Speaking speed: 130 WPM average. The fastest typist in the world does 200 WPM. Your speaking voice beats most typists and you've been doing it since age 2.
+The subconscious mind can't tell the difference between vividly imagined and actually experienced.
+
+That's why visualization works. That's also why rumination hurts.
+
+The images you hold in your mind have a physiological cost.
 
 ---
 
-### Post 29
-Most dictation tools require you to open an app, navigate to a dictation field, hit record, wait, then copy and paste. dictate.app is just a hotkey. Any app. Any field. Hold, speak, release. That difference matters every single time you use it. https://dictate-app.pages.dev/download
+What you resist persists. Not because the universe is punishing you.
+
+Because the nervous system keeps a threat active until you face it. Avoidance signals danger. The body responds accordingly.
+
+The only way out is through.
 
 ---
 
-### Post 30
-Otter.ai and similar tools are built for meeting transcription. They're great at that. dictate.app is built for typing replacement. Different job. If you want to write faster on Windows, dictate.app is the right tool.
+Egyptian death rituals weren't about the afterlife. They were about emotional completion for the living.
+
+The 40-day mourning period. The wailing. The ritual offerings.
+
+They understood something modern culture forgot: grief needs a container.
+
+howmindswork.org 🌙
 
 ---
 
-## TOP 5 PICKS FOR IMMEDIATE POSTING
-(Best mix of angles, clearest hooks, link distribution)
+There are feelings you've been carrying so long you stopped noticing their weight.
 
-1. Post 3 (Stats + Groq speed + link)
-2. Post 19 (Vivid demo, no link — strong standalone)
-3. Post 7 (Build in public milestone, no link)
-4. Post 26 (Dragon comparison + link)
-5. Post 13 (Writer use case, no link)
+Not because they went away. Because you adapted to the load.
+
+The body remembers. It always does.
+
+Stone Release Ritual in bio 🌙
+
+---
+
+The science of emotional regulation is simple: you can't think your way out of a feeling.
+
+You have to feel your way through it.
+
+The prefrontal cortex goes offline under emotional activation. Logic isn't available. The body is. Start there.
+
+---
+
+Grief after a breakup is neurologically identical to grief after a death.
+
+The same brain regions. The same stress hormones. The same physical pain.
+
+Stop telling yourself you don't have a right to feel as bad as you do.
+
+---
+
+Ritual is how humans have always marked transition.
+
+Birth. Death. Seasons. The moon.
+
+Modern life removed the rituals without replacing them. So we carry our transitions unacknowledged, wondering why we feel stuck.
+
+ritual in bio 🌙
+
+---
+
+You are not broken. You are unfinished.
+
+There's a difference.
+
+Broken things need fixing. Unfinished things need completion.
+
+That's the work. And it's closer than you think. 🌙
+
+---
