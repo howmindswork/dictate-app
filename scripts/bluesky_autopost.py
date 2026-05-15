@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Bluesky auto-poster for @hmwofficial.bsky.social (dictate.app)
+Bluesky auto-poster for @hmwbsky.bsky.social (HMW)
 Posts the next queued post from bluesky-post-queue.md.
 Tracks position in bluesky-post-index.txt. Wraps around when done.
 """
@@ -9,7 +9,7 @@ import os
 import re
 import sys
 
-HANDLE = "hmwofficial.bsky.social"
+HANDLE = "hmwbsky.bsky.social"
 QUEUE_FILE = os.path.join(os.path.dirname(__file__), "bluesky-post-queue.md")
 INDEX_FILE = os.path.join(os.path.dirname(__file__), "bluesky-post-index.txt")
 
@@ -61,10 +61,16 @@ def post_to_bluesky(handle, password, text):
     except ImportError:
         os.system("pip install atproto -q")
         from atproto import Client
-    client = Client()
-    client.login(handle, password)
-    client.send_post(text=text[:300])
-    print(f"Posted ({len(text)} chars): {text[:80]}...")
+    try:
+        client = Client()
+        client.login(handle, password)
+        client.send_post(text=text[:300])
+        print(f"Posted ({len(text)} chars): {text[:80]}...")
+    except Exception as e:
+        if "AccountTakedown" in str(e) or "account_taken_down" in str(e):
+            print(f"[autopost] Account {handle} is banned. Exiting gracefully.")
+            sys.exit(0)
+        raise
 
 def main():
     posts = parse_queue(QUEUE_FILE)

@@ -1,11 +1,10 @@
 name: Bluesky Auto-Poster
 
 on:
-  # DISABLED: hmwofficial.bsky.social is suspended (AccountTakedown). Re-enable when account is restored.
-  # schedule:
-  #   - cron: "0 13 * * *"   # 9 AM ET
-  #   - cron: "0 18 * * *"   # 2 PM ET
-  #   - cron: "0 23 * * *"   # 7 PM ET
+  schedule:
+    - cron: "0 13 * * *"   # 9 AM ET
+    - cron: "0 18 * * *"   # 2 PM ET
+    - cron: "0 23 * * *"   # 7 PM ET
   workflow_dispatch:
 
 jobs:
