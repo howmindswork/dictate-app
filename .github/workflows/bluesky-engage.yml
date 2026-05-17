@@ -6,9 +6,14 @@ on:
     - cron: "30 22 * * *"   # 6:30 PM ET
   workflow_dispatch:
 
+concurrency:
+  group: bluesky-engage
+  cancel-in-progress: true
+
 jobs:
   engage:
     runs-on: ubuntu-latest
+    continue-on-error: true
     permissions:
       contents: write
     steps:
