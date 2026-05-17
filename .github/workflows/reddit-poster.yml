@@ -1,11 +1,9 @@
 name: Reddit Auto-Poster
 
 on:
-  schedule:
-    - cron: "0 19 * * 1"   # Monday 7 PM UTC    → dictate
-    - cron: "0 19 * * 3"   # Wednesday 7 PM UTC → HMW
-    - cron: "0 19 * * 4"   # Thursday 7 PM UTC  → dictate
-    - cron: "0 19 * * 5"   # Friday 7 PM UTC    → TRJC
+  # Schedule removed — Reddit requires residential IP. Runs via crontab on host machine instead.
+  # GitHub Actions datacenter IPs are detected as bots and blocked.
+  # See: /home/luke/dictate-app-website/scripts/reddit_camoufox.py (crontab Mon/Thu 7PM UTC)
   workflow_dispatch:
     inputs:
       blog:
@@ -17,9 +15,7 @@ on:
 
 jobs:
   post-dictate:
-    if: >
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'dictate') ||
-      (github.event_name == 'schedule' && (github.event.schedule == '0 19 * * 1' || github.event.schedule == '0 19 * * 4'))
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'dictate'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -45,9 +41,7 @@ jobs:
         run: python3 scripts/reddit_camoufox.py
 
   post-hmw:
-    if: >
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'hmw') ||
-      (github.event_name == 'schedule' && github.event.schedule == '0 19 * * 3')
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'hmw'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -73,9 +67,7 @@ jobs:
         run: python3 scripts/reddit_camoufox.py
 
   post-trjc:
-    if: >
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'trjc') ||
-      (github.event_name == 'schedule' && github.event.schedule == '0 19 * * 5')
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.blog == 'trjc'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

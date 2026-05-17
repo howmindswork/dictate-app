@@ -1,10 +1,7 @@
 name: Bluesky Auto-Poster
 
 on:
-  schedule:
-    - cron: "0 13 * * *"   # 9 AM ET
-    - cron: "0 18 * * *"   # 2 PM ET
-    - cron: "0 23 * * *"   # 7 PM ET
+  # Schedule paused — no dictate Bluesky account yet. Re-enable when account is created.
   workflow_dispatch:
 
 jobs:
